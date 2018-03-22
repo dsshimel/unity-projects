@@ -12,7 +12,7 @@ public class SphereMover : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        randomizeObject();
+        initializeSphere();
 	}
 	
 	// Update is called once per frame
@@ -24,12 +24,16 @@ public class SphereMover : MonoBehaviour {
 
         if (gameObject.transform.position.z < CAMERA_Z_POSITION)
         {
-            randomizeObject();
+            initializeSphere();
         }
     }
 
-    private void randomizeObject()
+    private void initializeSphere()
     {
+		TrailRenderer trailRenderer = gameObject.GetComponent<TrailRenderer>();
+		trailRenderer.Clear();
+
+
         // The field of view from the camera should determine these numbers
         float newX = Random.Range(-10, 10);
         float newY = Random.Range(-9, 11);
@@ -44,13 +48,15 @@ public class SphereMover : MonoBehaviour {
 
         Renderer renderer = gameObject.GetComponent<Renderer>();
         // Is there a better way than using the magic string "_Color"?
-        renderer.material.SetColor(
-            "_Color",
-            new Color(
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f)));
+		Color materialColor = new Color(
+			Random.Range(0, 1.0f),
+			Random.Range(0, 1.0f),
+			Random.Range(0, 1.0f),
+			Random.Range(0, 1.0f));
+        renderer.material.SetColor("_Color", materialColor);
+
+		trailRenderer.endColor = materialColor;
+		trailRenderer.startColor = materialColor;
 
         xSpeed = Random.Range(-0.1f, 0.1f);
         ySpeed = Random.Range(-0.1f, 0.1f);
