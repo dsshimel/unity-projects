@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SphereMover : MonoBehaviour {
-    private const float CAMERA_Z_POSITION = -10;
+    // Min distance meteor can be from player.
+    public float radiusInner;
+    // Max distance meteor can be from player.
+    public float radiusOuter;
+    // Z = Rsin(angleZY)
+    // Y = Rcos(angleZY)
+    public float lengthX;
 
-    private float zSpeed = -0.1f;
-    private float xSpeed;
-    private float ySpeed;
+    private float angleZY;
+    private float radius;
+    private float x;
+    private float angularVelocity;
 
 	// Use this for initialization
 	void Start ()
@@ -19,13 +26,11 @@ public class SphereMover : MonoBehaviour {
 	void Update ()
     {
         // Make the spheres move in a parabolic arc like a comet
-        Vector3 translation = new Vector3(xSpeed, ySpeed, zSpeed);
-        gameObject.transform.Translate(translation);
+        float newY = radius * Mathf.Sin(angleZY);
+        float newZ = radius * Mathf.Cos(angleZY);
+        gameObject.transform.position = new Vector3(x, newY, newZ);
 
-        if (gameObject.transform.position.z < CAMERA_Z_POSITION)
-        {
-            initializeSphere();
-        }
+        angleZY += angularVelocity * Mathf.PI;
     }
 
     private void initializeSphere()
@@ -33,18 +38,20 @@ public class SphereMover : MonoBehaviour {
 		TrailRenderer trailRenderer = gameObject.GetComponent<TrailRenderer>();
 		trailRenderer.Clear();
 
+        radius = Random.Range(radiusInner, radiusOuter);
+        angleZY = Random.Range(0, 2 * Mathf.PI);
+        angularVelocity = Random.Range(0.005f, 0.01f);
 
         // The field of view from the camera should determine these numbers
-        float newX = Random.Range(-10, 10);
-        float newY = Random.Range(-9, 11);
-        float newZ = 10;
+        float newX = Random.Range(-lengthX, lengthX);
+        x = newX;
+        float newY = radius * Mathf.Sin(angleZY);
+        float newZ = radius * Mathf.Cos(angleZY);
         gameObject.transform.position = new Vector3(newX, newY, newZ);
 
         // Might look better if this distribution was logarithmic instead of linear
         float newScale = Random.Range(0.01f, 2);
         gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
-
-        zSpeed = Random.Range(-0.5f, -0.1f);
 
         Renderer renderer = gameObject.GetComponent<Renderer>();
         // Is there a better way than using the magic string "_Color"?
@@ -57,8 +64,5 @@ public class SphereMover : MonoBehaviour {
 
 		trailRenderer.endColor = materialColor;
 		trailRenderer.startColor = materialColor;
-
-        xSpeed = Random.Range(-0.1f, 0.1f);
-        ySpeed = Random.Range(-0.1f, 0.1f);
     }
 }
