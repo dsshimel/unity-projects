@@ -30,7 +30,7 @@ public class SphereMover : MonoBehaviour {
         float newZ = radius * Mathf.Cos(angleZY);
         gameObject.transform.position = new Vector3(x, newY, newZ);
 
-        angleZY += angularVelocity * Mathf.PI;
+        angleZY += -1 * angularVelocity * Mathf.PI;
     }
 
     private void initializeSphere()
