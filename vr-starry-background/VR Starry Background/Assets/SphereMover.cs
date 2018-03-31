@@ -11,9 +11,12 @@ public class SphereMover : MonoBehaviour {
     // Y = Rcos(angleZY)
     public float lengthX;
 
+    private float polarAngleTheta;
+    private float azimuthAnglePhi;
     private float angleZY;
     private float radius;
     private float x;
+    private float angleXY;
     private float angularVelocity;
 
 	// Use this for initialization
@@ -25,12 +28,19 @@ public class SphereMover : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        //https://en.wikipedia.org/wiki/Spherical_coordinate_system
         // Make the spheres move in a parabolic arc like a comet
-        float newY = radius * Mathf.Sin(angleZY);
-        float newZ = radius * Mathf.Cos(angleZY);
-        gameObject.transform.position = new Vector3(x, newY, newZ);
+        //float newX = radius * Mathf.Cos(angleXY);
+        //float newY = radius * Mathf.Sin(angleZY);
+        //float newZ = radius * Mathf.Cos(angleZY);
+        //gameObject.transform.position = new Vector3(newX, newY, newZ);
+
+        SetPosition();
 
         angleZY += -1 * angularVelocity * Mathf.PI;
+        angleXY += -1 * angularVelocity * Mathf.PI;
+        polarAngleTheta += -1 * angularVelocity * Mathf.PI;
+        azimuthAnglePhi += -1 * angularVelocity * Mathf.PI;
     }
 
     private void initializeSphere()
@@ -40,14 +50,11 @@ public class SphereMover : MonoBehaviour {
 
         radius = Random.Range(radiusInner, radiusOuter);
         angleZY = Random.Range(0, 2 * Mathf.PI);
+        angleXY = Random.Range(0, 2 * Mathf.PI);
+        polarAngleTheta = Random.Range(0, 2 * Mathf.PI);
+        azimuthAnglePhi = Random.Range(0, 2 * Mathf.PI);
         angularVelocity = Random.Range(0.005f, 0.01f);
-
-        // The field of view from the camera should determine these numbers
-        float newX = Random.Range(-lengthX, lengthX);
-        x = newX;
-        float newY = radius * Mathf.Sin(angleZY);
-        float newZ = radius * Mathf.Cos(angleZY);
-        gameObject.transform.position = new Vector3(newX, newY, newZ);
+        SetPosition();
 
         // Might look better if this distribution was logarithmic instead of linear
         float newScale = Random.Range(0.01f, 2);
@@ -64,5 +71,19 @@ public class SphereMover : MonoBehaviour {
 
 		trailRenderer.endColor = materialColor;
 		trailRenderer.startColor = materialColor;
+    }
+
+    private void SetPosition()
+    {
+        // The field of view from the camera should determine these numbers
+        //float newX = Random.Range(-lengthX, lengthX);
+        //float newX = radius * Mathf.Cos(angleXY);
+        //x = newX;
+        //float newY = radius * Mathf.Sin(angleZY);
+        //float newZ = radius * Mathf.Cos(angleZY);
+        float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
+        float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
+        float newZ = radius * Mathf.Cos(polarAngleTheta);
+        gameObject.transform.position = new Vector3(newX, newY, newZ);
     }
 }
