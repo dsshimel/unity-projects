@@ -9,10 +9,13 @@ public class SphereMover : MonoBehaviour {
     public float radiusOuter;
 
     private MeteorMovementStrategy movementStrategy;
+    private ParticleSystem trails;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
+        trails = GetComponentInChildren<ParticleSystem>();
+
         movementStrategy = new SphereTubeStrategy(radiusInner, radiusOuter);
         //movementStrategy = new HamsterWheelStrategy(radiusInner, radiusOuter);
         initializeSphere();
@@ -44,6 +47,21 @@ public class SphereMover : MonoBehaviour {
 			Random.Range(0, 1.0f));
         renderer.material.SetColor("_Color", materialColor);
 
+        var shape = trails.shape;
+        shape.radius = newScale * 2.0f;
+
+        var col = trails.colorOverLifetime;
+        Gradient grad = new Gradient();
+        GradientColorKey[] colorKeys = new GradientColorKey[] {
+            new GradientColorKey(materialColor, 0.0f),
+            new GradientColorKey(InvertColor(materialColor), 0.5f) };
+        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[] {
+            new GradientAlphaKey(1.0f, 0.0f),
+            new GradientAlphaKey(1.0f, 0.7f),
+            new GradientAlphaKey(0.0f, 1.0f) };
+        grad.SetKeys(colorKeys, alphaKeys);
+        col.color = grad;
+        
 		trailRenderer.endColor = materialColor;
 		trailRenderer.startColor = materialColor;
     }
@@ -51,5 +69,10 @@ public class SphereMover : MonoBehaviour {
     private void SetPosition(Vector3 position)
     {
         gameObject.transform.position = position;
+    }
+
+    private Color InvertColor(Color color)
+    {
+        return new Color(1.0f - color.r, 1.0f - color.g, 1.0f - color.b);
     }
 }
