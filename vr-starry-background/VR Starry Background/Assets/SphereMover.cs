@@ -13,8 +13,8 @@ public class SphereMover : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        //movementStrategy = new SphereTubeStrategy(radiusInner, radiusOuter);
-        movementStrategy = new HamsterWheelStrategy(radiusInner, radiusOuter);
+        movementStrategy = new SphereTubeStrategy(radiusInner, radiusOuter);
+        //movementStrategy = new HamsterWheelStrategy(radiusInner, radiusOuter);
         initializeSphere();
 	}
 	
