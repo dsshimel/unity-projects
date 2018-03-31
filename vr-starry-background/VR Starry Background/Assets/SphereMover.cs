@@ -39,7 +39,7 @@ public class SphereMover : MonoBehaviour {
 
         angleZY += -1 * angularVelocity * Mathf.PI;
         angleXY += -1 * angularVelocity * Mathf.PI;
-        polarAngleTheta += -1 * angularVelocity * Mathf.PI;
+        //polarAngleTheta += -1 * angularVelocity * Mathf.PI;
         azimuthAnglePhi += -1 * angularVelocity * Mathf.PI;
     }
 

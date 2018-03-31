@@ -10,7 +10,7 @@ public class GameOrchestrator : MonoBehaviour {
 	void Start () {
         for (var i = 0; i < numSpheres; i++)
         {
-            GameObject sphere = Instantiate(spherePrefab);
+            Instantiate(spherePrefab);
         }
     }
 	
