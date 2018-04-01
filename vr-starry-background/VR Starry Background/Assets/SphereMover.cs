@@ -8,12 +8,16 @@ public class SphereMover : MonoBehaviour {
     // Max distance meteor can be from player.
     public float radiusOuter;
 
-    private MeteorMovementStrategy movementStrategy;
+    private MovementStrategy movementStrategy;
     private ParticleSystem trails;
+    private bool isMoving;
+    private float time;
 
     // Use this for initialization
     void Start ()
     {
+        isMoving = false;
+        time = 0;
         trails = GetComponentInChildren<ParticleSystem>();
 
         movementStrategy = new SphereTubeStrategy(radiusInner, radiusOuter);
@@ -24,7 +28,21 @@ public class SphereMover : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        SetPosition(movementStrategy.GetPosition());
+        if (isMoving)
+        {
+            time += Time.deltaTime;
+            SetPosition(movementStrategy.GetPosition(time));
+        }
+    }
+
+    public void StartMoving()
+    {
+        isMoving = true;
+    }
+
+    public void StopMoving()
+    {
+        isMoving = false;
     }
 
     private void initializeSphere()

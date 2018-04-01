@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class HamsterWheelStrategy : MeteorMovementStrategy
+public class HamsterWheelStrategy : AbstractMovementStrategy
 {
     // Min distance meteor can be from player.
     public float radiusInner;
@@ -21,36 +21,25 @@ public class HamsterWheelStrategy : MeteorMovementStrategy
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
         this.maxXLength = 40;
+        intensity = 1;
     }
 
-    public Vector3 GetPosition()
-    {
-        return ComputePosition(Time.time - initTime);
-    }
-
-    public Vector3 InitPosition()
-    {
-        radius = Random.Range(radiusInner, radiusOuter);
-        angleZY = Random.Range(0, 2 * Mathf.PI);
-        xLength = Random.Range(-maxXLength, maxXLength);
-        angularVelocity = Random.Range(1.0f, 2.0f);
-
-        initTime = Time.time;
-        return ComputePosition(0);
-    }
-
-    public void SetIntensity(float intensity)
-    {
-        this.intensity = intensity;
-    }
-
-    // timeDelta is in seconds
-    private Vector3 ComputePosition(float timeDelta)
+    override public Vector3 GetPosition(float timeDelta)
     {
         float zy = angleZY - (timeDelta * angularVelocity);
 
         float newY = radius * Mathf.Sin(zy);
         float newZ = radius * Mathf.Cos(zy);
         return new Vector3(xLength, newY, newZ);
+    }
+
+    override public Vector3 InitPosition()
+    {
+        radius = Random.Range(radiusInner, radiusOuter);
+        angleZY = Random.Range(0, 2 * Mathf.PI);
+        xLength = Random.Range(-maxXLength, maxXLength);
+        angularVelocity = Random.Range(1.0f, 2.0f);
+
+        return GetPosition(0);
     }
 }
