@@ -24,12 +24,18 @@ public class SphereMover : MonoBehaviour {
         //movementStrategy = new HamsterWheelStrategy(radiusInner, radiusOuter);
         initializeSphere();
 	}
-	
+
+    private float intensity = 0.0f;
 	// Update is called once per frame
 	void Update ()
     {
         if (isMoving)
         {
+            if (intensity < 1)
+            {
+                movementStrategy.SetIntensity(intensity);
+                intensity += 0.005f;
+            }
             time += Time.deltaTime;
             SetPosition(movementStrategy.GetPosition(time));
         }

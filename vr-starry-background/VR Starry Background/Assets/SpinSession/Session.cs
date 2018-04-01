@@ -7,7 +7,7 @@ namespace SpinSession
 {
     public class Session : MonoBehaviour
     {
-        public int countdownTimeSeconds = 3;
+        public int countdownTimeSeconds = 1;
 
         public event EventHandler CountdownEnd;
 

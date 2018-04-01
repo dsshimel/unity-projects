@@ -14,19 +14,19 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
     private float angularVelocity;
     private float initTime;
     private float xLength;
-    private float intensity;
 
     public HamsterWheelStrategy(float radiusInner, float radiusOuter)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
         this.maxXLength = 40;
-        intensity = 1;
+        intensity = 1.0f;
     }
 
     override public Vector3 GetPosition(float timeDelta)
     {
-        float zy = angleZY - (timeDelta * angularVelocity);
+        float attenuatedAngularVelocity = angularVelocity * intensity;
+        float zy = angleZY - (timeDelta * attenuatedAngularVelocity);
 
         float newY = radius * Mathf.Sin(zy);
         float newZ = radius * Mathf.Cos(zy);
