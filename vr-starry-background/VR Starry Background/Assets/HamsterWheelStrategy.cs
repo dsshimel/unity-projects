@@ -14,6 +14,7 @@ public class HamsterWheelStrategy : MeteorMovementStrategy
     private float angularVelocity;
     private float initTime;
     private float xLength;
+    private float intensity;
 
     public HamsterWheelStrategy(float radiusInner, float radiusOuter)
     {
@@ -36,6 +37,11 @@ public class HamsterWheelStrategy : MeteorMovementStrategy
 
         initTime = Time.time;
         return ComputePosition(0);
+    }
+
+    public void SetIntensity(float intensity)
+    {
+        this.intensity = intensity;
     }
 
     // timeDelta is in seconds

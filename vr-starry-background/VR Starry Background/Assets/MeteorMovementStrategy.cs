@@ -9,4 +9,6 @@ public interface MeteorMovementStrategy {
 
     // Gets the current position of the meteor at time t.
     Vector3 GetPosition();
+
+    void SetIntensity(float intensity);
 }

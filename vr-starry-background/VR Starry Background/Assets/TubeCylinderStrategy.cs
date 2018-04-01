@@ -12,6 +12,7 @@ public class SphereTubeStrategy : MeteorMovementStrategy
     private float radius;
     private float angularVelocity;
     private float initTime;
+    private float intensity;
 
     public SphereTubeStrategy(float radiusInner, float radiusOuter)
     {
@@ -33,6 +34,11 @@ public class SphereTubeStrategy : MeteorMovementStrategy
 
         initTime = Time.time;
         return ComputePosition(0);
+    }
+
+    public void SetIntensity(float intensity)
+    {
+        this.intensity = intensity;
     }
 
     private Vector3 ComputePosition(float timeDelta)
