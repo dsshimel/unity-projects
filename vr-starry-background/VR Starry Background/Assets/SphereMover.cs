@@ -46,10 +46,7 @@ public class SphereMover : MonoBehaviour {
     }
 
     private void initializeSphere()
-    {
-        TrailRenderer trailRenderer = gameObject.GetComponent<TrailRenderer>();
-		trailRenderer.Clear();
-        
+    {    
         SetPosition(movementStrategy.InitPosition());
 
         // Might look better if this distribution was logarithmic instead of linear
@@ -79,9 +76,6 @@ public class SphereMover : MonoBehaviour {
             new GradientAlphaKey(0.0f, 1.0f) };
         grad.SetKeys(colorKeys, alphaKeys);
         col.color = grad;
-        
-		trailRenderer.endColor = materialColor;
-		trailRenderer.startColor = materialColor;
     }
 
     private void SetPosition(Vector3 position)
