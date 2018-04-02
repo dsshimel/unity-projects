@@ -31,7 +31,7 @@ namespace SpinSession
             intervals = new List<Interval>();
             for (int i = 0; i < 5; i++)
             {
-                intervals.Add(new Interval(2, 1));
+                intervals.Add(new Interval(10, 5));
             }
         }
 
