@@ -5,13 +5,25 @@ namespace SpinSession
 {
     public class Interval
     {
-        public float activeIntervalSeconds = 20.0f;
-        public float restIntervalSeconds = 10.0f;
+        public readonly float activeIntervalSeconds;
+        public readonly float restIntervalSeconds;
+
+        private bool isFinished = false;
 
         public Interval(float activeIntervalSeconds, float restIntervalSeconds)
         {
             this.activeIntervalSeconds = activeIntervalSeconds;
             this.restIntervalSeconds = restIntervalSeconds;
+        }
+
+        public void Finish()
+        {
+            isFinished = true;
+        }
+
+        public bool IsFinished()
+        {
+            return isFinished;
         }
     }
 }

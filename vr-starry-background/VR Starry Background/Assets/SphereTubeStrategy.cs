@@ -17,16 +17,16 @@ public class SphereTubeStrategy : AbstractMovementStrategy
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        intensity = 1.0f;
+        intensity = 0.0f;
     }
 
     override public Vector3 GetPosition(float timeDelta)
     {
         float attenuatedAngularVelocity = intensity * angularVelocity;
-        float azimuth = azimuthAnglePhi + (timeDelta * attenuatedAngularVelocity);
+        azimuthAnglePhi += timeDelta * attenuatedAngularVelocity;
 
-        float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuth);
-        float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuth);
+        float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
+        float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
         float newZ = radius * Mathf.Cos(polarAngleTheta);
         return new Vector3(newX, newY, newZ);
     }

@@ -13,7 +13,6 @@ public class SphereMover : MonoBehaviour {
     private bool isMoving;
     private float time;
 
-    // Use this for initialization
     void Start ()
     {
         isMoving = false;
@@ -25,19 +24,11 @@ public class SphereMover : MonoBehaviour {
         initializeSphere();
 	}
 
-    private float intensity = 0.0f;
-	// Update is called once per frame
 	void Update ()
     {
         if (isMoving)
         {
-            if (intensity < 1)
-            {
-                movementStrategy.SetIntensity(intensity);
-                intensity += 0.005f;
-            }
-            time += Time.deltaTime;
-            SetPosition(movementStrategy.GetPosition(time));
+            SetPosition(movementStrategy.GetPosition(Time.deltaTime));
         }
     }
 
@@ -49,6 +40,11 @@ public class SphereMover : MonoBehaviour {
     public void StopMoving()
     {
         isMoving = false;
+    }
+
+    public void SetIntensity(float intensity)
+    {
+        movementStrategy.SetIntensity(intensity);
     }
 
     private void initializeSphere()
