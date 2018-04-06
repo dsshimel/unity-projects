@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-namespace SpinSession
+﻿namespace SpinSession
 {
     public class Interval
     {
