@@ -11,12 +11,10 @@ public class SphereMover : MonoBehaviour {
     private MovementStrategy movementStrategy;
     private ParticleSystem trails;
     private bool isMoving;
-    private float time;
 
     void Start ()
     {
         isMoving = false;
-        time = 0;
         trails = GetComponentInChildren<ParticleSystem>();
 
         movementStrategy = new SphereTubeStrategy(radiusInner, radiusOuter);
