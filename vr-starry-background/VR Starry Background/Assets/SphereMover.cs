@@ -6,7 +6,7 @@ public class SphereMover : MonoBehaviour {
     // Max distance meteor can be from player.
     public float radiusOuter;
 
-    private MovementStrategy movementStrategy;
+    private IMovementStrategy movementStrategy;
     private ParticleSystem trails;
     private bool isMoving;
 
