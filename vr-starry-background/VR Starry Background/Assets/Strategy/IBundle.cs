@@ -5,4 +5,7 @@
  */
 public interface IBundle
 {
+    void ApplyStrategies();
+
+    float IncrementTime(float delta);
 }

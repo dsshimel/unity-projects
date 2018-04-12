@@ -52,13 +52,12 @@ public class SphereMover : MonoBehaviour {
         gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
 
         Renderer renderer = gameObject.GetComponent<Renderer>();
-        // Is there a better way than using the magic string "_Color"?
-		Color materialColor = new Color(
-			Random.Range(0, 1.0f),
-			Random.Range(0, 1.0f),
-			Random.Range(0, 1.0f),
-			Random.Range(0, 1.0f));
-        renderer.material.SetColor("_Color", materialColor);
+
+        Color materialColor = new Color(
+            Random.Range(0, 1.0f),
+            Random.Range(0, 1.0f),
+            Random.Range(0, 1.0f),
+            Random.Range(0, 1.0f));
 
         var shape = trails.shape;
         shape.radius = newScale * 2.0f;

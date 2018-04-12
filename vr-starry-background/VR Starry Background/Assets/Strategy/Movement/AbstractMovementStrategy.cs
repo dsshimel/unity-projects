@@ -5,7 +5,7 @@ public abstract class AbstractMovementStrategy : AbstractStrategy, IMovementStra
 {
     protected bool isMoving;
 
-    public AbstractMovementStrategy(IList<int> gameObjectIds, IManipulator manipulator) : base(gameObjectIds, manipulator)
+    public AbstractMovementStrategy(IManipulator manipulator) : base(manipulator)
     {
         
     }

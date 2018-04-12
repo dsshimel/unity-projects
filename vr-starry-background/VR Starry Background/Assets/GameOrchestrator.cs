@@ -8,22 +8,26 @@ public class GameOrchestrator : MonoBehaviour {
     public int numSpheres;
 
     private OldSession session;
-    private IDictionary<int, GameObject> spheres;
+    private IDictionary<int, GameObject> comets;
     private IManipulator manipulator;
+
+    private IBundle currentBundle;
 
 	void Start ()
     {
-        spheres = new Dictionary<int, GameObject>();
+        comets = new Dictionary<int, GameObject>();
 
         for (var i = 0; i < numSpheres; i++)
         {
-            GameObject sphere = Instantiate(spherePrefab);
-            spheres.Add(sphere.GetInstanceID(), sphere);
+            GameObject comet = Instantiate(spherePrefab);
+            comets.Add(comet.GetInstanceID(), comet);
         }
 
-        manipulator = new Manipulator(spheres);
+        manipulator = new Manipulator(comets);
 
         // Generate the playlist of strategies here?
+        currentBundle = new Bundle(new SphereTubeStrategy(30, 100), new RandomStaticColorStrategy(manipulator));
+        currentBundle.ApplyStrategies();
 
         session = gameObject.AddComponent<OldSession>();
         session.CountdownEnd += Session_CountdownEnd;
@@ -34,7 +38,7 @@ public class GameOrchestrator : MonoBehaviour {
 
     private void Session_CountdownEnd(object sender, System.EventArgs e)
     {
-        foreach (GameObject sphere in spheres.Values)
+        foreach (GameObject sphere in comets.Values)
         {
             sphere.GetComponent<SphereMover>().StartMoving();
         }
@@ -42,7 +46,7 @@ public class GameOrchestrator : MonoBehaviour {
 
     private void Session_ActivePeriodStart(object sender, System.EventArgs e)
     {
-        foreach (GameObject sphere in spheres.Values)
+        foreach (GameObject sphere in comets.Values)
         {
             sphere.GetComponent<SphereMover>().SetIntensity(1.0f);
         }
@@ -50,7 +54,7 @@ public class GameOrchestrator : MonoBehaviour {
 
     private void Session_RestPeriodStart(object sender, System.EventArgs e)
     {
-        foreach (GameObject sphere in spheres.Values)
+        foreach (GameObject sphere in comets.Values)
         {
             sphere.GetComponent<SphereMover>().SetIntensity(0.5f);
         }
@@ -58,6 +62,6 @@ public class GameOrchestrator : MonoBehaviour {
 
     void Update ()
     {
-
+        currentBundle.IncrementTime(Time.deltaTime);
 	}
 }

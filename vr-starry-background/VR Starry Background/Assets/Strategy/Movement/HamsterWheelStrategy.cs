@@ -13,7 +13,7 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
     private float angularVelocity;
     private float xLength;
 
-    public HamsterWheelStrategy(float radiusInner, float radiusOuter) : base(null, null)
+    public HamsterWheelStrategy(float radiusInner, float radiusOuter) : base(null)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
@@ -39,5 +39,10 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
         angularVelocity = Random.Range(1.0f, 2.0f);
 
         return GetPosition(0);
+    }
+
+    public override void ApplyStrategy()
+    {
+        
     }
 }
