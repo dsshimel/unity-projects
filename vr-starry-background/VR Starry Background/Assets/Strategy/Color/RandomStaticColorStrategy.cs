@@ -9,18 +9,17 @@ public class RandomStaticColorStrategy : AbstractStrategy, IColorStrategy
 
     public RandomStaticColorStrategy(IManipulator manipulator) : base(manipulator)
     {
-        this.colorMap = new Dictionary<int, Color>();
+        colorMap = new Dictionary<int, Color>();
         foreach (int gameObjectId in gameObjectIds)
         {
             Color color = new Color(
-                Random.Range(0, 1.0f),
                 Random.Range(0, 1.0f),
                 Random.Range(0, 1.0f),
                 Random.Range(0, 1.0f));
             colorMap.Add(gameObjectId, color);
         }
 
-        this.didApply = false;
+        didApply = false;
     }
 
     public override void ApplyStrategy()

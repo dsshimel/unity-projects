@@ -6,6 +6,8 @@ public class GameOrchestrator : MonoBehaviour {
 
     public GameObject spherePrefab;
     public int numSpheres;
+    public int radiusInner;
+    public int radiusOuter;
 
     private OldSession session;
     private IDictionary<int, GameObject> comets;
@@ -26,9 +28,10 @@ public class GameOrchestrator : MonoBehaviour {
         manipulator = new Manipulator(comets);
 
         // Generate the playlist of strategies here?
-        var movementStrat = new SphereTubeStrategy(manipulator, 30, 100);
+        var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
-        currentBundle = new Bundle(movementStrat, colorStrat);
+        var trailsStrat = new RandomGradientStrategy(manipulator);
+        currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat);
         currentBundle.ApplyStrategies();
 
         session = gameObject.AddComponent<OldSession>();

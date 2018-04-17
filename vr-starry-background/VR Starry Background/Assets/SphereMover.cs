@@ -18,7 +18,6 @@ public class SphereMover : MonoBehaviour {
 
         var manipulator = new Manipulator(new Dictionary<int, GameObject>());
         movementStrategy = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
-        // movementStrategy = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         initializeSphere();
 	}
 
@@ -53,37 +52,12 @@ public class SphereMover : MonoBehaviour {
         float newScale = Random.Range(0.01f, 2);
         gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
 
-        Renderer renderer = gameObject.GetComponent<Renderer>();
-
-        Color materialColor = new Color(
-            Random.Range(0, 1.0f),
-            Random.Range(0, 1.0f),
-            Random.Range(0, 1.0f),
-            Random.Range(0, 1.0f));
-
         var shape = trails.shape;
         shape.radius = newScale * 2.0f;
-
-        var col = trails.colorOverLifetime;
-        Gradient grad = new Gradient();
-        GradientColorKey[] colorKeys = new GradientColorKey[] {
-            new GradientColorKey(materialColor, 0.0f),
-            new GradientColorKey(InvertColor(materialColor), 0.5f) };
-        GradientAlphaKey[] alphaKeys = new GradientAlphaKey[] {
-            new GradientAlphaKey(1.0f, 0.0f),
-            new GradientAlphaKey(1.0f, 0.7f),
-            new GradientAlphaKey(0.0f, 1.0f) };
-        grad.SetKeys(colorKeys, alphaKeys);
-        col.color = grad;
     }
 
     private void SetPosition(Vector3 position)
     {
         gameObject.transform.position = position;
-    }
-
-    private Color InvertColor(Color color)
-    {
-        return new Color(1.0f - color.r, 1.0f - color.g, 1.0f - color.b);
     }
 }

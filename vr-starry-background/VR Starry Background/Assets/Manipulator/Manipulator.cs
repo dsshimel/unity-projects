@@ -24,4 +24,15 @@ public class Manipulator : IManipulator
             renderer.material.SetColor("_Color", color);
         }
     }
+
+    public void SetParticleColorOverLifetimeGradient(int objectId, Gradient gradient)
+    {
+        GameObject gameObject;
+        if (gameObjectMap.TryGetValue(objectId, out gameObject))
+        {
+            ParticleSystem trails = gameObject.GetComponentInChildren<ParticleSystem>();
+            var col = trails.colorOverLifetime;
+            col.color = gradient;
+        }
+    }
 }

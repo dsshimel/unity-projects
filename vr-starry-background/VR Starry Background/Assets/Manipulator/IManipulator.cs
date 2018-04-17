@@ -9,4 +9,6 @@ public interface IManipulator
     ICollection<int> GetGameObjectIds();
 
     void SetMaterialColor(int objectId, Color color);
+
+    void SetParticleColorOverLifetimeGradient(int objectId, Gradient gradient);
 }
