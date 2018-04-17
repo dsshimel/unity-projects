@@ -26,7 +26,7 @@ public class ColorMatchGradientStrategy : AbstractStrategy, ITrailsStrategy
             Gradient grad = new Gradient();
             GradientColorKey[] colorKeys = new GradientColorKey[] {
             new GradientColorKey(color, 0.0f),
-            new GradientColorKey(InvertColor(color), 0.5f) };
+            new GradientColorKey(ColorHelper.InvertColor(color), 0.5f) };
             GradientAlphaKey[] alphaKeys = new GradientAlphaKey[] {
             new GradientAlphaKey(1.0f, 0.0f),
             new GradientAlphaKey(1.0f, 0.7f),
@@ -37,10 +37,5 @@ public class ColorMatchGradientStrategy : AbstractStrategy, ITrailsStrategy
         }
 
         didApply = true;
-    }
-
-    private Color InvertColor(Color color)
-    {
-        return new Color(1.0f - color.r, 1.0f - color.g, 1.0f - color.b);
     }
 }
