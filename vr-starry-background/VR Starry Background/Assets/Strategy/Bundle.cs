@@ -1,28 +1,32 @@
 ﻿
+using System.Collections;
+using System.Collections.Generic;
+
 public class Bundle : IBundle
 {
-    private IMovementStrategy movementStrategy;
-    private IColorStrategy colorStrategy;
-    private ITrailsStrategy trailsStrategy;
+    private IList<IStrategy> strategies;
 
     public Bundle(IMovementStrategy movementStrat, IColorStrategy colorStrat, ITrailsStrategy trailsStrat)
     {
-        movementStrategy = movementStrat;
-        colorStrategy = colorStrat;
-        trailsStrategy = trailsStrat;
+        strategies = new List<IStrategy>();
+        strategies.Add(movementStrat);
+        strategies.Add(colorStrat);
+        strategies.Add(trailsStrat);
     }
 
     public void ApplyStrategies()
     {
-        movementStrategy.ApplyStrategy();
-        colorStrategy.ApplyStrategy();
-        trailsStrategy.ApplyStrategy();
+        foreach (IStrategy strat in strategies)
+        {
+            strat.ApplyStrategy();
+        }
     }
 
     public void IncrementTime(float delta)
     {
-        movementStrategy.IncrementTime(delta);
-        colorStrategy.IncrementTime(delta);
-        trailsStrategy.IncrementTime(delta);
+        foreach (IStrategy strat in strategies)
+        {
+            strat.IncrementTime(delta);
+        }
     }
 }
