@@ -12,8 +12,7 @@ public abstract class AbstractStrategy : IStrategy
     public AbstractStrategy(IManipulator manipulator)
     {
         this.manipulator = manipulator;
-        // TODO: Get rid of the null check.
-        this.gameObjectIds = manipulator == null ? new List<int>() : manipulator.GetGameObjectIds();
+        this.gameObjectIds = manipulator.GetGameObjectIds();
     }
 
     public void SetIntensity(float intensity)

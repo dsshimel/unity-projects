@@ -13,7 +13,7 @@ public class SphereTubeStrategy : AbstractMovementStrategy
     private float angularVelocity;
     private float initTime;
 
-    public SphereTubeStrategy(float radiusInner, float radiusOuter) : base(null)
+    public SphereTubeStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;

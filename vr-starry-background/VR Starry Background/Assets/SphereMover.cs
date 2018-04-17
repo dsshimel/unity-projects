@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SphereMover : MonoBehaviour {
     // Min distance meteor can be from player.
@@ -15,8 +16,9 @@ public class SphereMover : MonoBehaviour {
         isMoving = false;
         trails = GetComponentInChildren<ParticleSystem>();
 
-        movementStrategy = new SphereTubeStrategy(radiusInner, radiusOuter);
-        //movementStrategy = new HamsterWheelStrategy(radiusInner, radiusOuter);
+        var manipulator = new Manipulator(new Dictionary<int, GameObject>());
+        movementStrategy = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
+        // movementStrategy = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         initializeSphere();
 	}
 

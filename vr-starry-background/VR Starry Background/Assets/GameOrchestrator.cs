@@ -26,7 +26,9 @@ public class GameOrchestrator : MonoBehaviour {
         manipulator = new Manipulator(comets);
 
         // Generate the playlist of strategies here?
-        currentBundle = new Bundle(new SphereTubeStrategy(30, 100), new RandomStaticColorStrategy(manipulator));
+        var movementStrat = new SphereTubeStrategy(manipulator, 30, 100);
+        var colorStrat = new RandomStaticColorStrategy(manipulator);
+        currentBundle = new Bundle(movementStrat, colorStrat);
         currentBundle.ApplyStrategies();
 
         session = gameObject.AddComponent<OldSession>();

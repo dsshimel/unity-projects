@@ -13,7 +13,7 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
     private float angularVelocity;
     private float xLength;
 
-    public HamsterWheelStrategy(float radiusInner, float radiusOuter) : base(null)
+    public HamsterWheelStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
