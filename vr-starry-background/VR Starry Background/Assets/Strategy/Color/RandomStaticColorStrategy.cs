@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 public class RandomStaticColorStrategy : AbstractStrategy, IColorStrategy
@@ -31,8 +30,13 @@ public class RandomStaticColorStrategy : AbstractStrategy, IColorStrategy
 
         foreach (int gameObjectId in gameObjectIds)
         {
-            this.manipulator.SetMaterialColor(gameObjectId, colorMap[gameObjectId]);
+            manipulator.SetMaterialColor(gameObjectId, colorMap[gameObjectId]);
         }
         didApply = true;
+    }
+
+    public Color GetColor(int gameObjectId)
+    {
+        return colorMap[gameObjectId];
     }
 }
