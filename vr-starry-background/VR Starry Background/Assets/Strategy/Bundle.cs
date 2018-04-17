@@ -19,11 +19,10 @@ public class Bundle : IBundle
         trailsStrategy.ApplyStrategy();
     }
 
-    public float IncrementTime(float delta)
+    public void IncrementTime(float delta)
     {
         movementStrategy.IncrementTime(delta);
         colorStrategy.IncrementTime(delta);
-        float time = trailsStrategy.IncrementTime(delta);
-        return time;
+        trailsStrategy.IncrementTime(delta);
     }
 }
