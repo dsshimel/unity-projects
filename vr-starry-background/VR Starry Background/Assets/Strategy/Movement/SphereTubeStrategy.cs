@@ -20,13 +20,13 @@ public class SphereTubeStrategy : AbstractMovementStrategy
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
         initPositions = new Dictionary<int, AngleParams>();
-        foreach (int gameObjectId in this.gameObjectIds)
-        {
-            var radius = Random.Range(radiusInner, radiusOuter);
-            var polarAngleTheta = Random.Range(0, 2 * Mathf.PI);
-            var azimuthAnglePhi = Random.Range(0, 2 * Mathf.PI);
-            initPositions.Add(gameObjectId, new AngleParams(radius, polarAngleTheta, azimuthAnglePhi));
-        }
+        //foreach (int gameObjectId in this.gameObjectIds)
+        //{
+        //    var radius = Random.Range(radiusInner, radiusOuter);
+        //    var polarAngleTheta = Random.Range(0, 2 * Mathf.PI);
+        //    var azimuthAnglePhi = Random.Range(0, 2 * Mathf.PI);
+        //    initPositions.Add(gameObjectId, new AngleParams(radius, polarAngleTheta, azimuthAnglePhi));
+        //}
         intensity = 0.0f;
     }
 
