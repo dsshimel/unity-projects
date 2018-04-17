@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SphereTubeStrategy : AbstractMovementStrategy
 {
@@ -7,6 +8,7 @@ public class SphereTubeStrategy : AbstractMovementStrategy
     // Max distance meteor can be from player.
     public float radiusOuter;
 
+    private IDictionary<int, AngleParams> initPositions;
     private float polarAngleTheta;
     private float azimuthAnglePhi;
     private float radius;
@@ -17,6 +19,14 @@ public class SphereTubeStrategy : AbstractMovementStrategy
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
+        initPositions = new Dictionary<int, AngleParams>();
+        foreach (int gameObjectId in this.gameObjectIds)
+        {
+            var radius = Random.Range(radiusInner, radiusOuter);
+            var polarAngleTheta = Random.Range(0, 2 * Mathf.PI);
+            var azimuthAnglePhi = Random.Range(0, 2 * Mathf.PI);
+            initPositions.Add(gameObjectId, new AngleParams(radius, polarAngleTheta, azimuthAnglePhi));
+        }
         intensity = 0.0f;
     }
 
@@ -43,5 +53,19 @@ public class SphereTubeStrategy : AbstractMovementStrategy
 
     public override void ApplyStrategy()
     {
+    }
+
+    class AngleParams
+    {
+        public AngleParams(float radius, float polarAngleTheta, float azimuthAnglePhi)
+        {
+            Radius = radius;
+            PolarAngleTheta = polarAngleTheta;
+            AzimuthAnglePhi = azimuthAnglePhi;
+        }
+
+        public float Radius { get; set; }
+        public float PolarAngleTheta { get; set; }
+        public float AzimuthAnglePhi { get; set; }
     }
 }
