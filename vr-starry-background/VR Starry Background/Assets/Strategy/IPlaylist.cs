@@ -6,4 +6,6 @@
 public interface IPlaylist
 {
     void AddBundle(IBundle bundle);
+
+    void Reset();
 }

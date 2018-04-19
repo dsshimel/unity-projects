@@ -9,7 +9,8 @@ public class GameOrchestrator : MonoBehaviour {
     public int radiusInner;
     public int radiusOuter;
 
-    private OldSession session;
+    private OldSession oldSession;
+    private ISession session;
     private IDictionary<int, GameObject> comets;
     private IManipulator manipulator;
 
@@ -18,7 +19,6 @@ public class GameOrchestrator : MonoBehaviour {
 	void Start ()
     {
         comets = new Dictionary<int, GameObject>();
-
         for (var i = 0; i < numSpheres; i++)
         {
             GameObject comet = Instantiate(spherePrefab);
@@ -35,11 +35,16 @@ public class GameOrchestrator : MonoBehaviour {
         currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
         currentBundle.ApplyStrategies();
 
-        session = gameObject.AddComponent<OldSession>();
-        session.CountdownEnd += Session_CountdownEnd;
-        session.ActivePeriodStart += Session_ActivePeriodStart;
-        session.RestPeriodStart += Session_RestPeriodStart;
-        session.Begin();
+        IPlaylist playlist = new Playlist();
+        playlist.AddBundle(currentBundle);
+        session = new Session(playlist, /* countdowTime= */ 1.0f);
+
+        // TODO: Get rid of this code
+        oldSession = gameObject.AddComponent<OldSession>();
+        oldSession.CountdownEnd += Session_CountdownEnd;
+        oldSession.ActivePeriodStart += Session_ActivePeriodStart;
+        oldSession.RestPeriodStart += Session_RestPeriodStart;
+        oldSession.Begin();
     }
 
     private void Session_CountdownEnd(object sender, System.EventArgs e)
