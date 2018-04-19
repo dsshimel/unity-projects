@@ -30,8 +30,8 @@ public class GameOrchestrator : MonoBehaviour {
         // Generate the playlist of strategies here?
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
-        var trailsStrat = new ColorMatchGradientStrategy(manipulator, colorStrat);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
+        var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
         currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
         currentBundle.ApplyStrategies();
 

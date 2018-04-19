@@ -16,6 +16,11 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy, ISizeStrategy
         }
     }
 
+    public Vector3 GetSize(int gameObjectId)
+    {
+        return scaleMap[gameObjectId];
+    }
+
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
         manipulator.SetLocalScale(gameObjectId, scaleMap[gameObjectId]);

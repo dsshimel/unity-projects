@@ -45,6 +45,17 @@ public class Manipulator : IManipulator
         }
     }
 
+    public void SetParticleRadius(int objectId, float radius)
+    {
+        GameObject gameObject;
+        if (gameObjectMap.TryGetValue(objectId, out gameObject))
+        {
+            ParticleSystem trails = gameObject.GetComponentInChildren<ParticleSystem>();
+            var shape = trails.shape;
+            shape.radius = radius;
+        }
+    }
+
     public void SetPosition(int objectId, Vector3 position)
     {
         GameObject gameObject;

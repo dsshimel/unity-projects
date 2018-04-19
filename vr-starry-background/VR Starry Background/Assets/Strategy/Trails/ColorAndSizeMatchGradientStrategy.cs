@@ -1,17 +1,21 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class ColorMatchGradientStrategy : AbstractStaticStrategy, ITrailsStrategy
+public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy, ITrailsStrategy
 {
     IColorStrategy colorStrategy;
+    ISizeStrategy sizeStrategy;
 
-    public ColorMatchGradientStrategy(IManipulator manipulator, IColorStrategy colorStrat) : base(manipulator)
+    public ColorAndSizeMatchGradientStrategy(IManipulator manipulator, IColorStrategy colorStrat, ISizeStrategy sizeStrat) : base(manipulator)
     {
         colorStrategy = colorStrat;
+        sizeStrategy = sizeStrat;
     }
 
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
+        manipulator.SetParticleRadius(gameObjectId, sizeStrategy.GetSize(gameObjectId).magnitude);
+
         Color color = colorStrategy.GetColor(gameObjectId);
 
         Gradient grad = new Gradient();

@@ -9,13 +9,11 @@ public class SphereMover : MonoBehaviour {
 
     private IManipulator manipulator;
     private IMovementStrategy movementStrategy;
-    private ParticleSystem trails;
     private bool isMoving;
 
     void Start ()
     {
         isMoving = false;
-        trails = GetComponentInChildren<ParticleSystem>();
 
         var gameIds = new Dictionary<int, GameObject>();
         gameIds.Add(gameObject.GetInstanceID(), gameObject);
@@ -50,9 +48,5 @@ public class SphereMover : MonoBehaviour {
     private void InitializeSphere()
     {
         manipulator.SetPosition(gameObject.GetInstanceID(), movementStrategy.InitPosition());
-
-        // Should be the same radius as the scale in SizeStrategy
-        var shape = trails.shape;
-        shape.radius = Random.Range(0.01f, 2) * 2.0f;
     }
 }
