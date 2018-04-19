@@ -31,7 +31,8 @@ public class GameOrchestrator : MonoBehaviour {
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
         var trailsStrat = new ColorMatchGradientStrategy(manipulator, colorStrat);
-        currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat);
+        var sizeStrat = new RandomStaticSizeStrategy(manipulator);
+        currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
         currentBundle.ApplyStrategies();
 
         session = gameObject.AddComponent<OldSession>();

@@ -21,7 +21,7 @@ public class SphereMover : MonoBehaviour {
         gameIds.Add(gameObject.GetInstanceID(), gameObject);
         manipulator = new Manipulator(gameIds);
         movementStrategy = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
-        initializeSphere();
+        InitializeSphere();
 	}
 
 	void Update ()
@@ -47,15 +47,12 @@ public class SphereMover : MonoBehaviour {
         movementStrategy.SetIntensity(intensity);
     }
 
-    private void initializeSphere()
+    private void InitializeSphere()
     {
         manipulator.SetPosition(gameObject.GetInstanceID(), movementStrategy.InitPosition());
 
-        // Might look better if this distribution was logarithmic instead of linear
-        float newScale = Random.Range(0.01f, 2);
-        gameObject.transform.localScale = new Vector3(newScale, newScale, newScale);
-
+        // Should be the same radius as the scale in SizeStrategy
         var shape = trails.shape;
-        shape.radius = newScale * 2.0f;
+        shape.radius = Random.Range(0.01f, 2) * 2.0f;
     }
 }

@@ -15,6 +15,15 @@ public class Manipulator : IManipulator
         return gameObjectMap.Keys;
     }
 
+    public void SetLocalScale(int objectId, Vector3 scale)
+    {
+        GameObject gameObject;
+        if (gameObjectMap.TryGetValue(objectId, out gameObject))
+        {
+            gameObject.transform.localScale = scale;
+        }
+    }
+
     public void SetMaterialColor(int objectId, Color color)
     {
         GameObject gameObject;
