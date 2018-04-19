@@ -11,4 +11,6 @@ public interface IManipulator
     void SetMaterialColor(int objectId, Color color);
 
     void SetParticleColorOverLifetimeGradient(int objectId, Gradient gradient);
+
+    void SetPosition(int objectId, Vector3 position);
 }

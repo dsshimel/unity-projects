@@ -35,4 +35,13 @@ public class Manipulator : IManipulator
             col.color = gradient;
         }
     }
+
+    public void SetPosition(int objectId, Vector3 position)
+    {
+        GameObject gameObject;
+        if (gameObjectMap.TryGetValue(objectId, out gameObject))
+        {
+           gameObject.transform.position = position;
+        }
+    }
 }

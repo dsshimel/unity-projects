@@ -7,6 +7,7 @@ public class SphereMover : MonoBehaviour {
     // Max distance meteor can be from player.
     public float radiusOuter;
 
+    private IManipulator manipulator;
     private IMovementStrategy movementStrategy;
     private ParticleSystem trails;
     private bool isMoving;
@@ -16,7 +17,9 @@ public class SphereMover : MonoBehaviour {
         isMoving = false;
         trails = GetComponentInChildren<ParticleSystem>();
 
-        var manipulator = new Manipulator(new Dictionary<int, GameObject>());
+        var gameIds = new Dictionary<int, GameObject>();
+        gameIds.Add(gameObject.GetInstanceID(), gameObject);
+        manipulator = new Manipulator(gameIds);
         movementStrategy = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         initializeSphere();
 	}
@@ -25,7 +28,7 @@ public class SphereMover : MonoBehaviour {
     {
         if (isMoving)
         {
-            SetPosition(movementStrategy.GetPosition(Time.deltaTime));
+            manipulator.SetPosition(gameObject.GetInstanceID(), movementStrategy.GetPosition(Time.deltaTime));
         }
     }
 
@@ -45,8 +48,8 @@ public class SphereMover : MonoBehaviour {
     }
 
     private void initializeSphere()
-    {    
-        SetPosition(movementStrategy.InitPosition());
+    {
+        manipulator.SetPosition(gameObject.GetInstanceID(), movementStrategy.InitPosition());
 
         // Might look better if this distribution was logarithmic instead of linear
         float newScale = Random.Range(0.01f, 2);
@@ -54,10 +57,5 @@ public class SphereMover : MonoBehaviour {
 
         var shape = trails.shape;
         shape.radius = newScale * 2.0f;
-    }
-
-    private void SetPosition(Vector3 position)
-    {
-        gameObject.transform.position = position;
     }
 }
