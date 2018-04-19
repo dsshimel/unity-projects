@@ -2,10 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 
-public class RandomGradientStrategy : AbstractStrategy, ITrailsStrategy
+public class RandomGradientStrategy : AbstractStaticStrategy, ITrailsStrategy
 {
     private IDictionary<int, Gradient> gradientMap;
-    private bool didApply;
 
     public RandomGradientStrategy(IManipulator manipulator) : base(manipulator)
     {
@@ -28,22 +27,10 @@ public class RandomGradientStrategy : AbstractStrategy, ITrailsStrategy
             grad.SetKeys(colorKeys, alphaKeys);
             gradientMap.Add(gameObjectId, grad);
         }
-
-        didApply = false;
     }
 
-    public override void ApplyStrategy()
+    protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        if (didApply)
-        {
-            return;
-        }
-
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, gradientMap[gameObjectId]);
-        }
-
-        didApply = true;
+        manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, gradientMap[gameObjectId]);
     }
 }

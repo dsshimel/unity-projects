@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticColorStrategy : AbstractStrategy, IColorStrategy
+public class RandomStaticColorStrategy : AbstractStaticStrategy, IColorStrategy
 {
     private IDictionary<int, Color> colorMap;
-    private bool didApply;
 
     public RandomStaticColorStrategy(IManipulator manipulator) : base(manipulator)
     {
@@ -17,22 +16,11 @@ public class RandomStaticColorStrategy : AbstractStrategy, IColorStrategy
                 Random.Range(0, 1.0f));
             colorMap.Add(gameObjectId, color);
         }
-
-        didApply = false;
     }
 
-    public override void ApplyStrategy()
+    protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        if (didApply)
-        {
-            return;
-        }
-
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            manipulator.SetMaterialColor(gameObjectId, colorMap[gameObjectId]);
-        }
-        didApply = true;
+        manipulator.SetMaterialColor(gameObjectId, colorMap[gameObjectId]);
     }
 
     public Color GetColor(int gameObjectId)
