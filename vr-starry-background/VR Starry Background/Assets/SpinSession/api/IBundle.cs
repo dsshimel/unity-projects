@@ -7,5 +7,5 @@ public interface IBundle
 {
     void ApplyStrategies(float time);
 
-    void IncrementTime(float delta);
+    void SetIntensities(float intensity);
 }

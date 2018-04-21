@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class Bundle : IBundle
 {
@@ -22,11 +21,11 @@ public class Bundle : IBundle
         }
     }
 
-    public void IncrementTime(float delta)
+    public void SetIntensities(float intensity)
     {
         foreach (IStrategy strat in strategies)
         {
-            strat.IncrementTime(delta);
+            strat.SetIntensity(intensity);
         }
     }
 }

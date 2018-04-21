@@ -33,7 +33,6 @@ public class GameOrchestrator : MonoBehaviour {
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
         currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
-        currentBundle.ApplyStrategies(/* time= */ 0);
 
         IPlaylist playlist = new Playlist();
         Interval interval = new Interval(10, 5);
@@ -42,7 +41,9 @@ public class GameOrchestrator : MonoBehaviour {
         playlist.AddEntry(currentBundle, interval);
         playlist.AddEntry(currentBundle, interval);
         playlist.AddEntry(currentBundle, interval);
+
         session = new Session(playlist, /* countdowTime= */ 1.0f);
+        session.Start();
 
         // TODO: Get rid of this code
         oldSession = gameObject.AddComponent<OldSession>();
@@ -78,6 +79,6 @@ public class GameOrchestrator : MonoBehaviour {
 
     void Update ()
     {
-        currentBundle.IncrementTime(Time.deltaTime);
+        session.IncrementTime(Time.deltaTime);
 	}
 }

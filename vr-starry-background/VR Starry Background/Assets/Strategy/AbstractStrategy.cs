@@ -26,12 +26,5 @@ public abstract class AbstractStrategy : IStrategy
         this.intensity = intensity;
     }
 
-    public float IncrementTime(float delta)
-    {
-        time += delta;
-        ApplyStrategy(time);
-        return time;
-    }
-
     public abstract void ApplyStrategy(float time);
 }

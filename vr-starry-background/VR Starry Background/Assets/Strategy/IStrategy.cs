@@ -1,8 +1,8 @@
 ﻿public interface IStrategy
 {
+    // Set the intensity of the strategy.
     void SetIntensity(float intensity);
 
-    float IncrementTime(float delta);
-
+    // Apply the strategy at time t.
     void ApplyStrategy(float time);
 }
