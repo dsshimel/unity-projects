@@ -7,13 +7,11 @@ public abstract class AbstractStrategy : IStrategy
     protected ICollection<int> gameObjectIds;
     protected IManipulator manipulator;
     protected float intensity;
-    protected float time;
 
     public AbstractStrategy(IManipulator manipulator)
     {
         this.manipulator = manipulator;
         gameObjectIds = manipulator.GetGameObjectIds();
-        time = 0;
         intensity = 1.0f;
     }
 
@@ -26,5 +24,5 @@ public abstract class AbstractStrategy : IStrategy
         this.intensity = intensity;
     }
 
-    public abstract void ApplyStrategy(float time);
+    public abstract void ApplyStrategy(float timeNow, float timeBefore);
 }

@@ -7,7 +7,7 @@
         didApply = false;
     }
 
-    public override void ApplyStrategy(float time)
+    public override void ApplyStrategy(float timeNow, float timeBefore)
     {
         if (didApply)
         {

@@ -13,11 +13,11 @@ public class Bundle : IBundle
         strategies.Add(sizeStrat);
     }
 
-    public void ApplyStrategies(float time)
+    public void ApplyStrategies(float timeNow, float timeBefore)
     {
         foreach (IStrategy strat in strategies)
         {
-            strat.ApplyStrategy(time);
+            strat.ApplyStrategy(timeNow, timeBefore);
         }
     }
 

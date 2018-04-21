@@ -5,7 +5,7 @@
  */
 public interface IBundle
 {
-    void ApplyStrategies(float time);
+    void ApplyStrategies(float timeNow, float timeBefore);
 
     void SetIntensities(float intensity);
 }

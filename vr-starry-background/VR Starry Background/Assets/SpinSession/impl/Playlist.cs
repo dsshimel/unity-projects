@@ -31,7 +31,7 @@ public class Playlist : IPlaylist
         timeInEntry += delta;
         if (IsActive(timeInEntry))
         {
-            ApplyStrategies(timeInEntry);
+            ApplyStrategies(timeInEntry, timeInEntry - delta);
         } else if (IsResting(timeInEntry))
         {
             if (!activeFinished)
@@ -39,7 +39,7 @@ public class Playlist : IPlaylist
                 SetIntensities(0.5f);
                 activeFinished = true;   
             }
-            ApplyStrategies(timeInEntry);
+            ApplyStrategies(timeInEntry, timeInEntry - delta);
         } else
         {
             // We finished this interval, go to the next.
@@ -49,9 +49,9 @@ public class Playlist : IPlaylist
         return timeInEntry;
     }
 
-    public void ApplyStrategies(float time)
+    public void ApplyStrategies(float timeNow, float timeBefore)
     {
-        GetCurrentBundle().ApplyStrategies(time);
+        GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
     }
     
     public bool IsActive(float time)

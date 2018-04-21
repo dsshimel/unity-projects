@@ -1,6 +1,3 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-public interface ITrailsStrategy : IStrategy
+﻿public interface ITrailsStrategy : IStrategy
 {
 }

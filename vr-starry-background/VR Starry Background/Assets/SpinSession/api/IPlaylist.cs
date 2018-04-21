@@ -7,7 +7,7 @@ public interface IPlaylist
 {
     void AddEntry(IBundle bundle, Interval interval);
 
-    void ApplyStrategies(float time);
+    void ApplyStrategies(float timeNow, float timeBefore);
 
     bool IsActive(float time);
     bool IsResting(float time);

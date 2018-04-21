@@ -25,7 +25,7 @@ public class Session : ISession
 
         // Apply the strategies of the first bundle in the playlist at time 0 to initialize
         // everything.
-        playlist.ApplyStrategies(0);
+        playlist.ApplyStrategies(0, 0);
 
         isRunning = true;
     }
