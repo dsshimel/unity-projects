@@ -3,21 +3,23 @@
 public class Playlist : IPlaylist
 {
     private IList<IBundle> bundles;
-    private int currentBundleIndex;
+    private IList<Interval> intervals;
+    private int currentEntryIndex;
 
     public Playlist()
     {
         bundles = new List<IBundle>();
-        currentBundleIndex = 0;
+        currentEntryIndex = 0;
     }
 
-    public void AddBundle(IBundle bundle)
+    public void AddEntry(IBundle bundle, Interval interval)
     {
         bundles.Add(bundle);
+        intervals.Add(interval);
     }
 
     public void Reset()
     {
-        currentBundleIndex = 0;
+        currentEntryIndex = 0;
     }
 }

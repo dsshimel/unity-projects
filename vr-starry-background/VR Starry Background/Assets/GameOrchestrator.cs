@@ -36,7 +36,12 @@ public class GameOrchestrator : MonoBehaviour {
         currentBundle.ApplyStrategies();
 
         IPlaylist playlist = new Playlist();
-        playlist.AddBundle(currentBundle);
+        Interval interval = new Interval(10, 5);
+        playlist.AddEntry(currentBundle, interval);
+        playlist.AddEntry(currentBundle, interval);
+        playlist.AddEntry(currentBundle, interval);
+        playlist.AddEntry(currentBundle, interval);
+        playlist.AddEntry(currentBundle, interval);
         session = new Session(playlist, /* countdowTime= */ 1.0f);
 
         // TODO: Get rid of this code

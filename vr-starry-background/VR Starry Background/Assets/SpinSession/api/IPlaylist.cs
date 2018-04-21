@@ -5,7 +5,7 @@
  */
 public interface IPlaylist
 {
-    void AddBundle(IBundle bundle);
+    void AddEntry(IBundle bundle, Interval interval);
 
     void Reset();
 }
