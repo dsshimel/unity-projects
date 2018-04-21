@@ -1,5 +1,4 @@
-﻿using SpinSession;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GameOrchestrator : MonoBehaviour {
@@ -9,7 +8,6 @@ public class GameOrchestrator : MonoBehaviour {
     public int radiusInner;
     public int radiusOuter;
 
-    private OldSession oldSession;
     private ISession session;
     private IDictionary<int, GameObject> comets;
     private IManipulator manipulator;
@@ -44,37 +42,6 @@ public class GameOrchestrator : MonoBehaviour {
 
         session = new Session(playlist, /* countdowTime= */ 1.0f);
         session.Start();
-
-        // TODO: Get rid of this code
-        oldSession = gameObject.AddComponent<OldSession>();
-        oldSession.CountdownEnd += Session_CountdownEnd;
-        oldSession.ActivePeriodStart += Session_ActivePeriodStart;
-        oldSession.RestPeriodStart += Session_RestPeriodStart;
-        oldSession.Begin();
-    }
-
-    private void Session_CountdownEnd(object sender, System.EventArgs e)
-    {
-        foreach (GameObject sphere in comets.Values)
-        {
-            sphere.GetComponent<SphereMover>().StartMoving();
-        }
-    }
-
-    private void Session_ActivePeriodStart(object sender, System.EventArgs e)
-    {
-        foreach (GameObject sphere in comets.Values)
-        {
-            sphere.GetComponent<SphereMover>().SetIntensity(1.0f);
-        }
-    }
-
-    private void Session_RestPeriodStart(object sender, System.EventArgs e)
-    {
-        foreach (GameObject sphere in comets.Values)
-        {
-            sphere.GetComponent<SphereMover>().SetIntensity(0.5f);
-        }
     }
 
     void Update ()

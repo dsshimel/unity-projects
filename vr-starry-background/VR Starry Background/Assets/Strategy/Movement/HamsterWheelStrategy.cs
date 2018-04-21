@@ -17,8 +17,9 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        this.maxXLength = 40;
+        maxXLength = 40;
         intensity = 0.0f;
+        InitPosition();
     }
 
     override public Vector3 GetPosition(float timeDelta)
@@ -44,5 +45,6 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
     public override void ApplyStrategy(float timeNow, float timeBefore)
     {
         float delta = timeNow - timeBefore;
+        Vector3 position = GetPosition(delta);
     }
 }

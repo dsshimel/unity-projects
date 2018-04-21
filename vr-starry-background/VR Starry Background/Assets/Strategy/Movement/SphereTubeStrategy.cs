@@ -8,26 +8,36 @@ public class SphereTubeStrategy : AbstractMovementStrategy
     // Max distance meteor can be from player.
     public float radiusOuter;
 
-    private IDictionary<int, AngleParams> initPositions;
-    private float polarAngleTheta;
-    private float azimuthAnglePhi;
-    private float radius;
-    private float angularVelocity;
+    private IDictionary<int, AngleParams> angleParamsMap;
+    private AngleParams angleParams_;
     private float initTime;
 
     public SphereTubeStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        initPositions = new Dictionary<int, AngleParams>();
         intensity = 0.0f;
+
+        angleParamsMap = new Dictionary<int, AngleParams>();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            angleParamsMap.Add(gameObjectId, CreateAngleParams());
+        }
     }
 
     override public Vector3 GetPosition(float timeDelta)
     {
-        float attenuatedAngularVelocity = intensity * angularVelocity;
-        azimuthAnglePhi += timeDelta * attenuatedAngularVelocity;
+        return GetPosition(timeDelta, angleParams_);
+    }
 
+    private Vector3 GetPosition(float timeDelta, AngleParams angleParams)
+    {
+        float attenuatedAngularVelocity = intensity * angleParams.AngularVelocity;
+        angleParams.AzimuthAnglePhi += timeDelta * attenuatedAngularVelocity;
+
+        var radius = angleParams.Radius;
+        var polarAngleTheta = angleParams.PolarAngleTheta;
+        var azimuthAnglePhi = angleParams.AzimuthAnglePhi;
         float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
         float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
         float newZ = radius * Mathf.Cos(polarAngleTheta);
@@ -36,30 +46,43 @@ public class SphereTubeStrategy : AbstractMovementStrategy
 
     override public Vector3 InitPosition()
     {
-        radius = Random.Range(radiusInner, radiusOuter);
-        polarAngleTheta = Random.Range(0, 2 * Mathf.PI);
-        azimuthAnglePhi = Random.Range(0, 2 * Mathf.PI);
-        angularVelocity = Random.Range(1.0f, 2.0f);
-
+        angleParams_ = CreateAngleParams();
         return GetPosition(0);
     }
 
     public override void ApplyStrategy(float timeNow, float timeBefore)
     {
         float delta = timeNow - timeBefore;
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            Vector3 position = GetPosition(delta, angleParamsMap[gameObjectId]);
+            manipulator.SetPosition(gameObjectId, position);
+        }
+    }
+
+    private AngleParams CreateAngleParams()
+    {
+        return new AngleParams(
+            Random.Range(radiusInner, radiusOuter),
+            Random.Range(0, 2 * Mathf.PI),
+            Random.Range(0, 2 * Mathf.PI),
+            Random.Range(1.0f, 2.0f)); ;
     }
 
     class AngleParams
     {
-        public AngleParams(float radius, float polarAngleTheta, float azimuthAnglePhi)
+        public AngleParams(float radius, float polarAngleTheta, float azimuthAnglePhi,
+            float angularVelocity)
         {
             Radius = radius;
             PolarAngleTheta = polarAngleTheta;
             AzimuthAnglePhi = azimuthAnglePhi;
+            AngularVelocity = angularVelocity;
         }
 
         public float Radius { get; set; }
         public float PolarAngleTheta { get; set; }
         public float AzimuthAnglePhi { get; set; }
+        public float AngularVelocity { get; set; }
     }
 }
