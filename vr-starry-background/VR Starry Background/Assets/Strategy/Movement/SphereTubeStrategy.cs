@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SphereTubeStrategy : AbstractMovementStrategy
+public class SphereTubeStrategy : AbstractStrategy, IMovementStrategy
 {
     // Min distance meteor can be from player.
     public float radiusInner;
@@ -9,25 +9,17 @@ public class SphereTubeStrategy : AbstractMovementStrategy
     public float radiusOuter;
 
     private IDictionary<int, AngleParams> angleParamsMap;
-    private AngleParams angleParams_;
-    private float initTime;
 
     public SphereTubeStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        intensity = 0.0f;
 
         angleParamsMap = new Dictionary<int, AngleParams>();
         foreach (int gameObjectId in gameObjectIds)
         {
             angleParamsMap.Add(gameObjectId, CreateAngleParams());
         }
-    }
-
-    override public Vector3 GetPosition(float timeDelta)
-    {
-        return GetPosition(timeDelta, angleParams_);
     }
 
     private Vector3 GetPosition(float timeDelta, AngleParams angleParams)
@@ -41,13 +33,8 @@ public class SphereTubeStrategy : AbstractMovementStrategy
         float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
         float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
         float newZ = radius * Mathf.Cos(polarAngleTheta);
-        return new Vector3(newX, newY, newZ);
-    }
 
-    override public Vector3 InitPosition()
-    {
-        angleParams_ = CreateAngleParams();
-        return GetPosition(0);
+        return new Vector3(newX, newY, newZ);
     }
 
     public override void ApplyStrategy(float timeNow, float timeBefore)

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class HamsterWheelStrategy : AbstractMovementStrategy
+public class HamsterWheelStrategy : AbstractStrategy, IMovementStrategy
 {
     // Min distance meteor can be from player.
     public float radiusInner;
@@ -8,43 +9,65 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
     public float radiusOuter;
     public float maxXLength;
 
-    private float radius;
-    private float angleZY;
-    private float angularVelocity;
-    private float xLength;
+    private IDictionary<int, CylinderParams> cylinderParamsMap;
 
     public HamsterWheelStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        maxXLength = 40;
+        maxXLength = 100;
         intensity = 0.0f;
-        InitPosition();
-    }
 
-    override public Vector3 GetPosition(float timeDelta)
-    {
-        float attenuatedAngularVelocity = angularVelocity * intensity;
-        angleZY -= timeDelta * attenuatedAngularVelocity;
-
-        float newY = radius * Mathf.Sin(angleZY);
-        float newZ = radius * Mathf.Cos(angleZY);
-        return new Vector3(xLength, newY, newZ);
-    }
-
-    override public Vector3 InitPosition()
-    {
-        radius = Random.Range(radiusInner, radiusOuter);
-        angleZY = Random.Range(0, 2 * Mathf.PI);
-        xLength = Random.Range(-maxXLength, maxXLength);
-        angularVelocity = Random.Range(1.0f, 2.0f);
-
-        return GetPosition(0);
+        cylinderParamsMap = new Dictionary<int, CylinderParams>();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            cylinderParamsMap.Add(gameObjectId, CreateCylinderParams());
+        }
     }
 
     public override void ApplyStrategy(float timeNow, float timeBefore)
     {
         float delta = timeNow - timeBefore;
-        Vector3 position = GetPosition(delta);
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            Vector3 position = GetPosition(delta, cylinderParamsMap[gameObjectId]);
+            manipulator.SetPosition(gameObjectId, position);
+        }
+    }
+
+    private Vector3 GetPosition(float timeDelta, CylinderParams cylinderParams)
+    {
+        float attenuatedAngularVelocity = cylinderParams.AngularVelocity * intensity;
+        cylinderParams.AngleZY -= timeDelta * attenuatedAngularVelocity;
+
+        float newY = cylinderParams.Radius * Mathf.Sin(cylinderParams.AngleZY);
+        float newZ = cylinderParams.Radius * Mathf.Cos(cylinderParams.AngleZY);
+
+        return new Vector3(cylinderParams.XLength, newY, newZ);
+    }
+
+    private CylinderParams CreateCylinderParams()
+    {
+        return new CylinderParams(
+            Random.Range(radiusInner, radiusOuter),
+            Random.Range(0, 2 * Mathf.PI),
+            Random.Range(-maxXLength, maxXLength),
+            Random.Range(1.0f, 2.0f));
+    }
+
+    class CylinderParams
+    {
+        public CylinderParams(float radius, float angleZY, float xLength, float angularVelocity)
+        {
+            Radius = radius;
+            AngleZY = angleZY;
+            XLength = xLength;
+            AngularVelocity = angularVelocity;
+        }
+        
+        public float Radius { get; set; }
+        public float AngleZY { get; set; }
+        public float XLength { get; set; }
+        public float AngularVelocity { get; set; }
     }
 }

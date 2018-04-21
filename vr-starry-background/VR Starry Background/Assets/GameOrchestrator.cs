@@ -27,6 +27,7 @@ public class GameOrchestrator : MonoBehaviour {
 
         // Generate the playlist of strategies here?
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
+        //var movementStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
