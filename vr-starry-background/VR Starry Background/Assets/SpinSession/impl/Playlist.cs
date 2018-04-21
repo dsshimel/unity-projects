@@ -9,6 +9,7 @@ public class Playlist : IPlaylist
     public Playlist()
     {
         bundles = new List<IBundle>();
+        intervals = new List<Interval>();
         currentEntryIndex = 0;
     }
 
