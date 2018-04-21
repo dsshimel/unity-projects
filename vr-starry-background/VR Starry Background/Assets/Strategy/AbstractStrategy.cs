@@ -29,9 +29,9 @@ public abstract class AbstractStrategy : IStrategy
     public float IncrementTime(float delta)
     {
         time += delta;
-        ApplyStrategy();
+        ApplyStrategy(time);
         return time;
     }
 
-    public abstract void ApplyStrategy();
+    public abstract void ApplyStrategy(float time);
 }

@@ -1,9 +1,8 @@
-﻿
-public interface IStrategy
+﻿public interface IStrategy
 {
     void SetIntensity(float intensity);
 
     float IncrementTime(float delta);
 
-    void ApplyStrategy();
+    void ApplyStrategy(float time);
 }

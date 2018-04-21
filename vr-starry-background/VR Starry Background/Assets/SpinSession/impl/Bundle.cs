@@ -1,5 +1,4 @@
-﻿
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 public class Bundle : IBundle
@@ -15,11 +14,11 @@ public class Bundle : IBundle
         strategies.Add(sizeStrat);
     }
 
-    public void ApplyStrategies()
+    public void ApplyStrategies(float time)
     {
         foreach (IStrategy strat in strategies)
         {
-            strat.ApplyStrategy();
+            strat.ApplyStrategy(time);
         }
     }
 

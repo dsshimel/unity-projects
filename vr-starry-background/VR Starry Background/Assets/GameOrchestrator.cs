@@ -33,7 +33,7 @@ public class GameOrchestrator : MonoBehaviour {
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
         currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
-        currentBundle.ApplyStrategies();
+        currentBundle.ApplyStrategies(/* time= */ 0);
 
         IPlaylist playlist = new Playlist();
         Interval interval = new Interval(10, 5);

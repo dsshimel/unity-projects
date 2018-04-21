@@ -51,7 +51,7 @@ public class SphereTubeStrategy : AbstractMovementStrategy
         return GetPosition(0);
     }
 
-    public override void ApplyStrategy()
+    public override void ApplyStrategy(float time)
     {
     }
 

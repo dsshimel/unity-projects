@@ -10,5 +10,12 @@ public interface IPlaylist
     bool IsActive(float time);
     bool IsResting(float time);
 
+    void Next();
+    void Previous();
+    void Play();
+
+    float IncrementTime(float delta);
+    int Length();
+
     void Reset();
 }

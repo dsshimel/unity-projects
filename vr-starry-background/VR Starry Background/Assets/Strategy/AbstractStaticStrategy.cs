@@ -7,7 +7,7 @@
         didApply = false;
     }
 
-    public override void ApplyStrategy()
+    public override void ApplyStrategy(float time)
     {
         if (didApply)
         {

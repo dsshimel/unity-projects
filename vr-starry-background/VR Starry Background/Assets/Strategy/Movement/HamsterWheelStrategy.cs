@@ -41,7 +41,7 @@ public class HamsterWheelStrategy : AbstractMovementStrategy
         return GetPosition(0);
     }
 
-    public override void ApplyStrategy()
+    public override void ApplyStrategy(float time)
     {
         
     }
