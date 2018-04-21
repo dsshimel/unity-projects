@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Playlist : IPlaylist
 {
@@ -19,8 +20,28 @@ public class Playlist : IPlaylist
         intervals.Add(interval);
     }
 
+    public bool IsActive(float time)
+    {
+        return GetCurrentInterval().IsActive(time);
+    }
+
+    public bool IsResting(float time)
+    {
+        return GetCurrentInterval().IsResting(time);
+    }
+
     public void Reset()
     {
         currentEntryIndex = 0;
+    }
+
+    private IBundle GetCurrentBundle()
+    {
+        return bundles[currentEntryIndex];
+    }
+
+    private Interval GetCurrentInterval()
+    {
+        return intervals[currentEntryIndex];
     }
 }

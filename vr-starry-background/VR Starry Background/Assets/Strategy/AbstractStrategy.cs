@@ -12,11 +12,17 @@ public abstract class AbstractStrategy : IStrategy
     public AbstractStrategy(IManipulator manipulator)
     {
         this.manipulator = manipulator;
-        this.gameObjectIds = manipulator.GetGameObjectIds();
+        gameObjectIds = manipulator.GetGameObjectIds();
+        time = 0;
+        intensity = 1.0f;
     }
 
     public void SetIntensity(float intensity)
     {
+        if (intensity <= 0)
+        {
+            throw new System.ArgumentException("intensity must be positive");
+        }
         this.intensity = intensity;
     }
 

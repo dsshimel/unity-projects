@@ -7,5 +7,8 @@ public interface IPlaylist
 {
     void AddEntry(IBundle bundle, Interval interval);
 
+    bool IsActive(float time);
+    bool IsResting(float time);
+
     void Reset();
 }

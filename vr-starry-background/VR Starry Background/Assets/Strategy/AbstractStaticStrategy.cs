@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-
-public abstract class AbstractStaticStrategy : AbstractStrategy
+﻿public abstract class AbstractStaticStrategy : AbstractStrategy
 {
     protected bool didApply;
 

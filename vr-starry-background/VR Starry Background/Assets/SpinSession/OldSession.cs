@@ -63,7 +63,7 @@ namespace SpinSession
                 {
                     if (!activePeriodMilestone)
                     {
-                        if (timeSinceLastEvent > currentInterval.activeIntervalSeconds)
+                        if (timeSinceLastEvent > currentInterval.ActiveIntervalSeconds)
                         {
                             OnActivePeriodEnd(new EventArgs());
                             OnRestPeriodStart(new EventArgs());
@@ -72,7 +72,7 @@ namespace SpinSession
                         }
                     } else 
                     {
-                        if (timeSinceLastEvent > currentInterval.restIntervalSeconds)
+                        if (timeSinceLastEvent > currentInterval.RestIntervalSeconds)
                         {
                             OnRestPeriodEnd(new EventArgs());
                             activePeriodMilestone = false;
