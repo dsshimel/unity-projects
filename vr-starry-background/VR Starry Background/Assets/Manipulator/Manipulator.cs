@@ -40,6 +40,9 @@ public class Manipulator : IManipulator
         if (gameObjectMap.TryGetValue(objectId, out gameObject))
         {
             ParticleSystem trails = gameObject.GetComponentInChildren<ParticleSystem>();
+            //var noise = trails.noise;
+            //noise.enabled = true;
+            //noise.strength = 1;
             var col = trails.colorOverLifetime;
             col.color = gradient;
         }

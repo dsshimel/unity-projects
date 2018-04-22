@@ -12,8 +12,6 @@ public class GameOrchestrator : MonoBehaviour {
     private IDictionary<int, GameObject> comets;
     private IManipulator manipulator;
 
-    private IBundle currentBundle;
-
 	void Start ()
     {
         comets = new Dictionary<int, GameObject>();
@@ -27,19 +25,20 @@ public class GameOrchestrator : MonoBehaviour {
 
         // Generate the playlist of strategies here?
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
-        //var movementStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
+        var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
-        currentBundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
+        var bundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
+        var hamsterBundle = new Bundle(hamsterStrat, colorStrat, trailsStrat, sizeStrat);
 
         IPlaylist playlist = new Playlist();
         Interval interval = new Interval(10, 5);
-        playlist.AddEntry(currentBundle, interval);
-        playlist.AddEntry(currentBundle, interval);
-        playlist.AddEntry(currentBundle, interval);
-        playlist.AddEntry(currentBundle, interval);
-        playlist.AddEntry(currentBundle, interval);
+        playlist.AddEntry(bundle, interval);
+        playlist.AddEntry(hamsterBundle, interval);
+        playlist.AddEntry(bundle, interval);
+        playlist.AddEntry(hamsterBundle, interval);
+        playlist.AddEntry(bundle, interval);
 
         session = new Session(playlist, /* countdowTime= */ 1.0f);
         session.Start();
