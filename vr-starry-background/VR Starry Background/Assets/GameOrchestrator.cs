@@ -33,7 +33,7 @@ public class GameOrchestrator : MonoBehaviour {
         var hamsterBundle = new Bundle(hamsterStrat, colorStrat, trailsStrat, sizeStrat);
 
         IPlaylist playlist = new Playlist();
-        Interval interval = new Interval(10, 5);
+        Interval interval = new Interval(3, 1.5f);
         playlist.AddEntry(bundle, interval);
         playlist.AddEntry(hamsterBundle, interval);
         playlist.AddEntry(bundle, interval);

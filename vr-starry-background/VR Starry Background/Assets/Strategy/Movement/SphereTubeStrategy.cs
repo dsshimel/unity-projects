@@ -30,9 +30,15 @@ public class SphereTubeStrategy : AbstractStrategy, IMovementStrategy
         var radius = angleParams.Radius;
         var polarAngleTheta = angleParams.PolarAngleTheta;
         var azimuthAnglePhi = angleParams.AzimuthAnglePhi;
-        float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
-        float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
-        float newZ = radius * Mathf.Cos(polarAngleTheta);
+        //float newX = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
+        //float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
+        //float newZ = radius * Mathf.Cos(polarAngleTheta);
+        
+        // Setting the coordinates up like this makes the sphere rotate towards the
+        // user like the hamster wheel.
+        float newX = radius * Mathf.Cos(polarAngleTheta);
+        float newY = radius * Mathf.Sin(polarAngleTheta) * Mathf.Cos(azimuthAnglePhi);
+        float newZ = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
 
         return new Vector3(newX, newY, newZ);
     }
