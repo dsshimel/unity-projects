@@ -14,6 +14,7 @@ public interface IManipulator
     void SetParticleRadius(int objectId, float radius);
 
     void SetPosition(int objectId, Vector3 position);
+    void SetPositionXFade(int objectId, CrossfadeValues.Vector3XFade positionXFade);
 
     void SetLocalScale(int objectId, Vector3 scale);
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Manipulator : IManipulator
 {
@@ -66,5 +67,10 @@ public class Manipulator : IManipulator
         {
            gameObject.transform.position = position;
         }
+    }
+
+    public void SetPositionXFade(int objectId, CrossfadeValues.Vector3XFade positionXFade)
+    {
+        SetPosition(objectId, positionXFade.getXFadeValue());
     }
 }
