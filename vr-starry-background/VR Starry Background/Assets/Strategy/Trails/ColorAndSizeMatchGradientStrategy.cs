@@ -34,4 +34,9 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient
 
         return grad;
     }
+
+    public override Gradient CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Gradient> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
+    }
 }

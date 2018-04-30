@@ -71,6 +71,6 @@ public class Manipulator : IManipulator
 
     public void SetPositionXFade(int objectId, CrossfadeValues.Vector3XFade positionXFade)
     {
-        SetPosition(objectId, positionXFade.getXFadeValue());
+        SetPosition(objectId, positionXFade.GetXFadeValue());
     }
 }

@@ -54,7 +54,7 @@ public class Playlist : IPlaylist
         var fadeOutPercent = GetCurrentInterval().GetFadeOutPercent(timeNow);
         if (fadeOutPercent < 1)
         {
-
+            // TODO: implement cross fading
         }
         GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
     }

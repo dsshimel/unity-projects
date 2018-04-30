@@ -38,4 +38,9 @@ public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsS
     {
         return gradientMap[gameObjectId];
     }
+
+    public override Gradient CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Gradient> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
+    }
 }

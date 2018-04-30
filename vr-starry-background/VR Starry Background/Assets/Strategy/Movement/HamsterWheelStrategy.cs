@@ -56,6 +56,14 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         return new Vector3(cylinderParams.XLength, newY, newZ); ;
     }
 
+    public override Vector3 CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
+    {
+        var valueThis = ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var valueThat = thatStrategy.ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
+        return xfader.GetXFadeValue();
+    }
+
     class CylinderParams
     {
         public CylinderParams(float radius, float angleZY, float xLength, float angularVelocity)

@@ -25,4 +25,13 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeSt
     {
         return scaleMap[gameObjectId];
     }
+
+    public override Vector3 CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
+    {
+        // TODO: This is the same code for all Vector3 crossfading. Conslidated somehow.
+        var valueThis = ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var valueThat = thatStrategy.ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
+        return xfader.GetXFadeValue();
+    }
 }

@@ -8,4 +8,9 @@ public interface IBundle
     void ApplyStrategies(float timeNow, float timeBefore);
 
     void SetIntensities(float intensity);
+
+    IMovementStrategy GetMovementStrategy();
+    IColorStrategy GetColorStrategy();
+    ITrailsStrategy GetTrailsStrategy();
+    ISizeStrategy GetSizeStrategy();
 }

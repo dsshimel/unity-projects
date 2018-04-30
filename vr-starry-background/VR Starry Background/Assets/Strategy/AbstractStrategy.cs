@@ -27,4 +27,6 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
     public abstract void ApplyStrategy(float timeNow, float timeBefore);
 
     public abstract T ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore);
+
+    public abstract T CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<T> otherStrategy, float percentThis);
 }
