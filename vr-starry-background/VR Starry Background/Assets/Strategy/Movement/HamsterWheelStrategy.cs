@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class HamsterWheelStrategy : AbstractStrategy, IMovementStrategy
+public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
 {
     // Min distance meteor can be from player.
     public float radiusInner;
@@ -27,23 +27,10 @@ public class HamsterWheelStrategy : AbstractStrategy, IMovementStrategy
 
     public override void ApplyStrategy(float timeNow, float timeBefore)
     {
-        float delta = timeNow - timeBefore;
         foreach (int gameObjectId in gameObjectIds)
         {
-            Vector3 position = GetPosition(delta, cylinderParamsMap[gameObjectId]);
-            manipulator.SetPosition(gameObjectId, position);
+            manipulator.SetPosition(gameObjectId, ComputeStrategyValue(gameObjectId, timeNow, timeBefore));
         }
-    }
-
-    private Vector3 GetPosition(float timeDelta, CylinderParams cylinderParams)
-    {
-        float attenuatedAngularVelocity = cylinderParams.AngularVelocity * intensity;
-        cylinderParams.AngleZY -= timeDelta * attenuatedAngularVelocity;
-
-        float newY = cylinderParams.Radius * Mathf.Sin(cylinderParams.AngleZY);
-        float newZ = cylinderParams.Radius * Mathf.Cos(cylinderParams.AngleZY);
-
-        return new Vector3(cylinderParams.XLength, newY, newZ);
     }
 
     private CylinderParams CreateCylinderParams()
@@ -53,6 +40,20 @@ public class HamsterWheelStrategy : AbstractStrategy, IMovementStrategy
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(-maxXLength, maxXLength),
             Random.Range(1.0f, 2.0f));
+    }
+
+    public override Vector3 ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore)
+    {
+        float timeDelta = timeNow - timeBefore;
+        var cylinderParams = cylinderParamsMap[gameObjectId];
+
+        float attenuatedAngularVelocity = cylinderParams.AngularVelocity * intensity;
+        cylinderParams.AngleZY -= timeDelta * attenuatedAngularVelocity;
+
+        float newY = cylinderParams.Radius * Mathf.Sin(cylinderParams.AngleZY);
+        float newZ = cylinderParams.Radius * Mathf.Cos(cylinderParams.AngleZY);
+
+        return new Vector3(cylinderParams.XLength, newY, newZ); ;
     }
 
     class CylinderParams

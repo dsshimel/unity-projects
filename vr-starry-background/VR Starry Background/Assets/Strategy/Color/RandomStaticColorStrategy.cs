@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticColorStrategy : AbstractStaticStrategy, IColorStrategy
+public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorStrategy
 {
     private IDictionary<int, Color> colorMap;
 
@@ -20,10 +20,10 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy, IColorStrategy
 
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        manipulator.SetMaterialColor(gameObjectId, colorMap[gameObjectId]);
+        manipulator.SetMaterialColor(gameObjectId, ComputeStrategyValue(gameObjectId));
     }
 
-    public Color GetColor(int gameObjectId)
+    public override Color ComputeStrategyValue(int gameObjectId)
     {
         return colorMap[gameObjectId];
     }

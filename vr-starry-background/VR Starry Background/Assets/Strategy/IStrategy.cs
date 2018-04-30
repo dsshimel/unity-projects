@@ -1,8 +1,5 @@
-﻿public interface IStrategy
+﻿public interface IStrategy<T> : IStrategyUntyped
 {
-    // Set the intensity of the strategy.
-    void SetIntensity(float intensity);
-
-    // Apply the strategy at time t.
-    void ApplyStrategy(float timeNow, float timeBefore);
-}
+    // Get the value to be applied.
+    T ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore);
+}   

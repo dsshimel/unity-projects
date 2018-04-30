@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public abstract class AbstractStrategy : IStrategy
+public abstract class AbstractStrategy<T> : IStrategy<T>
 {
     // This list should be immutable but Unity doesn't support a 
     // high-enough version of .NET to use System.Collections.Immutable.
@@ -25,4 +25,6 @@ public abstract class AbstractStrategy : IStrategy
     }
 
     public abstract void ApplyStrategy(float timeNow, float timeBefore);
+
+    public abstract T ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore);
 }

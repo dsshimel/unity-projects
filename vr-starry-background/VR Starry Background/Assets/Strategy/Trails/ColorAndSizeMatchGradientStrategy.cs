@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy, ITrailsStrategy
+public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsStrategy
 {
     IColorStrategy colorStrategy;
     ISizeStrategy sizeStrategy;
@@ -13,9 +13,14 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy, ITrails
 
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        manipulator.SetParticleRadius(gameObjectId, sizeStrategy.GetSize(gameObjectId).magnitude);
+        manipulator.SetParticleRadius(gameObjectId, sizeStrategy.ComputeStrategyValue(gameObjectId, 0, 0).magnitude);
 
-        Color color = colorStrategy.GetColor(gameObjectId);
+        manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, ComputeStrategyValue(gameObjectId));
+    }
+
+    public override Gradient ComputeStrategyValue(int gameObjectId)
+    {
+        Color color = colorStrategy.ComputeStrategyValue(gameObjectId, 0, 0);
 
         Gradient grad = new Gradient();
         GradientColorKey[] colorKeys = new GradientColorKey[] {
@@ -27,6 +32,6 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy, ITrails
         new GradientAlphaKey(0.0f, 1.0f) };
         grad.SetKeys(colorKeys, alphaKeys);
 
-        manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, grad);
+        return grad;
     }
 }

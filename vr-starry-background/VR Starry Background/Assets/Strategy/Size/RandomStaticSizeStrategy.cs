@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticSizeStrategy : AbstractStaticStrategy, ISizeStrategy
+public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeStrategy
 {
     private IDictionary<int, Vector3> scaleMap;
 
@@ -16,13 +16,13 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy, ISizeStrategy
         }
     }
 
-    public Vector3 GetSize(int gameObjectId)
-    {
-        return scaleMap[gameObjectId];
-    }
-
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        manipulator.SetLocalScale(gameObjectId, scaleMap[gameObjectId]);
+        manipulator.SetLocalScale(gameObjectId, ComputeStrategyValue(gameObjectId));
+    }
+
+    public override Vector3 ComputeStrategyValue(int gameObjectId)
+    {
+        return scaleMap[gameObjectId];
     }
 }

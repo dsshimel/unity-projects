@@ -51,6 +51,11 @@ public class Playlist : IPlaylist
 
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
+        var fadeOutPercent = GetCurrentInterval().GetFadeOutPercent(timeNow);
+        if (fadeOutPercent < 1)
+        {
+
+        }
         GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
     }
     
@@ -66,12 +71,18 @@ public class Playlist : IPlaylist
 
     public void Next()
     {
-        currentEntryIndex += 1;
-        if (currentEntryIndex >= Length())
-        {
-            currentEntryIndex = 0;
-        }
+        currentEntryIndex = GetNextIndex();
         Play();
+    }
+
+    private int GetNextIndex()
+    {
+        var next = currentEntryIndex + 1;
+        if (next >= Length())
+        {
+            return 0;
+        }
+        return next;
     }
 
     public void Previous()
@@ -109,6 +120,11 @@ public class Playlist : IPlaylist
     private IBundle GetCurrentBundle()
     {
         return bundles[currentEntryIndex];
+    }
+
+    private IBundle GetNextBundle()
+    {
+        return bundles[GetNextIndex()];
     }
 
     private Interval GetCurrentInterval()

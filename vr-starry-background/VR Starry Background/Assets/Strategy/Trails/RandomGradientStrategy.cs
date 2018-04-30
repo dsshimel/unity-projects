@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomGradientStrategy : AbstractStaticStrategy, ITrailsStrategy
+public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsStrategy
 {
     private IDictionary<int, Gradient> gradientMap;
 
@@ -30,6 +30,12 @@ public class RandomGradientStrategy : AbstractStaticStrategy, ITrailsStrategy
 
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, gradientMap[gameObjectId]);
+        manipulator.SetParticleColorOverLifetimeGradient(
+            gameObjectId, ComputeStrategyValue(gameObjectId));
+    }
+
+    public override Gradient ComputeStrategyValue(int gameObjectId)
+    {
+        return gradientMap[gameObjectId];
     }
 }

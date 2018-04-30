@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Bundle : IBundle
 {
-    private IList<IStrategy> strategies;
+    private IList<IStrategyUntyped> strategies;
 
     public Bundle(IMovementStrategy movementStrat, IColorStrategy colorStrat, ITrailsStrategy trailsStrat, ISizeStrategy sizeStrat)
     {
-        strategies = new List<IStrategy>();
+        strategies = new List<IStrategyUntyped>();
         strategies.Add(movementStrat);
         strategies.Add(colorStrat);
         strategies.Add(trailsStrat);
@@ -15,7 +16,7 @@ public class Bundle : IBundle
 
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
-        foreach (IStrategy strat in strategies)
+        foreach (var strat in strategies)
         {
             strat.ApplyStrategy(timeNow, timeBefore);
         }
@@ -23,7 +24,7 @@ public class Bundle : IBundle
 
     public void SetIntensities(float intensity)
     {
-        foreach (IStrategy strat in strategies)
+        foreach (var strat in strategies)
         {
             strat.SetIntensity(intensity);
         }

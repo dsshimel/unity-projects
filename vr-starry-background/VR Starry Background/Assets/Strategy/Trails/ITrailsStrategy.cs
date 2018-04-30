@@ -1,3 +1,3 @@
-﻿public interface ITrailsStrategy : IStrategy
+﻿public interface ITrailsStrategy : IStrategyUntyped
 {
 }
