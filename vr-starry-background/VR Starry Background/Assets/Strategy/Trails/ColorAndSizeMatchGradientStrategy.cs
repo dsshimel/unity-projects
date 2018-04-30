@@ -39,4 +39,9 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Gradient> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
+    }
 }

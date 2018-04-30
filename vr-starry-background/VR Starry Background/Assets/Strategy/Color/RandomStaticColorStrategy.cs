@@ -32,4 +32,9 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorSt
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Color> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
+    }
 }

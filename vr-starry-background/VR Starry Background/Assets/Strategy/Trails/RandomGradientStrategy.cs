@@ -43,4 +43,9 @@ public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsS
     {
         throw new System.NotImplementedException();
     }
+
+    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Gradient> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
+    }
 }

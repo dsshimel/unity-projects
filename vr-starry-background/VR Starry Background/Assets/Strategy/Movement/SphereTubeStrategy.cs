@@ -72,6 +72,14 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         return xfader.GetXFadeValue();
     }
 
+    public override void ApplyStrategyWithCrossfade(float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
+    {
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            manipulator.SetPosition(gameObjectId, CrossFadeStrategyValues(gameObjectId, timeNow, timeBefore, thatStrategy, percentThis));
+        }
+    }
+
     class AngleParams
     {
         public AngleParams(float radius, float polarAngleTheta, float azimuthAnglePhi,
