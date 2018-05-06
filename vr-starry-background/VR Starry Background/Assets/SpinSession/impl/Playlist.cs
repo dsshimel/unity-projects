@@ -52,11 +52,18 @@ public class Playlist : IPlaylist
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
         var fadeOutPercent = GetCurrentInterval().GetFadeOutPercent(timeNow);
-        if (fadeOutPercent < 1)
-        {
-            // TODO: implement cross fading
-        }
         GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
+        // TODO: If we apply the crossfaded version of a strategy in one frame, we don't
+        // want to apply the non-crossfaded version as well.
+        // TODO: This code doesn't work. Investigate.
+        //if (fadeOutPercent < 1)
+        //{
+        //    GetCurrentBundle().GetMovementStrategy().ApplyStrategyWithCrossfade(
+        //        timeNow, timeBefore, GetNextBundle().GetMovementStrategy(), fadeOutPercent);
+        //} else
+        //{
+        //    GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
+        //}
     }
     
     public bool IsActive(float time)
