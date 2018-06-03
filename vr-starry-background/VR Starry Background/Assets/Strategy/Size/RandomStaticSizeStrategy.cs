@@ -26,11 +26,11 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeSt
         return scaleMap[gameObjectId];
     }
 
-    public override Vector3 CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
+    public override Vector3 CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
     {
         // TODO: This is the same code for all Vector3 crossfading. Conslidated somehow.
-        var valueThis = ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
-        var valueThat = thatStrategy.ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var valueThis = ComputeValue(gameObjectId, timeNow, timeBefore);
+        var valueThat = thatStrategy.ComputeValue(gameObjectId, timeNow, timeBefore);
         var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
         return xfader.GetXFadeValue();
     }
@@ -38,6 +38,6 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeSt
     protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Vector3> thatStrategy, float percentThis)
     {
         // TODO: Shouldn't need to pass in zeros for timeNow and timeBefore in a static strategy
-        manipulator.SetLocalScale(gameObjectId, CrossFadeStrategyValues(gameObjectId, 0, 0, thatStrategy, percentThis));
+        manipulator.SetLocalScale(gameObjectId, CrossFadeValues(gameObjectId, 0, 0, thatStrategy, percentThis));
     }
 }

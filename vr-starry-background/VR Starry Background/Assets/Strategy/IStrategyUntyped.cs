@@ -3,6 +3,5 @@
     // Set the intensity of the strategy.
     void SetIntensity(float intensity);
 
-    // Apply the strategy at time t.
-    void ApplyStrategy(float timeNow, float timeBefore);
+    void Apply(float timeNow, float timeBefore);
 }   

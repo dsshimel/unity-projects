@@ -22,11 +22,11 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         }
     }
 
-    public override void ApplyStrategy(float timeNow, float timeBefore)
+    public override void Apply(float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetPosition(gameObjectId, ComputeStrategyValue(gameObjectId, timeNow, timeBefore));
+            manipulator.SetPosition(gameObjectId, ComputeValue(gameObjectId, timeNow, timeBefore));
         }
     }
 
@@ -39,7 +39,7 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
             Random.Range(1.0f, 2.0f)); ;
     }
 
-    public override Vector3 ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore)
+    public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeBefore)
     {
         var timeDelta = timeNow - timeBefore;
         var angleParams = angleParamsMap[gameObjectId];
@@ -60,11 +60,11 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         return new Vector3(newX, newY, newZ);
     }
 
-    public override Vector3 CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
+    public override Vector3 CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
     {
         // TODO: Put this implementation in an AbstractMovementStrategy class?
-        var valueThis = ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
-        var valueThat = thatStrategy.ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var valueThis = ComputeValue(gameObjectId, timeNow, timeBefore);
+        var valueThat = thatStrategy.ComputeValue(gameObjectId, timeNow, timeBefore);
         var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
         return xfader.GetXFadeValue();
     }
@@ -73,7 +73,7 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetPosition(gameObjectId, CrossFadeStrategyValues(gameObjectId, timeNow, timeBefore, thatStrategy, percentThis));
+            manipulator.SetPosition(gameObjectId, CrossFadeValues(gameObjectId, timeNow, timeBefore, thatStrategy, percentThis));
         }
     }
 

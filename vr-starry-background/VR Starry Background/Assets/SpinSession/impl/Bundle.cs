@@ -27,7 +27,7 @@ public class Bundle : IBundle
     {
         foreach (var strat in strategies)
         {
-            strat.ApplyStrategy(timeNow, timeBefore);
+            strat.Apply(timeNow, timeBefore);
         }
     }
 

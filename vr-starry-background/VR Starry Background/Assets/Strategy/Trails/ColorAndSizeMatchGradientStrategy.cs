@@ -13,14 +13,14 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient
 
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        manipulator.SetParticleRadius(gameObjectId, sizeStrategy.ComputeStrategyValue(gameObjectId, 0, 0).magnitude);
+        manipulator.SetParticleRadius(gameObjectId, sizeStrategy.ComputeValue(gameObjectId, 0, 0).magnitude);
 
         manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, ComputeStrategyValue(gameObjectId));
     }
 
     public override Gradient ComputeStrategyValue(int gameObjectId)
     {
-        Color color = colorStrategy.ComputeStrategyValue(gameObjectId, 0, 0);
+        Color color = colorStrategy.ComputeValue(gameObjectId, 0, 0);
 
         Gradient grad = new Gradient();
         GradientColorKey[] colorKeys = new GradientColorKey[] {
@@ -35,7 +35,7 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient
         return grad;
     }
 
-    public override Gradient CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Gradient> thatStrategy, float percentThis)
+    public override Gradient CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Gradient> thatStrategy, float percentThis)
     {
         throw new System.NotImplementedException();
     }

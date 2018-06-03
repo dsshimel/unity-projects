@@ -7,7 +7,7 @@
         didApply = false;
     }
 
-    public override void ApplyStrategy(float timeNow, float timeBefore)
+    public override void Apply(float timeNow, float timeBefore)
     {
         if (didApply)
         {
@@ -21,7 +21,7 @@
         didApply = true;
     }
 
-    public override T ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore)
+    public override T ComputeValue(int gameObjectId, float timeNow, float timeBefore)
     {
         return ComputeStrategyValue(gameObjectId);
     }

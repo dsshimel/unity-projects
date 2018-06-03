@@ -28,7 +28,7 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorSt
         return colorMap[gameObjectId];
     }
 
-    public override Color CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Color> thatStrategy, float percentThis)
+    public override Color CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Color> thatStrategy, float percentThis)
     {
         throw new System.NotImplementedException();
     }
