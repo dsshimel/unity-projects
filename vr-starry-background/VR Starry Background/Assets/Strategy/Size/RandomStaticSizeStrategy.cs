@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticSizeStrategy : AbstractStaticStrategy, ISizeStrategy
+public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeStrategy
 {
     private IDictionary<int, Vector3> scaleMap;
 
@@ -16,13 +16,28 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy, ISizeStrategy
         }
     }
 
-    public Vector3 GetSize(int gameObjectId)
+    protected override void ApplyStrategyInternal(int gameObjectId)
+    {
+        manipulator.SetLocalScale(gameObjectId, ComputeStrategyValue(gameObjectId));
+    }
+
+    public override Vector3 ComputeStrategyValue(int gameObjectId)
     {
         return scaleMap[gameObjectId];
     }
 
-    protected override void ApplyStrategyInternal(int gameObjectId)
+    public override Vector3 CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
     {
-        manipulator.SetLocalScale(gameObjectId, scaleMap[gameObjectId]);
+        // TODO: This is the same code for all Vector3 crossfading. Conslidated somehow.
+        var valueThis = ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var valueThat = thatStrategy.ComputeStrategyValue(gameObjectId, timeNow, timeBefore);
+        var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
+        return xfader.GetXFadeValue();
+    }
+
+    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Vector3> thatStrategy, float percentThis)
+    {
+        // TODO: Shouldn't need to pass in zeros for timeNow and timeBefore in a static strategy
+        manipulator.SetLocalScale(gameObjectId, CrossFadeStrategyValues(gameObjectId, 0, 0, thatStrategy, percentThis));
     }
 }

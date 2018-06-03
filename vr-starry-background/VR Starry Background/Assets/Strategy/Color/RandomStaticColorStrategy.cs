@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticColorStrategy : AbstractStaticStrategy, IColorStrategy
+public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorStrategy
 {
     private IDictionary<int, Color> colorMap;
 
@@ -20,11 +20,21 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy, IColorStrategy
 
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
-        manipulator.SetMaterialColor(gameObjectId, colorMap[gameObjectId]);
+        manipulator.SetMaterialColor(gameObjectId, ComputeStrategyValue(gameObjectId));
     }
 
-    public Color GetColor(int gameObjectId)
+    public override Color ComputeStrategyValue(int gameObjectId)
     {
         return colorMap[gameObjectId];
+    }
+
+    public override Color CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Color> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Color> thatStrategy, float percentThis)
+    {
+        throw new System.NotImplementedException();
     }
 }

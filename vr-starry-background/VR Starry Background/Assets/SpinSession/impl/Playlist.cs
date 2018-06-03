@@ -51,7 +51,19 @@ public class Playlist : IPlaylist
 
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
+        var fadeOutPercent = GetCurrentInterval().GetFadeOutPercent(timeNow);
         GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
+        // TODO: If we apply the crossfaded version of a strategy in one frame, we don't
+        // want to apply the non-crossfaded version as well.
+        // TODO: This code doesn't work. Investigate.
+        //if (fadeOutPercent < 1)
+        //{
+        //    GetCurrentBundle().GetMovementStrategy().ApplyStrategyWithCrossfade(
+        //        timeNow, timeBefore, GetNextBundle().GetMovementStrategy(), fadeOutPercent);
+        //} else
+        //{
+        //    GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
+        //}
     }
     
     public bool IsActive(float time)
@@ -66,12 +78,18 @@ public class Playlist : IPlaylist
 
     public void Next()
     {
-        currentEntryIndex += 1;
-        if (currentEntryIndex >= Length())
-        {
-            currentEntryIndex = 0;
-        }
+        currentEntryIndex = GetNextIndex();
         Play();
+    }
+
+    private int GetNextIndex()
+    {
+        var next = currentEntryIndex + 1;
+        if (next >= Length())
+        {
+            return 0;
+        }
+        return next;
     }
 
     public void Previous()
@@ -109,6 +127,11 @@ public class Playlist : IPlaylist
     private IBundle GetCurrentBundle()
     {
         return bundles[currentEntryIndex];
+    }
+
+    private IBundle GetNextBundle()
+    {
+        return bundles[GetNextIndex()];
     }
 
     private Interval GetCurrentInterval()

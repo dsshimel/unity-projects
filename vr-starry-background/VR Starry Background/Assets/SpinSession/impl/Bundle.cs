@@ -1,29 +1,59 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Bundle : IBundle
 {
-    private IList<IStrategy> strategies;
+    private IList<IStrategyUntyped> strategies;
+    private IMovementStrategy movementStrategy;
+    private IColorStrategy colorStrategy;
+    private ITrailsStrategy trailsStrategy;
+    private ISizeStrategy sizeStrategy;
 
     public Bundle(IMovementStrategy movementStrat, IColorStrategy colorStrat, ITrailsStrategy trailsStrat, ISizeStrategy sizeStrat)
     {
-        strategies = new List<IStrategy>();
+        strategies = new List<IStrategyUntyped>();
         strategies.Add(movementStrat);
         strategies.Add(colorStrat);
         strategies.Add(trailsStrat);
         strategies.Add(sizeStrat);
+
+        movementStrategy = movementStrat;
+        colorStrategy = colorStrat;
+        trailsStrategy = trailsStrat;
+        sizeStrategy = sizeStrat;
     }
 
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
-        foreach (IStrategy strat in strategies)
+        foreach (var strat in strategies)
         {
             strat.ApplyStrategy(timeNow, timeBefore);
         }
     }
 
+    public IColorStrategy GetColorStrategy()
+    {
+        return colorStrategy;
+    }
+
+    public IMovementStrategy GetMovementStrategy()
+    {
+        return movementStrategy;
+    }
+
+    public ISizeStrategy GetSizeStrategy()
+    {
+        return sizeStrategy;
+    }
+
+    public ITrailsStrategy GetTrailsStrategy()
+    {
+        return trailsStrategy;
+    }
+
     public void SetIntensities(float intensity)
     {
-        foreach (IStrategy strat in strategies)
+        foreach (var strat in strategies)
         {
             strat.SetIntensity(intensity);
         }

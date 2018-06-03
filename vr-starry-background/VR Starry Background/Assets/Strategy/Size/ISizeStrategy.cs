@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public interface ISizeStrategy : IStrategy
+public interface ISizeStrategy : IStrategy<Vector3>
 {
-    Vector3 GetSize(int gameObjectId);
 }

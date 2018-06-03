@@ -1,8 +1,9 @@
-﻿public interface IStrategy
+﻿public interface IStrategy<T> : IStrategyUntyped
 {
-    // Set the intensity of the strategy.
-    void SetIntensity(float intensity);
+    // Get the value to be applied.
+    T ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore);
 
-    // Apply the strategy at time t.
-    void ApplyStrategy(float timeNow, float timeBefore);
-}
+    T CrossFadeStrategyValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<T> thatStrategy, float percentThis);
+
+    void ApplyStrategyWithCrossfade(float timeNow, float timeBefore, IStrategy<T> thatStrategy, float percentThis);
+}   

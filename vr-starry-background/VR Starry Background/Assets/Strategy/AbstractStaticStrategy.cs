@@ -1,4 +1,4 @@
-﻿public abstract class AbstractStaticStrategy : AbstractStrategy
+﻿public abstract class AbstractStaticStrategy<T> : AbstractStrategy<T>
 {
     protected bool didApply;
 
@@ -21,5 +21,22 @@
         didApply = true;
     }
 
+    public override T ComputeStrategyValue(int gameObjectId, float timeNow, float timeBefore)
+    {
+        return ComputeStrategyValue(gameObjectId);
+    }
+
+    public override void ApplyStrategyWithCrossfade(float timeNow, float timeBefore, IStrategy<T> thatStrategy, float percentThis)
+    {
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            ApplyStrategyWithCrossfadeInternal(gameObjectId, thatStrategy, percentThis);
+        }
+    }
+
+    public abstract T ComputeStrategyValue(int gameObjectId);
+
     protected abstract void ApplyStrategyInternal(int gameObjectId);
+
+    protected abstract void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<T> thatStrategy, float percentThis);
 }
