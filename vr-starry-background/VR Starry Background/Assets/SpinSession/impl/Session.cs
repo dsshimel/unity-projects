@@ -47,24 +47,28 @@ public class Session : ISession
 
     public float IncrementTime(float delta)
     {
-        if (isRunning)
+        if (!isRunning)
         {
-            time += delta;
-            if (!IsCountingDown())
-            {
-                if (countdownFinished)
-                {
-                    // Tell the playlist to do its thing
-                    playlist.IncrementTime(delta);
-                } else
-                {
-                    // We just finished counting down, so the playlist needs to start
-                    playlist.Play();
-                    playlist.IncrementTime(delta);
-                    countdownFinished = true;
-                }
-            }
+            return time;
         }
+
+        time += delta;
+        if (IsCountingDown())
+        {
+            // We're counting down, so the playlist isn't active yet.
+            return time;
+        }
+
+        // We're not counting down but the countdown is finished.
+        // Therefore the countdown just finished so we should play the
+        // playlist.
+        if (!countdownFinished)
+        {
+            playlist.Play();
+            countdownFinished = true;
+        }
+
+        playlist.IncrementTime(delta);
         return time;
     }
 }

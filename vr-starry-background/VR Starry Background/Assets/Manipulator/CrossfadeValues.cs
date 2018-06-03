@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEditor;
 
 public class CrossfadeValues
-{ 
+{
     public class Vector3XFade
     {
         private Vector3 valueOne;
@@ -33,3 +32,4 @@ public class CrossfadeValues
             return new Vector3(x, y, z);
         }
     }
+}
