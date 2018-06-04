@@ -2,23 +2,19 @@
 {
     public readonly float ActiveIntervalSeconds;
     public readonly float RestIntervalSeconds;
-    public readonly float FadeOutSeconds;
+    public readonly float FadeSeconds;
 
     private bool isFinished = false;
 
-    public Interval(float activeIntervalSeconds, float restIntervalSeconds, float fadeOutSeconds)
+    public Interval(float activeIntervalSeconds, float restIntervalSeconds, float fadeSeconds)
     {
-        if (activeIntervalSeconds < 0 || restIntervalSeconds < 0)
+        if (activeIntervalSeconds < 0 || restIntervalSeconds < 0 || fadeSeconds < 0)
         {
             throw new System.ArgumentException("intervals must be positive");
         }
-        if (fadeOutSeconds > activeIntervalSeconds + restIntervalSeconds)
-        {
-            throw new System.ArgumentException("can't xfade longer than the total interval");
-        }
         ActiveIntervalSeconds = activeIntervalSeconds;
         RestIntervalSeconds = restIntervalSeconds;
-        FadeOutSeconds = fadeOutSeconds;
+        FadeSeconds = fadeSeconds;
     }
 
     public bool IsActive(float time)
@@ -28,24 +24,37 @@
 
     public bool IsResting(float time)
     {
-        return ActiveIntervalSeconds <= time && time < ActiveIntervalSeconds + RestIntervalSeconds;
+        return ActiveIntervalSeconds <= time && time < FadeStartTime;
     }
 
-    public float GetFadeOutPercent(float time)
+    public bool IsFading(float time)
     {
-        if (!IsActive(time))
-        {
-            return 0;
-        }
+        return FadeStartTime <= time && time < FadeStartTime + FadeSeconds;
+    }
 
-        float fadeOutStartTime = ActiveIntervalSeconds + RestIntervalSeconds - FadeOutSeconds;
-        float timeIntoFadeOut = time - fadeOutStartTime;
-        if (timeIntoFadeOut < 0)
+    public float GetFadePercent(float time)
+    {
+        // Unless we're fading, return the max.
+        if (!IsFading(time))
         {
             return 1;
         }
 
-        return 1.0f - (timeIntoFadeOut / FadeOutSeconds);
+        float timeIntoFade = time - FadeStartTime;
+        if (timeIntoFade > FadeSeconds)
+        {
+            return 0;
+        }
+
+        return 1.0f - (timeIntoFade / FadeSeconds);
+    }
+
+    public float FadeStartTime
+    {
+        get
+        {
+            return ActiveIntervalSeconds + RestIntervalSeconds;
+        }
     }
 
     public void Finish()

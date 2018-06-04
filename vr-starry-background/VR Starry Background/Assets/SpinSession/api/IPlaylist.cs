@@ -9,15 +9,11 @@ public interface IPlaylist
 
     void ApplyStrategies(float timeNow, float timeBefore);
 
-    bool IsActive(float time);
-    bool IsResting(float time);
-
     void Next();
     void Previous();
     void Play();
 
     float IncrementTime(float delta);
-    int Length();
 
     void Reset();
 }

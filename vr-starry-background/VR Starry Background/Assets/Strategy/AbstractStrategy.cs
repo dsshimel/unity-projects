@@ -17,9 +17,9 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
 
     public void SetIntensity(float intensity)
     {
-        if (intensity <= 0)
+        if (intensity <= 0 || 1 < intensity)
         {
-            throw new System.ArgumentException("intensity must be positive");
+            throw new System.ArgumentException("intensity must be between 0 and 1");
         }
         this.intensity = intensity;
     }
