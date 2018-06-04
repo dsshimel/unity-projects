@@ -11,6 +11,14 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
+    public override CometProperty Property
+    {
+        get
+        {
+            return CometProperty.POSITION;
+        }
+    }
+
     public HamsterWheelStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;

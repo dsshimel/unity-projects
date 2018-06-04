@@ -5,6 +5,16 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient
     IColorStrategy colorStrategy;
     ISizeStrategy sizeStrategy;
 
+    public override CometProperty Property
+    {
+        get
+        {
+            // What to do here since this strategy manipulates two properties?
+            // Could extract another strategy for the particle radius.
+            return CometProperty.PARTICLE_COLOR_OVER_LIFETIME_GRADIENT;
+        }
+    }
+
     public ColorAndSizeMatchGradientStrategy(IManipulator manipulator, IColorStrategy colorStrat, ISizeStrategy sizeStrat) : base(manipulator)
     {
         colorStrategy = colorStrat;
@@ -14,7 +24,6 @@ public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient
     protected override void ApplyStrategyInternal(int gameObjectId)
     {
         manipulator.SetParticleRadius(gameObjectId, sizeStrategy.ComputeValue(gameObjectId, 0, 0).magnitude);
-
         manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, ComputeStrategyValue(gameObjectId));
     }
 

@@ -31,6 +31,14 @@ public class Bundle : IBundle
         }
     }
 
+    public void SetIntensities(float intensity)
+    {
+        foreach (var strat in strategies)
+        {
+            strat.SetIntensity(intensity);
+        }
+    }
+
     public IColorStrategy GetColorStrategy()
     {
         return colorStrategy;
@@ -49,13 +57,5 @@ public class Bundle : IBundle
     public ITrailsStrategy GetTrailsStrategy()
     {
         return trailsStrategy;
-    }
-
-    public void SetIntensities(float intensity)
-    {
-        foreach (var strat in strategies)
-        {
-            strat.SetIntensity(intensity);
-        }
     }
 }

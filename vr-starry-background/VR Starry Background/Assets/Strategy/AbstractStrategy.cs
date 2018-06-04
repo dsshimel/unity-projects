@@ -8,6 +8,8 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
     protected IManipulator manipulator;
     protected float intensity;
 
+    public abstract CometProperty Property { get; }
+
     public AbstractStrategy(IManipulator manipulator)
     {
         this.manipulator = manipulator;

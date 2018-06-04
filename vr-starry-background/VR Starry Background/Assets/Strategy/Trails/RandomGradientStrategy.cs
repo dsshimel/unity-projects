@@ -5,6 +5,14 @@ public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsS
 {
     private IDictionary<int, Gradient> gradientMap;
 
+    public override CometProperty Property
+    {
+        get
+        {
+            return CometProperty.PARTICLE_COLOR_OVER_LIFETIME_GRADIENT;
+        }
+    }
+
     public RandomGradientStrategy(IManipulator manipulator) : base(manipulator)
     {
         gradientMap = new Dictionary<int, Gradient>();

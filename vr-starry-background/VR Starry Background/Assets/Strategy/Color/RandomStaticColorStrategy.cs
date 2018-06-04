@@ -5,6 +5,14 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorSt
 {
     private IDictionary<int, Color> colorMap;
 
+    public override CometProperty Property
+    {
+        get
+        {
+            return CometProperty.MATERIAL_COLOR;
+        }
+    }
+
     public RandomStaticColorStrategy(IManipulator manipulator) : base(manipulator)
     {
         colorMap = new Dictionary<int, Color>();

@@ -10,6 +10,14 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
 
     private IDictionary<int, AngleParams> angleParamsMap;
 
+    public override CometProperty Property
+    {
+        get
+        {
+            return CometProperty.POSITION;
+        }
+    }
+
     public SphereTubeStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;

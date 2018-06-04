@@ -4,4 +4,9 @@
     void SetIntensity(float intensity);
 
     void Apply(float timeNow, float timeBefore);
+
+    CometProperty Property
+    {
+        get;
+    }
 }   

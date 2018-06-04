@@ -5,6 +5,14 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeSt
 {
     private IDictionary<int, Vector3> scaleMap;
 
+    public override CometProperty Property
+    {
+        get
+        {
+            return CometProperty.LOCAL_SCALE;
+        }
+    }
+
     public RandomStaticSizeStrategy(IManipulator manipulator) : base(manipulator)
     {
         scaleMap = new Dictionary<int, Vector3>();
