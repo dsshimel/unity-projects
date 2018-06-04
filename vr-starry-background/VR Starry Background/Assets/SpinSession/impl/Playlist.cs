@@ -6,7 +6,6 @@ public class Playlist : IPlaylist
     private IList<Interval> intervals;
     private int currentEntryIndex;
     private float timeInEntry;
-    private bool activeFinished;
     private State state;
 
     public Playlist(IList<IBundle> bundles, IList<Interval> intervals)
@@ -15,7 +14,6 @@ public class Playlist : IPlaylist
         this.intervals = intervals;
         currentEntryIndex = 0;
         timeInEntry = 0;
-        activeFinished = false;
         state = State.UNRECOGNIZED;
     }
 
@@ -24,7 +22,6 @@ public class Playlist : IPlaylist
     {
         state = State.ACTIVE;
         timeInEntry = 0;
-        activeFinished = false;
         SetIntensities(1.0f);
         IncrementTime(0);
     }
