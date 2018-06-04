@@ -18,11 +18,11 @@ public abstract class AbstractStrategyApplier<T> : IStrategyApplier<T>
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            ApplyInternal(strategy.Property, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
+            ApplyInternal(gameObjectId, strategy.Property, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
         }
     }
 
-    protected abstract void ApplyInternal(CometProperty property, T value);
+    protected abstract void ApplyInternal(int gameObjectId, CometProperty property, T value);
 
     void IStrategyApplier<T>.ApplyFade(IStrategy<T> strategyOut, IStrategy<T> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {

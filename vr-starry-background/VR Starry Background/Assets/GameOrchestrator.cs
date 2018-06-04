@@ -25,13 +25,14 @@ public class GameOrchestrator : MonoBehaviour {
 
         // Generate the playlist of strategies here?
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
+        var movementStratApplier = new MovementStrategyApplier(manipulator);
         var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
 
-        var bundle = new Bundle(movementStrat, colorStrat, trailsStrat, sizeStrat);
-        var hamsterBundle = new Bundle(hamsterStrat, colorStrat, trailsStrat, sizeStrat);
+        var bundle = new Bundle(movementStrat, movementStratApplier, colorStrat, trailsStrat, sizeStrat);
+        var hamsterBundle = new Bundle(hamsterStrat, movementStratApplier, colorStrat, trailsStrat, sizeStrat);
 
         IPlaylist playlist = new Playlist(new List<IBundle>(), new List<Interval>());
         Interval interval = new Interval(3, 1.5f, 1.0f);

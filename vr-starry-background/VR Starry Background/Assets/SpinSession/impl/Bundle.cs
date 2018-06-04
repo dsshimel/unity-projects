@@ -1,15 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Bundle : IBundle
 {
     private IList<IStrategyUntyped> strategies;
     private IMovementStrategy movementStrategy;
+    private IStrategyApplier<Vector3> movementStrategyApplier;
     private IColorStrategy colorStrategy;
     private ITrailsStrategy trailsStrategy;
     private ISizeStrategy sizeStrategy;
 
-    public Bundle(IMovementStrategy movementStrat, IColorStrategy colorStrat, ITrailsStrategy trailsStrat, ISizeStrategy sizeStrat)
+    public Bundle(
+        IMovementStrategy movementStrat,
+        IStrategyApplier<Vector3> movementStratApplier,
+        IColorStrategy colorStrat,
+        ITrailsStrategy trailsStrat,
+        ISizeStrategy sizeStrat)
     {
         strategies = new List<IStrategyUntyped>();
         strategies.Add(movementStrat);
@@ -18,6 +24,7 @@ public class Bundle : IBundle
         strategies.Add(sizeStrat);
 
         movementStrategy = movementStrat;
+        movementStrategyApplier = movementStratApplier;
         colorStrategy = colorStrat;
         trailsStrategy = trailsStrat;
         sizeStrategy = sizeStrat;
@@ -25,10 +32,11 @@ public class Bundle : IBundle
 
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
-        foreach (var strat in strategies)
-        {
-            strat.Apply(timeNow, timeBefore);
-        }
+        movementStrategyApplier.Apply(movementStrategy, timeNow, timeBefore);
+        //movementStrategy.Apply(timeNow, timeBefore);
+        colorStrategy.Apply(timeNow, timeBefore);
+        trailsStrategy.Apply(timeNow, timeBefore);
+        sizeStrategy.Apply(timeNow, timeBefore);
     }
 
     public void SetIntensities(float intensity)
