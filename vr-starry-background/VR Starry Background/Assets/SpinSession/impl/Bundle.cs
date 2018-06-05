@@ -5,14 +5,14 @@ public class Bundle : IBundle
 {
     private IList<IStrategyUntyped> strategies;
     private IMovementStrategy movementStrategy;
-    private IStrategyApplier<Vector3> movementStrategyApplier;
+    private IStrategyApplier<Vector3, IMovementStrategy> movementStrategyApplier;
     private IColorStrategy colorStrategy;
     private ITrailsStrategy trailsStrategy;
     private ISizeStrategy sizeStrategy;
 
     public Bundle(
         IMovementStrategy movementStrat,
-        IStrategyApplier<Vector3> movementStratApplier,
+        IStrategyApplier<Vector3, IMovementStrategy> movementStratApplier,
         IColorStrategy colorStrat,
         ITrailsStrategy trailsStrat,
         ISizeStrategy sizeStrat)

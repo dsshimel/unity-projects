@@ -1,16 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class MovementStrategyApplier : AbstractStrategyApplier<Vector3>
+// TODO: Figure out how to extend from an abstract class
+public class MovementStrategyApplier : IStrategyApplier<Vector3, IMovementStrategy>
 {
-    public MovementStrategyApplier(IManipulator manipulator) : base(manipulator)
+    // This list should be immutable but Unity doesn't support a 
+    // high-enough version of .NET to use System.Collections.Immutable.
+    protected ICollection<int> gameObjectIds;
+    protected IManipulator manipulator;
+
+    public MovementStrategyApplier(IManipulator manipulator)
     {
+        this.manipulator = manipulator;
+        gameObjectIds = manipulator.GetGameObjectIds();
     }
 
-    protected override void ApplyInternal(int gameObjectId, CometProperty property, Vector3 value)
+    void IStrategyApplier<Vector3, IMovementStrategy>.Apply(IMovementStrategy strategy, float timeNow, float timeBefore)
     {
-        if (property == CometProperty.POSITION)
+        foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetPosition(gameObjectId, value);
+            manipulator.SetPosition(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
         }
+    }
+
+    void IStrategyApplier<Vector3, IMovementStrategy>.ApplyFade(IMovementStrategy strategyOut, IMovementStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    {
+        throw new System.NotImplementedException();
     }
 }
