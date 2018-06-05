@@ -7,6 +7,7 @@ public class Bundle : IBundle
     private IMovementStrategy movementStrategy;
     private IStrategyApplier<Vector3, IMovementStrategy> movementStrategyApplier;
     private IColorStrategy colorStrategy;
+    private IStrategyApplier<Color, IColorStrategy> colorStrategyApplier;
     private ITrailsStrategy trailsStrategy;
     private ISizeStrategy sizeStrategy;
 
@@ -14,18 +15,22 @@ public class Bundle : IBundle
         IMovementStrategy movementStrat,
         IStrategyApplier<Vector3, IMovementStrategy> movementStratApplier,
         IColorStrategy colorStrat,
+        IStrategyApplier<Color, IColorStrategy> colorStratApplier,
         ITrailsStrategy trailsStrat,
         ISizeStrategy sizeStrat)
     {
-        strategies = new List<IStrategyUntyped>();
-        strategies.Add(movementStrat);
-        strategies.Add(colorStrat);
-        strategies.Add(trailsStrat);
-        strategies.Add(sizeStrat);
+        strategies = new List<IStrategyUntyped>
+        {
+            movementStrat,
+            colorStrat,
+            trailsStrat,
+            sizeStrat
+        };
 
         movementStrategy = movementStrat;
         movementStrategyApplier = movementStratApplier;
         colorStrategy = colorStrat;
+        colorStrategyApplier = colorStratApplier;
         trailsStrategy = trailsStrat;
         sizeStrategy = sizeStrat;
     }
@@ -34,7 +39,8 @@ public class Bundle : IBundle
     {
         movementStrategyApplier.Apply(movementStrategy, timeNow, timeBefore);
         //movementStrategy.Apply(timeNow, timeBefore);
-        colorStrategy.Apply(timeNow, timeBefore);
+        colorStrategyApplier.Apply(colorStrategy, timeNow, timeBefore);
+        //colorStrategy.Apply(timeNow, timeBefore);
         trailsStrategy.Apply(timeNow, timeBefore);
         sizeStrategy.Apply(timeNow, timeBefore);
     }
