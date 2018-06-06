@@ -33,10 +33,12 @@ public class GameOrchestrator : MonoBehaviour {
         var movementStratApplier = new MovementStrategyApplier(manipulator);
         var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
+        var hamsterColorStrat = new RandomStaticColorStrategy(manipulator);
         var colorStratApplier = new ColorStrategyApplier(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var sizeStratApplier = new SizeStrategyApplier(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat/*, sizeStrat*/);
+        var hamsterTrailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, hamsterColorStrat/*, sizeStrat*/);
         var trailsStratApplier = new TrailsStrategyApplier(manipulator);
 
         var bundle = 
@@ -44,16 +46,13 @@ public class GameOrchestrator : MonoBehaviour {
                 movementStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
         var hamsterBundle = 
             new Bundle(
-                hamsterStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
+                hamsterStrat, movementStratApplier, hamsterColorStrat, colorStratApplier, hamsterTrailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
 
         IPlaylist playlist = new Playlist(new List<IBundle>(), new List<Interval>());
-        Interval interval = new Interval(3, 1.5f, 1.0f);
+        Interval interval = new Interval(3, 1.5f, 5.0f);
         // TODO: This should be done by a PlaylistBuilder.
         playlist.AddEntry(bundle, interval);
         playlist.AddEntry(hamsterBundle, interval);
-        playlist.AddEntry(bundle, interval);
-        playlist.AddEntry(hamsterBundle, interval);
-        playlist.AddEntry(bundle, interval);
 
         session = new Session(playlist, /* countdowTime= */ 1.0f);
         session.Start();
