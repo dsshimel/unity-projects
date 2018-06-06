@@ -4,10 +4,8 @@ using UnityEngine;
 // TODO: Figure out how to extend from an abstract class
 public class MovementStrategyApplier : IStrategyApplier<Vector3, IMovementStrategy>
 {
-    // This list should be immutable but Unity doesn't support a 
-    // high-enough version of .NET to use System.Collections.Immutable.
-    protected ICollection<int> gameObjectIds;
-    protected IManipulator manipulator;
+    private ICollection<int> gameObjectIds;
+    private IManipulator manipulator;
 
     public MovementStrategyApplier(IManipulator manipulator)
     {
