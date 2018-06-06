@@ -9,6 +9,7 @@ public class Bundle : IBundle
     private IColorStrategy colorStrategy;
     private IStrategyApplier<Color, IColorStrategy> colorStrategyApplier;
     private ITrailsStrategy trailsStrategy;
+    private IStrategyApplier<Gradient, ITrailsStrategy> trailsStrategyApplier;
     private ISizeStrategy sizeStrategy;
 
     public Bundle(
@@ -17,6 +18,7 @@ public class Bundle : IBundle
         IColorStrategy colorStrat,
         IStrategyApplier<Color, IColorStrategy> colorStratApplier,
         ITrailsStrategy trailsStrat,
+        IStrategyApplier<Gradient, ITrailsStrategy> trailsStratApplier,
         ISizeStrategy sizeStrat)
     {
         strategies = new List<IStrategyUntyped>
@@ -32,6 +34,7 @@ public class Bundle : IBundle
         colorStrategy = colorStrat;
         colorStrategyApplier = colorStratApplier;
         trailsStrategy = trailsStrat;
+        trailsStrategyApplier = trailsStratApplier;
         sizeStrategy = sizeStrat;
     }
 
@@ -41,7 +44,8 @@ public class Bundle : IBundle
         //movementStrategy.Apply(timeNow, timeBefore);
         colorStrategyApplier.Apply(colorStrategy, timeNow, timeBefore);
         //colorStrategy.Apply(timeNow, timeBefore);
-        trailsStrategy.Apply(timeNow, timeBefore);
+        trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeBefore);
+        //trailsStrategy.Apply(timeNow, timeBefore);
         sizeStrategy.Apply(timeNow, timeBefore);
     }
 

@@ -31,9 +31,10 @@ public class GameOrchestrator : MonoBehaviour {
         var colorStrat = new RandomStaticColorStrategy(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
+        var trailsStratApplier = new TrailsStrategyApplier(manipulator);
 
-        var bundle = new Bundle(movementStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, sizeStrat);
-        var hamsterBundle = new Bundle(hamsterStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, sizeStrat);
+        var bundle = new Bundle(movementStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat);
+        var hamsterBundle = new Bundle(hamsterStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat);
 
         IPlaylist playlist = new Playlist(new List<IBundle>(), new List<Interval>());
         Interval interval = new Interval(3, 1.5f, 1.0f);
