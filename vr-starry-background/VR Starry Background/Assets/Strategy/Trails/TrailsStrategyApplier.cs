@@ -22,6 +22,8 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
         foreach (int gameObjectId in gameObjectIds)
         {
             manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
+            // TODO: I'm no longer setting the size of the particles relative to the size of the comets, e.g.
+            // manipulator.SetParticleRadius(gameObjectId, sizeStrategy.ComputeValue(gameObjectId, 0, 0).magnitude);
         }
     }
 

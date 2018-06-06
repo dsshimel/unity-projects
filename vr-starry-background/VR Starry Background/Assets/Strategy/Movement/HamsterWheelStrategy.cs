@@ -11,14 +11,6 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
-    public override CometProperty Property
-    {
-        get
-        {
-            return CometProperty.POSITION;
-        }
-    }
-
     public HamsterWheelStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
@@ -30,14 +22,6 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         foreach (int gameObjectId in gameObjectIds)
         {
             cylinderParamsMap.Add(gameObjectId, CreateCylinderParams());
-        }
-    }
-
-    public override void Apply(float timeNow, float timeBefore)
-    {
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            manipulator.SetPosition(gameObjectId, ComputeValue(gameObjectId, timeNow, timeBefore));
         }
     }
 
@@ -62,22 +46,6 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         float newZ = cylinderParams.Radius * Mathf.Cos(cylinderParams.AngleZY);
 
         return new Vector3(cylinderParams.XLength, newY, newZ); ;
-    }
-
-    public override Vector3 CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
-    {
-        var valueThis = ComputeValue(gameObjectId, timeNow, timeBefore);
-        var valueThat = thatStrategy.ComputeValue(gameObjectId, timeNow, timeBefore);
-        var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
-        return xfader.GetXFadeValue();
-    }
-
-    public override void ApplyStrategyWithCrossfade(float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
-    {
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            manipulator.SetPosition(gameObjectId, CrossFadeValues(gameObjectId, timeNow, timeBefore, thatStrategy, percentThis));
-        }
     }
 
     class CylinderParams

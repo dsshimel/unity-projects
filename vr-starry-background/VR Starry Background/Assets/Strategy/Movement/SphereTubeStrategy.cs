@@ -10,14 +10,6 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
 
     private IDictionary<int, AngleParams> angleParamsMap;
 
-    public override CometProperty Property
-    {
-        get
-        {
-            return CometProperty.POSITION;
-        }
-    }
-
     public SphereTubeStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
     {
         this.radiusInner = radiusInner;
@@ -27,14 +19,6 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         foreach (int gameObjectId in gameObjectIds)
         {
             angleParamsMap.Add(gameObjectId, CreateAngleParams());
-        }
-    }
-
-    public override void Apply(float timeNow, float timeBefore)
-    {
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            manipulator.SetPosition(gameObjectId, ComputeValue(gameObjectId, timeNow, timeBefore));
         }
     }
 
@@ -66,23 +50,6 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         float newZ = radius * Mathf.Sin(polarAngleTheta) * Mathf.Sin(azimuthAnglePhi);
 
         return new Vector3(newX, newY, newZ);
-    }
-
-    public override Vector3 CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
-    {
-        // TODO: Put this implementation in an AbstractMovementStrategy class?
-        var valueThis = ComputeValue(gameObjectId, timeNow, timeBefore);
-        var valueThat = thatStrategy.ComputeValue(gameObjectId, timeNow, timeBefore);
-        var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
-        return xfader.GetXFadeValue();
-    }
-
-    public override void ApplyStrategyWithCrossfade(float timeNow, float timeBefore, IStrategy<Vector3> thatStrategy, float percentThis)
-    {
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            manipulator.SetPosition(gameObjectId, CrossFadeValues(gameObjectId, timeNow, timeBefore, thatStrategy, percentThis));
-        }
     }
 
     class AngleParams

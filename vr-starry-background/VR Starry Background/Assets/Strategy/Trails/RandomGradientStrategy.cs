@@ -5,14 +5,6 @@ public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsS
 {
     private IDictionary<int, Gradient> gradientMap;
 
-    public override CometProperty Property
-    {
-        get
-        {
-            return CometProperty.PARTICLE_COLOR_OVER_LIFETIME_GRADIENT;
-        }
-    }
-
     public RandomGradientStrategy(IManipulator manipulator) : base(manipulator)
     {
         gradientMap = new Dictionary<int, Gradient>();
@@ -36,24 +28,8 @@ public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsS
         }
     }
 
-    protected override void ApplyStrategyInternal(int gameObjectId)
-    {
-        manipulator.SetParticleColorOverLifetimeGradient(
-            gameObjectId, ComputeStrategyValue(gameObjectId));
-    }
-
     public override Gradient ComputeStrategyValue(int gameObjectId)
     {
         return gradientMap[gameObjectId];
-    }
-
-    public override Gradient CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Gradient> thatStrategy, float percentThis)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Gradient> thatStrategy, float percentThis)
-    {
-        throw new System.NotImplementedException();
     }
 }

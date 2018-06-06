@@ -5,14 +5,6 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorSt
 {
     private IDictionary<int, Color> colorMap;
 
-    public override CometProperty Property
-    {
-        get
-        {
-            return CometProperty.MATERIAL_COLOR;
-        }
-    }
-
     public RandomStaticColorStrategy(IManipulator manipulator) : base(manipulator)
     {
         colorMap = new Dictionary<int, Color>();
@@ -26,23 +18,8 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorSt
         }
     }
 
-    protected override void ApplyStrategyInternal(int gameObjectId)
-    {
-        manipulator.SetMaterialColor(gameObjectId, ComputeStrategyValue(gameObjectId));
-    }
-
     public override Color ComputeStrategyValue(int gameObjectId)
     {
         return colorMap[gameObjectId];
-    }
-
-    public override Color CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<Color> thatStrategy, float percentThis)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    protected override void ApplyStrategyWithCrossfadeInternal(int gameObjectId, IStrategy<Color> thatStrategy, float percentThis)
-    {
-        throw new System.NotImplementedException();
     }
 }

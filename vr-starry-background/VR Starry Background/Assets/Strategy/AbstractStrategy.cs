@@ -8,8 +8,6 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
     protected IManipulator manipulator;
     protected float intensity;
 
-    public abstract CometProperty Property { get; }
-
     public AbstractStrategy(IManipulator manipulator)
     {
         this.manipulator = manipulator;
@@ -26,11 +24,5 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
         this.intensity = intensity;
     }
 
-    public abstract void Apply(float timeNow, float timeBefore);
-
     public abstract T ComputeValue(int gameObjectId, float timeNow, float timeBefore);
-
-    public abstract T CrossFadeValues(int gameObjectId, float timeNow, float timeBefore, IStrategy<T> otherStrategy, float percentThis);
-
-    public abstract void ApplyStrategyWithCrossfade(float timeNow, float timeBefore, IStrategy<T> thatStrategy, float percentThis);
 }
