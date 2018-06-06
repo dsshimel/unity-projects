@@ -45,7 +45,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
         float newY = cylinderParams.Radius * Mathf.Sin(cylinderParams.AngleZY);
         float newZ = cylinderParams.Radius * Mathf.Cos(cylinderParams.AngleZY);
 
-        return new Vector3(cylinderParams.XLength, newY, newZ); ;
+        return new Vector3(cylinderParams.XLength, newY, newZ);
     }
 
     class CylinderParams
