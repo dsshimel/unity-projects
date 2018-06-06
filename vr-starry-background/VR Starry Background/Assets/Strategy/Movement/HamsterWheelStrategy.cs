@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class HamsterWheelStrategy : AbstractStrategy<Vector3>, IMovementStrategy
+public class HamsterWheelStrategy : AbstractStrategy<Vector3>
 {
     // Min distance meteor can be from player.
     public float radiusInner;

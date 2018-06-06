@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SphereTubeStrategy : AbstractStrategy<Vector3>, IMovementStrategy
+public class SphereTubeStrategy : AbstractStrategy<Vector3>
 {
     // Min distance meteor can be from player.
     public float radiusInner;
