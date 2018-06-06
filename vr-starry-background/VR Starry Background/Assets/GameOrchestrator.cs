@@ -26,7 +26,8 @@ public class GameOrchestrator : MonoBehaviour {
         // TODO: Generate the playlist of strategies here?
         // TODO: Looks like I should be passing the strategy to the applier. But then
         // how will I cross fade between two strategies? Could pass in the next
-        // strategy as well.
+        // strategy as well, though that might couple it too closely to the ordering
+        // in the playlist.
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var movementStratApplier = new MovementStrategyApplier(manipulator);
         var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
@@ -46,7 +47,7 @@ public class GameOrchestrator : MonoBehaviour {
 
         IPlaylist playlist = new Playlist(new List<IBundle>(), new List<Interval>());
         Interval interval = new Interval(3, 1.5f, 1.0f);
-        // This should be done by a PlaylistBuilder.
+        // TODO: This should be done by a PlaylistBuilder.
         playlist.AddEntry(bundle, interval);
         playlist.AddEntry(hamsterBundle, interval);
         playlist.AddEntry(bundle, interval);
