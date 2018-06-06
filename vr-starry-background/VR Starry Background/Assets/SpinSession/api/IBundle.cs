@@ -11,8 +11,20 @@ public interface IBundle
 
     void SetIntensities(float intensity);
 
-    IStrategy<Vector3> GetMovementStrategy();
-    IStrategy<Color> GetColorStrategy();
-    IStrategy<Gradient> GetTrailsStrategy();
-    IStrategy<Vector3> GetSizeStrategy();
+    IStrategy<Vector3> MovementStrategy
+    {
+        get;
+    }
+    IStrategy<Color> ColorStrategy
+    {
+        get;
+    }
+    IStrategy<Gradient> TrailsStrategy
+    {
+        get;
+    }
+    IStrategy<Vector3> SizeStrategy
+    {
+        get;
+    }
 }

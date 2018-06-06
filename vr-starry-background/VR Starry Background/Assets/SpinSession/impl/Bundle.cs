@@ -51,10 +51,10 @@ public class Bundle : IBundle
 
     public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
-        movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.GetMovementStrategy(), fadeOutPercent, timeNow, timeBefore);
-        colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.GetColorStrategy(), fadeOutPercent, timeNow, timeBefore);
-        trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.GetTrailsStrategy(), fadeOutPercent, timeNow, timeBefore);
-        sizeStrategyApplier.ApplyFade(sizeStrategy, bundleFadeIn.GetSizeStrategy(), fadeOutPercent, timeNow, timeBefore);
+        movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.MovementStrategy, fadeOutPercent, timeNow, timeBefore);
+        colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.ColorStrategy, fadeOutPercent, timeNow, timeBefore);
+        trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.TrailsStrategy, fadeOutPercent, timeNow, timeBefore);
+        sizeStrategyApplier.ApplyFade(sizeStrategy, bundleFadeIn.SizeStrategy, fadeOutPercent, timeNow, timeBefore);
     }
 
     public void SetIntensities(float intensity)
@@ -65,23 +65,35 @@ public class Bundle : IBundle
         }
     }
 
-    public IStrategy<Color> GetColorStrategy()
+    public IStrategy<Color> ColorStrategy
     {
-        return colorStrategy;
+        get
+        {
+            return colorStrategy;
+        }
     }
 
-    public IStrategy<Vector3> GetMovementStrategy()
+    public IStrategy<Vector3> MovementStrategy
     {
-        return movementStrategy;
+        get
+        {
+            return movementStrategy;
+        }
     }
 
-    public IStrategy<Vector3> GetSizeStrategy()
+    public IStrategy<Vector3> SizeStrategy
     {
-        return sizeStrategy;
+        get
+        {
+            return sizeStrategy;
+        }
     }
 
-    public IStrategy<Gradient> GetTrailsStrategy()
+    public IStrategy<Gradient> TrailsStrategy
     {
-        return trailsStrategy;
+        get
+        {
+            return trailsStrategy;
+        }
     }
 }
