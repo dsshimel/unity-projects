@@ -29,6 +29,8 @@ public class GameOrchestrator : MonoBehaviour {
         // in the playlist.
         // TODO: I am passing the manipulator to the strategies because it is the authoritative source
         // of game object IDs. Maybe extract a ProvideGameObjectIds interface?
+        // TODO: One idea is to feed one strategy into the next in a chain to create coherency
+        // between the patterns
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var movementStrat2 = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var hamsterMovementStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
@@ -71,8 +73,8 @@ public class GameOrchestrator : MonoBehaviour {
         // TODO: This should be done by a PlaylistBuilder.
         playlist.AddEntry(bundle, interval);
         playlist.AddEntry(hamsterBundle, interval);
-        playlist.AddEntry(bundle2, interval);
         playlist.AddEntry(hamsterBundle2, interval);
+        playlist.AddEntry(bundle2, interval);
 
         session = new Session(playlist, /* countdowTime= */ 1.0f);
         session.Start();
