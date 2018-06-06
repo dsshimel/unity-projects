@@ -8,8 +8,8 @@ using System.Collections.Generic;
 // what property they're manipulating.
 public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
 {
-    protected ICollection<int> gameObjectIds;
-    protected IManipulator manipulator;
+    private ICollection<int> gameObjectIds;
+    private IManipulator manipulator;
 
     public TrailsStrategyApplier(IManipulator manipulator)
     {

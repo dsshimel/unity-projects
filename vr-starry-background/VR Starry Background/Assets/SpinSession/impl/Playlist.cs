@@ -63,7 +63,7 @@ public class Playlist : IPlaylist
     {
         if (state == State.FADING)
         {
-
+            CurrentBundle.ApplyStrategiesFade(NextBundle, CurrentInterval.GetFadePercent(timeNow), timeNow, timeBefore);
         } else
         {
             CurrentBundle.ApplyStrategies(timeNow, timeBefore);

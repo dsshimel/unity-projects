@@ -23,11 +23,12 @@ public class MovementStrategyApplier : IStrategyApplier<Vector3, IMovementStrate
 
     void IStrategyApplier<Vector3, IMovementStrategy>.ApplyFade(IMovementStrategy strategyOut, IMovementStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
-        throw new System.NotImplementedException();
-        // Example of how I might do this:
-        // var valueThis = ComputeValue(gameObjectId, timeNow, timeBefore);
-        // var valueThat = thatStrategy.ComputeValue(gameObjectId, timeNow, timeBefore);
-        // var xfader = new CrossfadeValues.Vector3XFade(valueThis, valueThat, percentThis);
-        // return xfader.GetXFadeValue();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+
+            manipulator.SetPosition(gameObjectId, CrossfadeValues.FadeVector3(valueOut, valueIn, fadeOutPercent));
+        }
     }
 }

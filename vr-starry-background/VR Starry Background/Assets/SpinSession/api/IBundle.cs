@@ -6,6 +6,7 @@
 public interface IBundle
 {
     void ApplyStrategies(float timeNow, float timeBefore);
+    void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeBefore);
 
     void SetIntensities(float intensity);
 

@@ -44,13 +44,17 @@ public class Bundle : IBundle
     public void ApplyStrategies(float timeNow, float timeBefore)
     {
         movementStrategyApplier.Apply(movementStrategy, timeNow, timeBefore);
-        //movementStrategy.Apply(timeNow, timeBefore);
         colorStrategyApplier.Apply(colorStrategy, timeNow, timeBefore);
-        //colorStrategy.Apply(timeNow, timeBefore);
         trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeBefore);
-        //trailsStrategy.Apply(timeNow, timeBefore);
         sizeStrategyApplier.Apply(sizeStrategy, timeNow, timeBefore);
-        //sizeStrategy.Apply(timeNow, timeBefore);
+    }
+
+    public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeBefore)
+    {
+        movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.GetMovementStrategy(), fadeOutPercent, timeNow, timeBefore);
+        colorStrategyApplier.Apply(colorStrategy, timeNow, timeBefore);
+        trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeBefore);
+        sizeStrategyApplier.Apply(sizeStrategy, timeNow, timeBefore);
     }
 
     public void SetIntensities(float intensity)
