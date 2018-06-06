@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class ColorStrategyApplier : IStrategyApplier<Color, IColorStrategy>
+public class ColorStrategyApplier : IStrategyApplier<Color>
 {
     // This list should be immutable but Unity doesn't support a 
     // high-enough version of .NET to use System.Collections.Immutable.
@@ -14,7 +14,7 @@ public class ColorStrategyApplier : IStrategyApplier<Color, IColorStrategy>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    void IStrategyApplier<Color, IColorStrategy>.Apply(IColorStrategy strategy, float timeNow, float timeBefore)
+    void IStrategyApplier<Color>.Apply(IStrategy<Color> strategy, float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
@@ -22,7 +22,7 @@ public class ColorStrategyApplier : IStrategyApplier<Color, IColorStrategy>
         }
     }
 
-    void IStrategyApplier<Color, IColorStrategy>.ApplyFade(IColorStrategy strategyOut, IColorStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    void IStrategyApplier<Color>.ApplyFade(IStrategy<Color> strategyOut, IStrategy<Color> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 // providing a kind of value (e.g. Vector3, Color, Gradient, etc.). This might be a
 // more flexible approach because right now the strategies at least nominally know
 // what property they're manipulating.
-public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
+public class TrailsStrategyApplier : IStrategyApplier<Gradient>
 {
     private ICollection<int> gameObjectIds;
     private IManipulator manipulator;
@@ -17,7 +17,7 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    void IStrategyApplier<Gradient, ITrailsStrategy>.Apply(ITrailsStrategy strategy, float timeNow, float timeBefore)
+    void IStrategyApplier<Gradient>.Apply(IStrategy<Gradient> strategy, float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
@@ -27,7 +27,7 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
         }
     }
 
-    void IStrategyApplier<Gradient, ITrailsStrategy>.ApplyFade(ITrailsStrategy strategyOut, ITrailsStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    void IStrategyApplier<Gradient>.ApplyFade(IStrategy<Gradient> strategyOut, IStrategy<Gradient> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {

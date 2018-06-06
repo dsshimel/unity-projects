@@ -4,24 +4,24 @@ using UnityEngine;
 public class Bundle : IBundle
 {
     private IList<IStrategyUntyped> strategies;
-    private IMovementStrategy movementStrategy;
-    private IStrategyApplier<Vector3, IMovementStrategy> movementStrategyApplier;
+    private IStrategy<Vector3> movementStrategy;
+    private IStrategyApplier<Vector3> movementStrategyApplier;
     private IColorStrategy colorStrategy;
-    private IStrategyApplier<Color, IColorStrategy> colorStrategyApplier;
+    private IStrategyApplier<Color> colorStrategyApplier;
     private ITrailsStrategy trailsStrategy;
-    private IStrategyApplier<Gradient, ITrailsStrategy> trailsStrategyApplier;
+    private IStrategyApplier<Gradient> trailsStrategyApplier;
     private ISizeStrategy sizeStrategy;
-    private IStrategyApplier<Vector3, ISizeStrategy> sizeStrategyApplier;
+    private IStrategyApplier<Vector3> sizeStrategyApplier;
 
     public Bundle(
-        IMovementStrategy movementStrat,
-        IStrategyApplier<Vector3, IMovementStrategy> movementStratApplier,
+        IStrategy<Vector3> movementStrat,
+        IStrategyApplier<Vector3> movementStratApplier,
         IColorStrategy colorStrat,
-        IStrategyApplier<Color, IColorStrategy> colorStratApplier,
+        IStrategyApplier<Color> colorStratApplier,
         ITrailsStrategy trailsStrat,
-        IStrategyApplier<Gradient, ITrailsStrategy> trailsStratApplier,
+        IStrategyApplier<Gradient> trailsStratApplier,
         ISizeStrategy sizeStrat,
-        IStrategyApplier<Vector3, ISizeStrategy> sizeStratApplier)
+        IStrategyApplier<Vector3> sizeStratApplier)
     {
         strategies = new List<IStrategyUntyped>
         {
@@ -71,7 +71,7 @@ public class Bundle : IBundle
         return colorStrategy;
     }
 
-    public IMovementStrategy GetMovementStrategy()
+    public IStrategy<Vector3> GetMovementStrategy()
     {
         return movementStrategy;
     }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class SizeStrategyApplier : IStrategyApplier<Vector3, ISizeStrategy>
+public class SizeStrategyApplier : IStrategyApplier<Vector3>
 {
     private ICollection<int> gameObjectIds;
     private IManipulator manipulator;
@@ -12,7 +12,7 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3, ISizeStrategy>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    void IStrategyApplier<Vector3, ISizeStrategy>.Apply(ISizeStrategy strategy, float timeNow, float timeBefore)
+    void IStrategyApplier<Vector3>.Apply(IStrategy<Vector3> strategy, float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
@@ -20,7 +20,7 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3, ISizeStrategy>
         }
     }
 
-    void IStrategyApplier<Vector3, ISizeStrategy>.ApplyFade(ISizeStrategy strategyOut, ISizeStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    void IStrategyApplier<Vector3>.ApplyFade(IStrategy<Vector3> strategyOut, IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
