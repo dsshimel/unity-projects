@@ -54,8 +54,8 @@ public class Bundle : IBundle
         // TODO: Fading would look smoother if I passed the time-before-zero (i.e. negative time) to the fade in strategy
         movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.GetMovementStrategy(), fadeOutPercent, timeNow, timeBefore);
         colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.GetColorStrategy(), fadeOutPercent, timeNow, timeBefore);
-        trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeBefore);
-        sizeStrategyApplier.Apply(sizeStrategy, timeNow, timeBefore);
+        trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.GetTrailsStrategy(), fadeOutPercent, timeNow, timeBefore);
+        sizeStrategyApplier.ApplyFade(sizeStrategy, bundleFadeIn.GetSizeStrategy(), fadeOutPercent, timeNow, timeBefore);
     }
 
     public void SetIntensities(float intensity)

@@ -24,6 +24,12 @@ public class ColorStrategyApplier : IStrategyApplier<Color, IColorStrategy>
 
     void IStrategyApplier<Color, IColorStrategy>.ApplyFade(IColorStrategy strategyOut, IColorStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
-        throw new System.NotImplementedException();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+
+            manipulator.SetMaterialColor(gameObjectId, CrossfadeValues.FadeColor(valueOut, valueIn, fadeOutPercent));
+        }
     }
 }

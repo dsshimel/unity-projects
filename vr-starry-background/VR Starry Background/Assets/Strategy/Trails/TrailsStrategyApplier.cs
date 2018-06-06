@@ -29,6 +29,15 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
 
     void IStrategyApplier<Gradient, ITrailsStrategy>.ApplyFade(ITrailsStrategy strategyOut, ITrailsStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
-        throw new System.NotImplementedException();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            // TODO: Figure out how to fade between gradients
+            manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore));
+
+            //var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
+            //var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+
+            //manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, CrossfadeValues.FadeGradient(valueOut, valueIn, fadeOutPercent));
+        }
     }
 }

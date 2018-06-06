@@ -22,6 +22,12 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3, ISizeStrategy>
 
     void IStrategyApplier<Vector3, ISizeStrategy>.ApplyFade(ISizeStrategy strategyOut, ISizeStrategy strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
-        throw new System.NotImplementedException();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+
+            manipulator.SetLocalScale(gameObjectId, CrossfadeValues.FadeVector3(valueOut, valueIn, fadeOutPercent));
+        }
     }
 }

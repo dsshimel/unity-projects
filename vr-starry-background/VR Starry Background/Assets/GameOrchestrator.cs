@@ -30,13 +30,17 @@ public class GameOrchestrator : MonoBehaviour {
         // TODO: I am passing the manipulator to the strategies because it is the authoritative source
         // of game object IDs. Maybe extract a ProvideGameObjectIds interface?
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
+        var hamsterMovementStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
         var movementStratApplier = new MovementStrategyApplier(manipulator);
-        var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
+
         var colorStrat = new RandomStaticColorStrategy(manipulator);
         var hamsterColorStrat = new RandomStaticColorStrategy(manipulator);
         var colorStratApplier = new ColorStrategyApplier(manipulator);
+
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
+        var hamsterSizeStrat = new RandomStaticSizeStrategy(manipulator);
         var sizeStratApplier = new SizeStrategyApplier(manipulator);
+
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat/*, sizeStrat*/);
         var hamsterTrailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, hamsterColorStrat/*, sizeStrat*/);
         var trailsStratApplier = new TrailsStrategyApplier(manipulator);
@@ -46,7 +50,7 @@ public class GameOrchestrator : MonoBehaviour {
                 movementStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
         var hamsterBundle = 
             new Bundle(
-                hamsterStrat, movementStratApplier, hamsterColorStrat, colorStratApplier, hamsterTrailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
+                hamsterMovementStrat, movementStratApplier, hamsterColorStrat, colorStratApplier, hamsterTrailsStrat, trailsStratApplier, hamsterSizeStrat, sizeStratApplier);
 
         IPlaylist playlist = new Playlist(new List<IBundle>(), new List<Interval>());
         Interval interval = new Interval(3, 1.5f, 5.0f);
