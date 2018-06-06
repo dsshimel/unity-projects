@@ -34,20 +34,20 @@ public class Playlist : IPlaylist
         switch (state)
         {
             case State.ACTIVE:
-                ApplyStrategies(timeInEntry, timeInEntry - delta);
+                ApplyStrategies(timeInEntry, delta);
                 break;
             case State.ACTIVE_FINISHED:
                 SetIntensities(0.5f);
-                ApplyStrategies(timeInEntry, timeInEntry - delta);
+                ApplyStrategies(timeInEntry, delta);
                 break;
             case State.RESTING:
-                ApplyStrategies(timeInEntry, timeInEntry - delta);
+                ApplyStrategies(timeInEntry, delta);
                 break;
             case State.RESTING_FINISHED:
-                ApplyStrategies(timeInEntry, timeInEntry - delta);
+                ApplyStrategies(timeInEntry, delta);
                 break;
             case State.FADING:
-                ApplyStrategies(timeInEntry, timeInEntry - delta);
+                ApplyStrategies(timeInEntry, delta);
                 break;
             case State.FADING_FINISHED:
                 Next();
@@ -59,14 +59,14 @@ public class Playlist : IPlaylist
         return timeInEntry;
     }
 
-    public void ApplyStrategies(float timeNow, float timeBefore)
+    public void ApplyStrategies(float timeNow, float timeDelta)
     {
         if (state == State.FADING)
         {
-            CurrentBundle.ApplyStrategiesFade(NextBundle, CurrentInterval.GetFadePercent(timeNow), timeNow, timeBefore);
+            CurrentBundle.ApplyStrategiesFade(NextBundle, CurrentInterval.GetFadePercent(timeNow), timeNow, timeDelta);
         } else
         {
-            CurrentBundle.ApplyStrategies(timeNow, timeBefore);
+            CurrentBundle.ApplyStrategies(timeNow, timeDelta);
         }
     }
 

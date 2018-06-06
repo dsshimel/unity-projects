@@ -17,22 +17,22 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    void IStrategyApplier<Gradient>.Apply(IStrategy<Gradient> strategy, float timeNow, float timeBefore)
+    void IStrategyApplier<Gradient>.Apply(IStrategy<Gradient> strategy, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
+            manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeDelta));
             // TODO: I'm no longer setting the size of the particles relative to the size of the comets, e.g.
             // manipulator.SetParticleRadius(gameObjectId, sizeStrategy.ComputeValue(gameObjectId, 0, 0).magnitude);
         }
     }
 
-    void IStrategyApplier<Gradient>.ApplyFade(IStrategy<Gradient> strategyOut, IStrategy<Gradient> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    void IStrategyApplier<Gradient>.ApplyFade(IStrategy<Gradient> strategyOut, IStrategy<Gradient> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
-            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeDelta);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeDelta);
 
             manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, CrossfadeValues.FadeGradient(valueOut, valueIn, fadeOutPercent));
         }

@@ -34,9 +34,8 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
             Random.Range(1.0f, 2.0f));
     }
 
-    public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeBefore)
+    public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)
     {
-        float timeDelta = timeNow - timeBefore;
         var cylinderParams = cylinderParamsMap[gameObjectId];
 
         float attenuatedAngularVelocity = cylinderParams.AngularVelocity * intensity;

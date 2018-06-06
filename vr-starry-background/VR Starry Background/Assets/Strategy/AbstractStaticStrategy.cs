@@ -4,7 +4,7 @@
     {
     }
 
-    public override T ComputeValue(int gameObjectId, float timeNow, float timeBefore)
+    public override T ComputeValue(int gameObjectId, float timeNow, float timeDelta)
     {
         return ComputeStrategyValue(gameObjectId);
     }

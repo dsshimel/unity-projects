@@ -13,20 +13,20 @@ public class MovementStrategyApplier : IStrategyApplier<Vector3>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    public void Apply(IStrategy<Vector3> strategy, float timeNow, float timeBefore)
+    public void Apply(IStrategy<Vector3> strategy, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetPosition(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
+            manipulator.SetPosition(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeDelta));
         }
     }
 
-    public void ApplyFade(IStrategy<Vector3> strategyOut, IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    public void ApplyFade(IStrategy<Vector3> strategyOut, IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
-            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeDelta);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeDelta);
 
             manipulator.SetPosition(gameObjectId, CrossfadeValues.FadeVector3(valueOut, valueIn, fadeOutPercent));
         }

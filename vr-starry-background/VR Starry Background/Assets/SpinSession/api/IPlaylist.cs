@@ -7,7 +7,7 @@ public interface IPlaylist
 {
     void AddEntry(IBundle bundle, Interval interval);
 
-    void ApplyStrategies(float timeNow, float timeBefore);
+    void ApplyStrategies(float timeNow, float timeDelta);
 
     void Next();
     void Previous();

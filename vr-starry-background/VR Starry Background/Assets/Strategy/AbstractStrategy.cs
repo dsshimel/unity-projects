@@ -22,5 +22,5 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
         this.intensity = intensity;
     }
 
-    public abstract T ComputeValue(int gameObjectId, float timeNow, float timeBefore);
+    public abstract T ComputeValue(int gameObjectId, float timeNow, float timeDelta);
 }

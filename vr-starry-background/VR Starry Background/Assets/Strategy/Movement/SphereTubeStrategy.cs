@@ -31,9 +31,8 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
             Random.Range(1.0f, 2.0f)); ;
     }
 
-    public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeBefore)
+    public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)
     {
-        var timeDelta = timeNow - timeBefore;
         var angleParams = angleParamsMap[gameObjectId];
 
         float attenuatedAngularVelocity = intensity * angleParams.AngularVelocity;

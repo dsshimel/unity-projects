@@ -14,20 +14,20 @@ public class ColorStrategyApplier : IStrategyApplier<Color>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    void IStrategyApplier<Color>.Apply(IStrategy<Color> strategy, float timeNow, float timeBefore)
+    void IStrategyApplier<Color>.Apply(IStrategy<Color> strategy, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetMaterialColor(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
+            manipulator.SetMaterialColor(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeDelta));
         }
     }
 
-    void IStrategyApplier<Color>.ApplyFade(IStrategy<Color> strategyOut, IStrategy<Color> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    void IStrategyApplier<Color>.ApplyFade(IStrategy<Color> strategyOut, IStrategy<Color> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
-            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeDelta);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeDelta);
 
             manipulator.SetMaterialColor(gameObjectId, CrossfadeValues.FadeColor(valueOut, valueIn, fadeOutPercent));
         }

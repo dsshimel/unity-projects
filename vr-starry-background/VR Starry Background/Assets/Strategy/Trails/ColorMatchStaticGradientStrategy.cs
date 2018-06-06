@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorMatchGradientStrategy : AbstractStaticStrategy<Gradient>
+public class ColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gradient>
 {
     private IStrategy<Color> colorStrategy;
     private IDictionary<int, Gradient> gradientMap;
 
-    public ColorMatchGradientStrategy(IManipulator manipulator, IStrategy<Color> colorStrat) : base(manipulator)
+    public ColorMatchStaticGradientStrategy(IManipulator manipulator, IStrategy<Color> colorStrat) : base(manipulator)
     {
         colorStrategy = colorStrat;
 

@@ -41,20 +41,20 @@ public class Bundle : IBundle
         sizeStrategyApplier = sizeStratApplier;
     }
 
-    public void ApplyStrategies(float timeNow, float timeBefore)
+    public void ApplyStrategies(float timeNow, float timeDelta)
     {
-        movementStrategyApplier.Apply(movementStrategy, timeNow, timeBefore);
-        colorStrategyApplier.Apply(colorStrategy, timeNow, timeBefore);
-        trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeBefore);
-        sizeStrategyApplier.Apply(sizeStrategy, timeNow, timeBefore);
+        movementStrategyApplier.Apply(movementStrategy, timeNow, timeDelta);
+        colorStrategyApplier.Apply(colorStrategy, timeNow, timeDelta);
+        trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeDelta);
+        sizeStrategyApplier.Apply(sizeStrategy, timeNow, timeDelta);
     }
 
-    public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeBefore)
+    public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
-        movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.MovementStrategy, fadeOutPercent, timeNow, timeBefore);
-        colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.ColorStrategy, fadeOutPercent, timeNow, timeBefore);
-        trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.TrailsStrategy, fadeOutPercent, timeNow, timeBefore);
-        sizeStrategyApplier.ApplyFade(sizeStrategy, bundleFadeIn.SizeStrategy, fadeOutPercent, timeNow, timeBefore);
+        movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.MovementStrategy, fadeOutPercent, timeNow, timeDelta);
+        colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.ColorStrategy, fadeOutPercent, timeNow, timeDelta);
+        trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.TrailsStrategy, fadeOutPercent, timeNow, timeDelta);
+        sizeStrategyApplier.ApplyFade(sizeStrategy, bundleFadeIn.SizeStrategy, fadeOutPercent, timeNow, timeDelta);
     }
 
     public void SetIntensities(float intensity)

@@ -12,20 +12,21 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3>
         gameObjectIds = manipulator.GameObjectIds;
     }
 
-    void IStrategyApplier<Vector3>.Apply(IStrategy<Vector3> strategy, float timeNow, float timeBefore)
+    void IStrategyApplier<Vector3>.Apply(IStrategy<Vector3> strategy, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            manipulator.SetLocalScale(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeBefore));
+            manipulator.SetLocalScale(gameObjectId, strategy.ComputeValue(gameObjectId, timeNow, timeDelta));
         }
     }
 
-    void IStrategyApplier<Vector3>.ApplyFade(IStrategy<Vector3> strategyOut, IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeBefore)
+    void IStrategyApplier<Vector3>.ApplyFade(
+        IStrategy<Vector3> strategyOut, IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
-            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
+            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeDelta);
+            var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeDelta);
 
             manipulator.SetLocalScale(gameObjectId, CrossfadeValues.FadeVector3(valueOut, valueIn, fadeOutPercent));
         }
