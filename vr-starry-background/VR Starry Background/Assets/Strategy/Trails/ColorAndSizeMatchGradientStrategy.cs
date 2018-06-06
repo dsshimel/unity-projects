@@ -4,13 +4,11 @@ using UnityEngine;
 public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsStrategy
 {
     private IColorStrategy colorStrategy;
-    private ISizeStrategy sizeStrategy;
     private IDictionary<int, Gradient> gradientMap;
 
-    public ColorAndSizeMatchGradientStrategy(IManipulator manipulator, IColorStrategy colorStrat, ISizeStrategy sizeStrat) : base(manipulator)
+    public ColorAndSizeMatchGradientStrategy(IManipulator manipulator, IColorStrategy colorStrat) : base(manipulator)
     {
         colorStrategy = colorStrat;
-        sizeStrategy = sizeStrat;
 
         gradientMap = new Dictionary<int, Gradient>();
         foreach (int gameObjectId in gameObjectIds)

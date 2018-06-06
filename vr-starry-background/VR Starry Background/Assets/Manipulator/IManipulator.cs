@@ -6,15 +6,14 @@ using UnityEngine;
  */
 public interface IManipulator
 {
-    ICollection<int> GetGameObjectIds();
+    ICollection<int> GameObjectIds
+    {
+        get;
+    }
 
     void SetMaterialColor(int objectId, Color color);
-
     void SetParticleColorOverLifetimeGradient(int objectId, Gradient gradient);
     void SetParticleRadius(int objectId, float radius);
-
     void SetPosition(int objectId, Vector3 position);
-    void SetPositionXFade(int objectId, CrossfadeValues.Vector3XFade positionXFade);
-
     void SetLocalScale(int objectId, Vector3 scale);
 }

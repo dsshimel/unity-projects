@@ -10,9 +10,12 @@ public class Manipulator : IManipulator
         gameObjectMap = gameObjects;
     }
 
-    public ICollection<int> GetGameObjectIds()
+    public ICollection<int> GameObjectIds
     {
-        return gameObjectMap.Keys;
+        get
+        {
+           return gameObjectMap.Keys;
+        }
     }
 
     public void SetLocalScale(int objectId, Vector3 scale)
@@ -66,10 +69,5 @@ public class Manipulator : IManipulator
         {
            gameObject.transform.position = position;
         }
-    }
-
-    public void SetPositionXFade(int objectId, CrossfadeValues.Vector3XFade positionXFade)
-    {
-        SetPosition(objectId, positionXFade.GetXFadeValue());
     }
 }

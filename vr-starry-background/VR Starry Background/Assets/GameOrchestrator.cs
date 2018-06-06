@@ -35,7 +35,7 @@ public class GameOrchestrator : MonoBehaviour {
         var colorStratApplier = new ColorStrategyApplier(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
         var sizeStratApplier = new SizeStrategyApplier(manipulator);
-        var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
+        var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat/*, sizeStrat*/);
         var trailsStratApplier = new TrailsStrategyApplier(manipulator);
 
         var bundle = 

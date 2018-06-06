@@ -9,7 +9,7 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
 
     public AbstractStrategy(IManipulator manipulator)
     {
-        gameObjectIds = manipulator.GetGameObjectIds();
+        gameObjectIds = manipulator.GameObjectIds;
         intensity = 1.0f;
     }
 

@@ -9,7 +9,7 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3, ISizeStrategy>
     public SizeStrategyApplier(IManipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GetGameObjectIds();
+        gameObjectIds = manipulator.GameObjectIds;
     }
 
     void IStrategyApplier<Vector3, ISizeStrategy>.Apply(ISizeStrategy strategy, float timeNow, float timeBefore)

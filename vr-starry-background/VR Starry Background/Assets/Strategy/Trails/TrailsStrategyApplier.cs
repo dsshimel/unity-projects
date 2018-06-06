@@ -14,7 +14,7 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
     public TrailsStrategyApplier(IManipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GetGameObjectIds();
+        gameObjectIds = manipulator.GameObjectIds;
     }
 
     void IStrategyApplier<Gradient, ITrailsStrategy>.Apply(ITrailsStrategy strategy, float timeNow, float timeBefore)

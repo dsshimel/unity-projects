@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 public class ColorStrategyApplier : IStrategyApplier<Color, IColorStrategy>
@@ -12,7 +11,7 @@ public class ColorStrategyApplier : IStrategyApplier<Color, IColorStrategy>
     public ColorStrategyApplier(IManipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GetGameObjectIds();
+        gameObjectIds = manipulator.GameObjectIds;
     }
 
     void IStrategyApplier<Color, IColorStrategy>.Apply(IColorStrategy strategy, float timeNow, float timeBefore)
