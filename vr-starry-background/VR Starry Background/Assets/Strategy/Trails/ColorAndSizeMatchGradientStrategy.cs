@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsStrategy
 {
-    private IColorStrategy colorStrategy;
+    private IStrategy<Color> colorStrategy;
     private IDictionary<int, Gradient> gradientMap;
 
-    public ColorAndSizeMatchGradientStrategy(IManipulator manipulator, IColorStrategy colorStrat) : base(manipulator)
+    public ColorAndSizeMatchGradientStrategy(IManipulator manipulator, IStrategy<Color> colorStrat) : base(manipulator)
     {
         colorStrategy = colorStrat;
 

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>, IColorStrategy
+public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>
 {
     private IDictionary<int, Color> colorMap;
 
