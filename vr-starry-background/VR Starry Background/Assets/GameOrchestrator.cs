@@ -41,8 +41,6 @@ public class GameOrchestrator : MonoBehaviour {
         var hamsterSizeStrat = new RandomStaticSizeStrategy(manipulator);
         var sizeStratApplier = new SizeStrategyApplier(manipulator);
 
-        var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat/*, sizeStrat*/);
-        var hamsterTrailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, hamsterColorStrat/*, sizeStrat*/);
         var trailsStratApplier = new TrailsStrategyApplier(manipulator);
 
         var bundle = 
