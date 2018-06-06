@@ -23,18 +23,26 @@ public class GameOrchestrator : MonoBehaviour {
 
         manipulator = new Manipulator(comets);
 
-        // Generate the playlist of strategies here?
+        // TODO: Generate the playlist of strategies here?
+        // TODO: Looks like I should be passing the strategy to the applier. But then
+        // how will I cross fade between two strategies? Could pass in the next
+        // strategy as well.
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var movementStratApplier = new MovementStrategyApplier(manipulator);
         var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
-        var colorStratApplier = new ColorStrategyApplier(manipulator);
         var colorStrat = new RandomStaticColorStrategy(manipulator);
+        var colorStratApplier = new ColorStrategyApplier(manipulator);
         var sizeStrat = new RandomStaticSizeStrategy(manipulator);
+        var sizeStratApplier = new SizeStrategyApplier(manipulator);
         var trailsStrat = new ColorAndSizeMatchGradientStrategy(manipulator, colorStrat, sizeStrat);
         var trailsStratApplier = new TrailsStrategyApplier(manipulator);
 
-        var bundle = new Bundle(movementStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat);
-        var hamsterBundle = new Bundle(hamsterStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat);
+        var bundle = 
+            new Bundle(
+                movementStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
+        var hamsterBundle = 
+            new Bundle(
+                hamsterStrat, movementStratApplier, colorStrat, colorStratApplier, trailsStrat, trailsStratApplier, sizeStrat, sizeStratApplier);
 
         IPlaylist playlist = new Playlist(new List<IBundle>(), new List<Interval>());
         Interval interval = new Interval(3, 1.5f, 1.0f);
