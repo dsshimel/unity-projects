@@ -6,21 +6,21 @@ public class Bundle : IBundle
     private IList<IStrategyUntyped> strategies;
     private IStrategy<Vector3> movementStrategy;
     private IStrategyApplier<Vector3> movementStrategyApplier;
-    private IColorStrategy colorStrategy;
+    private IStrategy<Color> colorStrategy;
     private IStrategyApplier<Color> colorStrategyApplier;
-    private ITrailsStrategy trailsStrategy;
+    private IStrategy<Gradient> trailsStrategy;
     private IStrategyApplier<Gradient> trailsStrategyApplier;
-    private ISizeStrategy sizeStrategy;
+    private IStrategy<Vector3> sizeStrategy;
     private IStrategyApplier<Vector3> sizeStrategyApplier;
 
     public Bundle(
         IStrategy<Vector3> movementStrat,
         IStrategyApplier<Vector3> movementStratApplier,
-        IColorStrategy colorStrat,
+        IStrategy<Color> colorStrat,
         IStrategyApplier<Color> colorStratApplier,
-        ITrailsStrategy trailsStrat,
+        IStrategy<Gradient> trailsStrat,
         IStrategyApplier<Gradient> trailsStratApplier,
-        ISizeStrategy sizeStrat,
+        IStrategy<Vector3> sizeStrat,
         IStrategyApplier<Vector3> sizeStratApplier)
     {
         strategies = new List<IStrategyUntyped>
@@ -51,7 +51,6 @@ public class Bundle : IBundle
 
     public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeBefore)
     {
-        // TODO: Fading would look smoother if I passed the time-before-zero (i.e. negative time) to the fade in strategy
         movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.GetMovementStrategy(), fadeOutPercent, timeNow, timeBefore);
         colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.GetColorStrategy(), fadeOutPercent, timeNow, timeBefore);
         trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.GetTrailsStrategy(), fadeOutPercent, timeNow, timeBefore);
@@ -66,7 +65,7 @@ public class Bundle : IBundle
         }
     }
 
-    public IColorStrategy GetColorStrategy()
+    public IStrategy<Color> GetColorStrategy()
     {
         return colorStrategy;
     }
@@ -76,12 +75,12 @@ public class Bundle : IBundle
         return movementStrategy;
     }
 
-    public ISizeStrategy GetSizeStrategy()
+    public IStrategy<Vector3> GetSizeStrategy()
     {
         return sizeStrategy;
     }
 
-    public ITrailsStrategy GetTrailsStrategy()
+    public IStrategy<Gradient> GetTrailsStrategy()
     {
         return trailsStrategy;
     }
