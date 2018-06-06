@@ -68,17 +68,6 @@ public class Playlist : IPlaylist
         {
             CurrentBundle.ApplyStrategies(timeNow, timeBefore);
         }
-        // TODO: If we apply the crossfaded version of a strategy in one frame, we don't
-        // want to apply the non-crossfaded version as well.
-        // TODO: This code doesn't work. Investigate.
-        //if (fadeOutPercent < 1)
-        //{
-        //    GetCurrentBundle().GetMovementStrategy().ApplyStrategyWithCrossfade(
-        //        timeNow, timeBefore, GetNextBundle().GetMovementStrategy(), fadeOutPercent);
-        //} else
-        //{
-        //    GetCurrentBundle().ApplyStrategies(timeNow, timeBefore);
-        //}
     }
 
     public void Next()

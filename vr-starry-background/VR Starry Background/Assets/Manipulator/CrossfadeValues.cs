@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CrossfadeValues
 {
@@ -6,7 +7,7 @@ public class CrossfadeValues
     {
         if (percentOut < 0 || 1 < percentOut)
         {
-            throw new System.ArgumentException("percent must be between 0 and 1");
+            throw new ArgumentException("percent must be between 0 and 1");
         }
         return 1 - percentOut;
     }
