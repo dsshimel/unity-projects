@@ -1,9 +1,0 @@
-﻿public enum CometProperty
-{
-    UNRECOGNIZED = 0,
-    LOCAL_SCALE,
-    MATERIAL_COLOR,
-    PARTICLE_COLOR_OVER_LIFETIME_GRADIENT,
-    PARTICLE_RADIUS,
-    POSITION
-}
