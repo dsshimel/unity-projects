@@ -10,11 +10,7 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>
         colorMap = new Dictionary<int, Color>();
         foreach (int gameObjectId in gameObjectIds)
         {
-            Color color = new Color(
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f));
-            colorMap.Add(gameObjectId, color);
+            colorMap.Add(gameObjectId, ColorHelper.RandomColor());
         }
     }
 

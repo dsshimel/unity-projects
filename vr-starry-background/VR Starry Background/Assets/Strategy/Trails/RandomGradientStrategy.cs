@@ -10,10 +10,7 @@ public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>
         gradientMap = new Dictionary<int, Gradient>();
         foreach (int gameObjectId in gameObjectIds)
         {
-            Color color = new Color(
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f),
-                Random.Range(0, 1.0f));
+            Color color = ColorHelper.RandomColor();
 
             Gradient grad = new Gradient();
             GradientColorKey[] colorKeys = new GradientColorKey[] {
