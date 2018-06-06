@@ -9,12 +9,11 @@ public class GameOrchestrator : MonoBehaviour {
     public int radiusOuter;
 
     private ISession session;
-    private IDictionary<int, GameObject> comets;
     private IManipulator manipulator;
 
 	void Start ()
     {
-        comets = new Dictionary<int, GameObject>();
+        var comets = new Dictionary<int, GameObject>();
         for (var i = 0; i < numSpheres; i++)
         {
             GameObject comet = Instantiate(spherePrefab);
@@ -28,6 +27,8 @@ public class GameOrchestrator : MonoBehaviour {
         // how will I cross fade between two strategies? Could pass in the next
         // strategy as well, though that might couple it too closely to the ordering
         // in the playlist.
+        // TODO: I am passing the manipulator to the strategies because it is the authoritative source
+        // of game object IDs. Maybe extract a ProvideGameObjectIds interface?
         var movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
         var movementStratApplier = new MovementStrategyApplier(manipulator);
         var hamsterStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
