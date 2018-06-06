@@ -37,7 +37,6 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient, ITrailsStrategy>
             //var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeBefore);
             //var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeBefore);
 
-            //manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, CrossfadeValues.FadeGradient(valueOut, valueIn, fadeOutPercent));
         }
     }
 }
