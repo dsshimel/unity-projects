@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>, ISizeStrategy
+public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>
 {
     private IDictionary<int, Vector3> scaleMap;
 

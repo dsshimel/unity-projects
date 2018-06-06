@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient>, ITrailsStrategy
+public class ColorAndSizeMatchGradientStrategy : AbstractStaticStrategy<Gradient>
 {
     private IStrategy<Color> colorStrategy;
     private IDictionary<int, Gradient> gradientMap;

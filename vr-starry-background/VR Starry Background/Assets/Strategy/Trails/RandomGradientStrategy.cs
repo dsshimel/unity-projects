@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>//, ITrailsStrategy
+public class RandomGradientStrategy : AbstractStaticStrategy<Gradient>
 {
     private IDictionary<int, Gradient> gradientMap;
 
