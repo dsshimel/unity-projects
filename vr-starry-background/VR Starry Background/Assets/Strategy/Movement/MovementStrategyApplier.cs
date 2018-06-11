@@ -7,10 +7,10 @@ public class MovementStrategyApplier : IStrategyApplier<Vector3>
     private ICollection<int> gameObjectIds;
     private IManipulator manipulator;
 
-    public MovementStrategyApplier(IManipulator manipulator)
+    public MovementStrategyApplier(Manipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GameObjectIds;
+        gameObjectIds = manipulator.Value;
     }
 
     public void Apply(IStrategy<Vector3> strategy, float timeNow, float timeDelta)

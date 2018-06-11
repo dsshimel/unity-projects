@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using System.Collections.Generic;
 
 public class BundleFactory
 {
-    private readonly IManipulator manipulator;
+    private readonly Manipulator manipulator;
+    private readonly IProvider<ICollection<int>> gameObjectIdProvider;
     public int radiusInner = 30;
     public int radiusOuter = 100;
 
-    public BundleFactory(IManipulator manipulator)
+    public BundleFactory(Manipulator manipulator)
     {
         this.manipulator = manipulator;
+        this.gameObjectIdProvider = manipulator;
     }
 
     public IBundle create()
@@ -22,24 +25,23 @@ public class BundleFactory
         // of game object IDs. Maybe extract a ProvideGameObjectIds interface?
         // TODO: One idea is to feed one strategy into the next in a chain to create coherency
         // between the patterns
-
         IStrategy<Vector3> movementStrat;
         if (flipCoin())
         {
-            movementStrat = new SphereTubeStrategy(manipulator, radiusInner, radiusOuter);
+            movementStrat = new SphereTubeStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
         } else
         {
-            movementStrat = new HamsterWheelStrategy(manipulator, radiusInner, radiusOuter);
+            movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
         }
         var movementStratApplier = new MovementStrategyApplier(manipulator);
 
-        var colorStrat = new RandomStaticColorStrategy(manipulator);
+        var colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
         var colorStratApplier = new ColorStrategyApplier(manipulator);
 
-        var sizeStrat = new RandomStaticSizeStrategy(manipulator);
+        var sizeStrat = new RandomStaticSizeStrategy(gameObjectIdProvider);
         var sizeStratApplier = new SizeStrategyApplier(manipulator);
 
-        var trailsStrat = new ColorMatchStaticGradientStrategy(manipulator, colorStrat);
+        var trailsStrat = new ColorMatchStaticGradientStrategy(gameObjectIdProvider, colorStrat);
         var trailsStratApplier = new TrailsStrategyApplier(manipulator);
 
         return new Bundle(

@@ -4,12 +4,12 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
 {
     // This list should be immutable but Unity doesn't support a 
     // high-enough version of .NET to use System.Collections.Immutable.
-    protected ICollection<int> gameObjectIds;
+    protected readonly ICollection<int> gameObjectIds;
     protected float intensity;
 
-    public AbstractStrategy(IManipulator manipulator)
+    public AbstractStrategy(IProvider<ICollection<int>> gameObjectIdProvider)
     {
-        gameObjectIds = manipulator.GameObjectIds;
+        gameObjectIds = gameObjectIdProvider.Value;
         intensity = 1.0f;
     }
 

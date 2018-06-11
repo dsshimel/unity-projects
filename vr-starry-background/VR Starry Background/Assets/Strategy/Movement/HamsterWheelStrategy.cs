@@ -11,7 +11,10 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
-    public HamsterWheelStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
+    public HamsterWheelStrategy(
+        IProvider<ICollection<int>> gameObjectIdProvider,
+        float radiusInner,
+        float radiusOuter) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;

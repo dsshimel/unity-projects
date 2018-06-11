@@ -6,10 +6,10 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3>
     private ICollection<int> gameObjectIds;
     private IManipulator manipulator;
 
-    public SizeStrategyApplier(IManipulator manipulator)
+    public SizeStrategyApplier(Manipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GameObjectIds;
+        gameObjectIds = manipulator.Value;
     }
 
     void IStrategyApplier<Vector3>.Apply(IStrategy<Vector3> strategy, float timeNow, float timeDelta)

@@ -5,13 +5,13 @@ public class ColorStrategyApplier : IStrategyApplier<Color>
 {
     // This list should be immutable but Unity doesn't support a 
     // high-enough version of .NET to use System.Collections.Immutable.
-    private ICollection<int> gameObjectIds;
-    private IManipulator manipulator;
+    private readonly ICollection<int> gameObjectIds;
+    private readonly IManipulator manipulator;
 
-    public ColorStrategyApplier(IManipulator manipulator)
+    public ColorStrategyApplier(Manipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GameObjectIds;
+        gameObjectIds = manipulator.Value;
     }
 
     void IStrategyApplier<Color>.Apply(IStrategy<Color> strategy, float timeNow, float timeDelta)

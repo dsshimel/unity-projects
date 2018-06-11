@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Manipulator : IManipulator
+public class Manipulator : IManipulator, IProvider<ICollection<int>>
 {
     private IDictionary<int, GameObject> gameObjectMap;
 
@@ -10,11 +10,11 @@ public class Manipulator : IManipulator
         gameObjectMap = gameObjects;
     }
 
-    public ICollection<int> GameObjectIds
+    public ICollection<int> Value
     {
         get
         {
-           return gameObjectMap.Keys;
+            return gameObjectMap.Keys;
         }
     }
 

@@ -8,13 +8,13 @@ using System.Collections.Generic;
 // what property they're manipulating.
 public class TrailsStrategyApplier : IStrategyApplier<Gradient>
 {
-    private ICollection<int> gameObjectIds;
-    private IManipulator manipulator;
+    private readonly ICollection<int> gameObjectIds;
+    private readonly IManipulator manipulator;
 
-    public TrailsStrategyApplier(IManipulator manipulator)
+    public TrailsStrategyApplier(Manipulator manipulator)
     {
         this.manipulator = manipulator;
-        gameObjectIds = manipulator.GameObjectIds;
+        gameObjectIds = manipulator.Value;
     }
 
     void IStrategyApplier<Gradient>.Apply(IStrategy<Gradient> strategy, float timeNow, float timeDelta)

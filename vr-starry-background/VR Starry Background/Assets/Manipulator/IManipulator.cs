@@ -6,11 +6,6 @@ using UnityEngine;
  */
 public interface IManipulator
 {
-    ICollection<int> GameObjectIds
-    {
-        get;
-    }
-
     void SetMaterialColor(int objectId, Color color);
     void SetParticleColorOverLifetimeGradient(int objectId, Gradient gradient);
     void SetParticleRadius(int objectId, float radius);

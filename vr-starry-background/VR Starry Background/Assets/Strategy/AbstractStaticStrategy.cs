@@ -1,6 +1,8 @@
-﻿public abstract class AbstractStaticStrategy<T> : AbstractStrategy<T>
+﻿using System.Collections.Generic;
+
+public abstract class AbstractStaticStrategy<T> : AbstractStrategy<T>
 {
-    public AbstractStaticStrategy(IManipulator manipulator) : base(manipulator)
+    public AbstractStaticStrategy(IProvider<ICollection<int>> gameObjectIdProvider) : base(gameObjectIdProvider)
     {
     }
 

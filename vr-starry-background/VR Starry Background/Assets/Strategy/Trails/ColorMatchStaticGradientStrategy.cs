@@ -6,7 +6,9 @@ public class ColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gradient>
     private IStrategy<Color> colorStrategy;
     private IDictionary<int, Gradient> gradientMap;
 
-    public ColorMatchStaticGradientStrategy(IManipulator manipulator, IStrategy<Color> colorStrat) : base(manipulator)
+    public ColorMatchStaticGradientStrategy(
+        IProvider<ICollection<int>> gameObjectIdProvider,
+        IStrategy<Color> colorStrat) : base(gameObjectIdProvider)
     {
         colorStrategy = colorStrat;
 

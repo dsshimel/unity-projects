@@ -5,7 +5,7 @@ public class RandomStaticColorStrategy : AbstractStaticStrategy<Color>
 {
     private IDictionary<int, Color> colorMap;
 
-    public RandomStaticColorStrategy(IManipulator manipulator) : base(manipulator)
+    public RandomStaticColorStrategy(IProvider<ICollection<int>> gameObjectIdProvider) : base(gameObjectIdProvider)
     {
         colorMap = new Dictionary<int, Color>();
         foreach (int gameObjectId in gameObjectIds)

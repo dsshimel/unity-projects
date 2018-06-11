@@ -10,7 +10,10 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
 
     private IDictionary<int, AngleParams> angleParamsMap;
 
-    public SphereTubeStrategy(IManipulator manipulator, float radiusInner, float radiusOuter) : base(manipulator)
+    public SphereTubeStrategy(
+        IProvider<ICollection<int>> gameObjectIdProvider,
+        float radiusInner,
+        float radiusOuter) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;

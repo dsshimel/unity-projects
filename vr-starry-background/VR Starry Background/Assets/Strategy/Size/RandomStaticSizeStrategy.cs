@@ -5,7 +5,7 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>
 {
     private IDictionary<int, Vector3> scaleMap;
 
-    public RandomStaticSizeStrategy(IManipulator manipulator) : base(manipulator)
+    public RandomStaticSizeStrategy(IProvider<ICollection<int>> gameObjectIdProvider) : base(gameObjectIdProvider)
     {
         scaleMap = new Dictionary<int, Vector3>();
         foreach (int gameObjectId in gameObjectIds)

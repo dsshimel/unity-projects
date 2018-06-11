@@ -9,7 +9,6 @@ public class GameOrchestrator : MonoBehaviour {
     public int radiusOuter;
 
     private ISession session;
-    private IManipulator manipulator;
 
 	void Start ()
     {
@@ -20,17 +19,7 @@ public class GameOrchestrator : MonoBehaviour {
             comets.Add(comet.GetInstanceID(), comet);
         }
 
-        manipulator = new Manipulator(comets);
-
-        // TODO: Generate the playlist of strategies here?
-        // TODO: Looks like I should be passing the strategy to the applier. But then
-        // how will I cross fade between two strategies? Could pass in the next
-        // strategy as well, though that might couple it too closely to the ordering
-        // in the playlist.
-        // TODO: I am passing the manipulator to the strategies because it is the authoritative source
-        // of game object IDs. Maybe extract a ProvideGameObjectIds interface?
-        // TODO: One idea is to feed one strategy into the next in a chain to create coherency
-        // between the patterns
+        var manipulator = new Manipulator(comets);
         var bundleFactory = new BundleFactory(manipulator);
         var playlistFactory = new PlaylistFactory(bundleFactory);
 
