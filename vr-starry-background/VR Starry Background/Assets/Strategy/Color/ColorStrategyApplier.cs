@@ -13,6 +13,7 @@ public class ColorStrategyApplier : IStrategyApplier<Color>
     {
         this.manipulator = manipulator;
         gameObjectIds = manipulator.Value;
+        this.strategy = strategy;
     }
 
     void IStrategyApplier<Color>.Apply(float timeNow, float timeDelta)
