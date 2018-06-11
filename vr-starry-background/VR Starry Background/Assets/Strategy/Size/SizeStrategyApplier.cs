@@ -14,6 +14,14 @@ public class SizeStrategyApplier : IStrategyApplier<Vector3>
         this.strategy = strategy;
     }
 
+    public IStrategy<Vector3> Strategy
+    {
+        get
+        {
+            return strategy;
+        }
+    }
+
     void IStrategyApplier<Vector3>.Apply(float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)

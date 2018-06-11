@@ -16,6 +16,14 @@ public class ColorStrategyApplier : IStrategyApplier<Color>
         this.strategy = strategy;
     }
 
+    public IStrategy<Color> Strategy
+    {
+        get
+        {
+            return strategy;
+        }
+    }
+
     void IStrategyApplier<Color>.Apply(float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)

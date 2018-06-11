@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 public class BundleFactory
@@ -33,26 +32,22 @@ public class BundleFactory
         {
             movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
         }
-        var movementStratApplier = new MovementStrategyApplier(manipulator, movementStrat);
+        var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 
         var colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
-        var colorStratApplier = new ColorStrategyApplier(manipulator, colorStrat);
+        var colorStrategyApplier = new ColorStrategyApplier(manipulator, colorStrat);
 
         var sizeStrat = new RandomStaticSizeStrategy(gameObjectIdProvider);
-        var sizeStratApplier = new SizeStrategyApplier(manipulator, sizeStrat);
+        var sizeStrategyApplier = new SizeStrategyApplier(manipulator, sizeStrat);
 
         var trailsStrat = new ColorMatchStaticGradientStrategy(gameObjectIdProvider, colorStrat);
-        var trailsStratApplier = new TrailsStrategyApplier(manipulator, trailsStrat);
+        var trailsStrategyApplier = new TrailsStrategyApplier(manipulator, trailsStrat);
 
         return new Bundle(
-                movementStrat,
-                movementStratApplier,
-                colorStrat,
-                colorStratApplier,
-                trailsStrat,
-                trailsStratApplier,
-                sizeStrat,
-                sizeStratApplier);
+                movementStrategyApplier,
+                colorStrategyApplier,
+                trailsStrategyApplier,
+                sizeStrategyApplier);
     }
 
     private bool flipCoin()

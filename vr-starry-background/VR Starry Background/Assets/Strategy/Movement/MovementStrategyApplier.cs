@@ -15,6 +15,14 @@ public class MovementStrategyApplier : IStrategyApplier<Vector3>
         this.strategy = strategy;
     }
 
+    public IStrategy<Vector3> Strategy
+    {
+        get
+        {
+            return strategy;
+        }
+    }
+
     public void Apply(float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)

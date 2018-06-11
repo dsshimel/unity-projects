@@ -4,41 +4,29 @@ using UnityEngine;
 public class Bundle : IBundle
 {
     private IList<IStrategyUntyped> strategies;
-    private IStrategy<Vector3> movementStrategy;
     private IStrategyApplier<Vector3> movementStrategyApplier;
-    private IStrategy<Color> colorStrategy;
     private IStrategyApplier<Color> colorStrategyApplier;
-    private IStrategy<Gradient> trailsStrategy;
     private IStrategyApplier<Gradient> trailsStrategyApplier;
-    private IStrategy<Vector3> sizeStrategy;
     private IStrategyApplier<Vector3> sizeStrategyApplier;
 
     public Bundle(
-        IStrategy<Vector3> movementStrat,
         IStrategyApplier<Vector3> movementStratApplier,
-        IStrategy<Color> colorStrat,
         IStrategyApplier<Color> colorStratApplier,
-        IStrategy<Gradient> trailsStrat,
         IStrategyApplier<Gradient> trailsStratApplier,
-        IStrategy<Vector3> sizeStrat,
         IStrategyApplier<Vector3> sizeStratApplier)
     {
+        movementStrategyApplier = movementStratApplier;
+        colorStrategyApplier = colorStratApplier;
+        trailsStrategyApplier = trailsStratApplier;
+        sizeStrategyApplier = sizeStratApplier;
+
         strategies = new List<IStrategyUntyped>
         {
-            movementStrat,
-            colorStrat,
-            trailsStrat,
-            sizeStrat
+            movementStrategyApplier.Strategy,
+            colorStrategyApplier.Strategy,
+            trailsStrategyApplier.Strategy,
+            sizeStrategyApplier.Strategy
         };
-
-        movementStrategy = movementStrat;
-        movementStrategyApplier = movementStratApplier;
-        colorStrategy = colorStrat;
-        colorStrategyApplier = colorStratApplier;
-        trailsStrategy = trailsStrat;
-        trailsStrategyApplier = trailsStratApplier;
-        sizeStrategy = sizeStrat;
-        sizeStrategyApplier = sizeStratApplier;
     }
 
     public void ApplyStrategies(float timeNow, float timeDelta)
@@ -69,7 +57,7 @@ public class Bundle : IBundle
     {
         get
         {
-            return colorStrategy;
+            return colorStrategyApplier.Strategy;
         }
     }
 
@@ -77,7 +65,7 @@ public class Bundle : IBundle
     {
         get
         {
-            return movementStrategy;
+            return movementStrategyApplier.Strategy;
         }
     }
 
@@ -85,7 +73,7 @@ public class Bundle : IBundle
     {
         get
         {
-            return sizeStrategy;
+            return sizeStrategyApplier.Strategy;
         }
     }
 
@@ -93,7 +81,7 @@ public class Bundle : IBundle
     {
         get
         {
-            return trailsStrategy;
+            return trailsStrategyApplier.Strategy;
         }
     }
 }

@@ -19,6 +19,14 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient>
         this.strategy = strategy;
     }
 
+    public IStrategy<Gradient> Strategy
+    {
+        get
+        {
+            return strategy;
+        }
+    }
+
     void IStrategyApplier<Gradient>.Apply(float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
