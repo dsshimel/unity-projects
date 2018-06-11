@@ -33,16 +33,16 @@ public class BundleFactory
         {
             movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
         }
-        var movementStratApplier = new MovementStrategyApplier(manipulator);
+        var movementStratApplier = new MovementStrategyApplier(manipulator, movementStrat);
 
         var colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
-        var colorStratApplier = new ColorStrategyApplier(manipulator);
+        var colorStratApplier = new ColorStrategyApplier(manipulator, colorStrat);
 
         var sizeStrat = new RandomStaticSizeStrategy(gameObjectIdProvider);
-        var sizeStratApplier = new SizeStrategyApplier(manipulator);
+        var sizeStratApplier = new SizeStrategyApplier(manipulator, sizeStrat);
 
         var trailsStrat = new ColorMatchStaticGradientStrategy(gameObjectIdProvider, colorStrat);
-        var trailsStratApplier = new TrailsStrategyApplier(manipulator);
+        var trailsStratApplier = new TrailsStrategyApplier(manipulator, trailsStrat);
 
         return new Bundle(
                 movementStrat,

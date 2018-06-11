@@ -43,18 +43,18 @@ public class Bundle : IBundle
 
     public void ApplyStrategies(float timeNow, float timeDelta)
     {
-        movementStrategyApplier.Apply(movementStrategy, timeNow, timeDelta);
-        colorStrategyApplier.Apply(colorStrategy, timeNow, timeDelta);
-        trailsStrategyApplier.Apply(trailsStrategy, timeNow, timeDelta);
-        sizeStrategyApplier.Apply(sizeStrategy, timeNow, timeDelta);
+        movementStrategyApplier.Apply(timeNow, timeDelta);
+        colorStrategyApplier.Apply(timeNow, timeDelta);
+        trailsStrategyApplier.Apply(timeNow, timeDelta);
+        sizeStrategyApplier.Apply(timeNow, timeDelta);
     }
 
     public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
-        movementStrategyApplier.ApplyFade(movementStrategy, bundleFadeIn.MovementStrategy, fadeOutPercent, timeNow, timeDelta);
-        colorStrategyApplier.ApplyFade(colorStrategy, bundleFadeIn.ColorStrategy, fadeOutPercent, timeNow, timeDelta);
-        trailsStrategyApplier.ApplyFade(trailsStrategy, bundleFadeIn.TrailsStrategy, fadeOutPercent, timeNow, timeDelta);
-        sizeStrategyApplier.ApplyFade(sizeStrategy, bundleFadeIn.SizeStrategy, fadeOutPercent, timeNow, timeDelta);
+        movementStrategyApplier.ApplyFade(bundleFadeIn.MovementStrategy, fadeOutPercent, timeNow, timeDelta);
+        colorStrategyApplier.ApplyFade(bundleFadeIn.ColorStrategy, fadeOutPercent, timeNow, timeDelta);
+        trailsStrategyApplier.ApplyFade(bundleFadeIn.TrailsStrategy, fadeOutPercent, timeNow, timeDelta);
+        sizeStrategyApplier.ApplyFade(bundleFadeIn.SizeStrategy, fadeOutPercent, timeNow, timeDelta);
     }
 
     public void SetIntensities(float intensity)

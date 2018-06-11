@@ -4,16 +4,18 @@ using UnityEngine;
 // TODO: Figure out how to extend from an abstract class
 public class MovementStrategyApplier : IStrategyApplier<Vector3>
 {
-    private ICollection<int> gameObjectIds;
-    private IManipulator manipulator;
+    private readonly ICollection<int> gameObjectIds;
+    private readonly IManipulator manipulator;
+    private readonly IStrategy<Vector3> strategy;
 
-    public MovementStrategyApplier(Manipulator manipulator)
+    public MovementStrategyApplier(Manipulator manipulator, IStrategy<Vector3> strategy)
     {
         this.manipulator = manipulator;
         gameObjectIds = manipulator.Value;
+        this.strategy = strategy;
     }
 
-    public void Apply(IStrategy<Vector3> strategy, float timeNow, float timeDelta)
+    public void Apply(float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
@@ -21,11 +23,11 @@ public class MovementStrategyApplier : IStrategyApplier<Vector3>
         }
     }
 
-    public void ApplyFade(IStrategy<Vector3> strategyOut, IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
+    public void ApplyFade(IStrategy<Vector3> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeDelta);
+            var valueOut = strategy.ComputeValue(gameObjectId, timeNow, timeDelta);
             var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeDelta);
 
             manipulator.SetPosition(gameObjectId, CrossfadeValues.FadeVector3(valueOut, valueIn, fadeOutPercent));

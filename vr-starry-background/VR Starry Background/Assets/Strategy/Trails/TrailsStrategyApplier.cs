@@ -10,14 +10,16 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient>
 {
     private readonly ICollection<int> gameObjectIds;
     private readonly IManipulator manipulator;
+    private readonly IStrategy<Gradient> strategy;
 
-    public TrailsStrategyApplier(Manipulator manipulator)
+    public TrailsStrategyApplier(Manipulator manipulator, IStrategy<Gradient> strategy)
     {
         this.manipulator = manipulator;
         gameObjectIds = manipulator.Value;
+        this.strategy = strategy;
     }
 
-    void IStrategyApplier<Gradient>.Apply(IStrategy<Gradient> strategy, float timeNow, float timeDelta)
+    void IStrategyApplier<Gradient>.Apply(float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
@@ -27,11 +29,11 @@ public class TrailsStrategyApplier : IStrategyApplier<Gradient>
         }
     }
 
-    void IStrategyApplier<Gradient>.ApplyFade(IStrategy<Gradient> strategyOut, IStrategy<Gradient> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
+    void IStrategyApplier<Gradient>.ApplyFade(IStrategy<Gradient> strategyIn, float fadeOutPercent, float timeNow, float timeDelta)
     {
         foreach (int gameObjectId in gameObjectIds)
         {
-            var valueOut = strategyOut.ComputeValue(gameObjectId, timeNow, timeDelta);
+            var valueOut = strategy.ComputeValue(gameObjectId, timeNow, timeDelta);
             var valueIn = strategyIn.ComputeValue(gameObjectId, timeNow, timeDelta);
 
             manipulator.SetParticleColorOverLifetimeGradient(gameObjectId, CrossfadeValues.FadeGradient(valueOut, valueIn, fadeOutPercent));
