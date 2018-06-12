@@ -15,6 +15,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
+    // TODO: Add bool for controlling if half the comets go the opposite direction
     public HamsterWheelStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
