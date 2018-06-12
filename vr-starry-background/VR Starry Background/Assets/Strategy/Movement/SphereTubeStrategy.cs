@@ -21,29 +21,41 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         this.radiusOuter = radiusOuter;
         this.randomizeParams = randomizeParams;
 
-        angleParamsMap = new Dictionary<int, AngleParams>();
+        this.angleParamsMap = this.randomizeParams
+            ? InitAngleParamsRandom()
+            : InitAngleParams();
+    }
 
-        var gameObjectIdEnumerator = gameObjectIds.GetEnumerator();
+    private IDictionary<int, AngleParams> InitAngleParamsRandom()
+    {
+        var paramsMap = new Dictionary<int, AngleParams>();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            paramsMap.Add(gameObjectId, CreateAngleParams());
+        }
+        return paramsMap;
+    }
+
+    private IDictionary<int, AngleParams> InitAngleParams()
+    {
+        var paramsMap = new Dictionary<int, AngleParams>();
         var angleParamsList = new List<AngleParams>();
-        var numRadii = 2;
+        var numRadii = 3;
         var numPolarAngles = 14;
-        var numAzimuthAngles = 12;
+        var numAzimuthAngles = 8;
+        var radiusUnit = (radiusOuter - radiusInner) / (numRadii - 1);
         for (var r = 0; r < numRadii; r++)
         {
-            var radiusUnit = (radiusOuter - radiusInner) / (numRadii - 1);
             var radius = (r * radiusUnit) + radiusInner;
-            var radiusFraction = r / numRadii;
             for (var j = 0; j < numPolarAngles; j++)
             {
                 var polarAngleUnit = Mathf.PI / numPolarAngles;
                 var polarAngleTheta = j * polarAngleUnit + (polarAngleUnit / 2);
-                polarAngleTheta += polarAngleUnit * radiusFraction;
 
                 for (var k = 0; k < numAzimuthAngles; k++)
                 {
                     var azimuthAngleUnit = 2 * Mathf.PI / numAzimuthAngles;
                     var azimuthAnglePhi = k * azimuthAngleUnit + (azimuthAngleUnit / 2);
-                    azimuthAnglePhi += azimuthAngleUnit * radiusFraction;
 
                     angleParamsList.Add(new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, 1.5f));
                 }
@@ -51,16 +63,11 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         }
 
         var angleParamsIndex = 0;
-        foreach (int gameObjectId in gameObjectIds)
+        foreach (var gameObjectId in gameObjectIds)
         {
-            if (randomizeParams)
-            {
-                angleParamsMap.Add(gameObjectId, CreateAngleParams());
-            } else
-            {
-                angleParamsMap.Add(gameObjectId, angleParamsList[angleParamsIndex++]);
-            }
+            paramsMap.Add(gameObjectId, angleParamsList[angleParamsIndex++]);
         }
+        return paramsMap;
     }
 
     private AngleParams CreateAngleParams()

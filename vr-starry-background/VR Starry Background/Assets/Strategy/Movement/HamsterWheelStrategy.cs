@@ -4,28 +4,73 @@ using UnityEngine;
 public class HamsterWheelStrategy : AbstractStrategy<Vector3>
 {
     // Min distance meteor can be from player.
-    public float radiusInner;
+    public readonly float radiusInner;
     // Max distance meteor can be from player.
-    public float radiusOuter;
-    public float maxXLength;
+    public readonly float radiusOuter;
+    public readonly float maxXLength;
+    public readonly bool randomizeParams;
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
     public HamsterWheelStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
-        float radiusOuter) : base(gameObjectIdProvider)
+        float radiusOuter,
+        bool randomizeParams) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        maxXLength = 100;
-        intensity = 0.0f;
+        this.maxXLength = radiusOuter;
+        this.randomizeParams = randomizeParams;
 
-        cylinderParamsMap = new Dictionary<int, CylinderParams>();
+        this.cylinderParamsMap = this.randomizeParams
+            ? InitCylinderParamsRandom()
+            : InitCylinderParams();
+    }
+
+    private IDictionary<int, CylinderParams> InitCylinderParamsRandom()
+    {
+        var paramsMap = new Dictionary<int, CylinderParams>();
         foreach (int gameObjectId in gameObjectIds)
         {
-            cylinderParamsMap.Add(gameObjectId, CreateCylinderParams());
+            paramsMap.Add(gameObjectId, CreateCylinderParams());
         }
+        return paramsMap;
+    }
+
+    private IDictionary<int, CylinderParams> InitCylinderParams()
+    {
+        var paramsMap = new Dictionary<int, CylinderParams>();
+
+        var cylinderParamsList = new List<CylinderParams>();
+        var numRadii = 3;
+        var numAngleZYs = 8;
+        var numLengthSpacings = 14;
+        var radiusUnit = (radiusOuter - radiusInner) / (numRadii - 1);
+        for (var r = 0; r < numRadii; r++)
+        {
+            var radius = (r * radiusUnit) + radiusInner;
+            for (var j = 0; j < numAngleZYs; j++)
+            {
+                var angleZYUnit = (2 * Mathf.PI) / numAngleZYs;
+                var angleZY = j * angleZYUnit;
+
+                for (var k = 0; k < numLengthSpacings; k++)
+                {
+                    var xLengthUnit = 2 * maxXLength / (numLengthSpacings - 1);
+                    var xLength = (k * xLengthUnit) - maxXLength;
+
+                    cylinderParamsList.Add(new CylinderParams(radius, angleZY, xLength, 1.5f));
+                }
+            }
+        }
+
+        var cylinderParamsIndex = 0;
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            paramsMap.Add(gameObjectId, cylinderParamsList[cylinderParamsIndex++]);
+        }
+        return paramsMap;
     }
 
     private CylinderParams CreateCylinderParams()

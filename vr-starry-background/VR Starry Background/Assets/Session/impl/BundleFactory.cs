@@ -29,11 +29,13 @@ public class BundleFactory
         IStrategy<Vector3> movementStrat;
         if (flipCoin())
         {
-            movementStrat = new SphereTubeStrategy(gameObjectIdProvider, radiusInner, radiusOuter, /* randomizeParams= */ flipCoin());
+            var randomizeParams = flipCoin();
+            movementStrat = new SphereTubeStrategy(gameObjectIdProvider, radiusInner, radiusOuter, randomizeParams);
         }
         else
         {
-            movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
+            var randomizeParams = flipCoin();
+            movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter, randomizeParams);
         }
         var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 
