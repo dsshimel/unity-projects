@@ -5,15 +5,24 @@ public class BundleFactory
 {
     private readonly Manipulator manipulator;
     private readonly IProvider<ICollection<int>> gameObjectIdProvider;
-    public int radiusInner = 30;
-    public int radiusOuter = 100;
+    public readonly float radiusInner;
+    public readonly float radiusOuter;
+    public readonly float angularVelocityMin;
+    public readonly float angularVelocityMax;
 
-    public BundleFactory(Manipulator manipulator, int radiusInner, int radiusOuter)
+    public BundleFactory(
+        Manipulator manipulator, 
+        float radiusInner, 
+        float radiusOuter, 
+        float angularVelocityMin, 
+        float angularVelocityMax)
     {
         this.manipulator = manipulator;
         this.gameObjectIdProvider = manipulator;
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
+        this.angularVelocityMin = angularVelocityMin;
+        this.angularVelocityMax = angularVelocityMax;
     }
 
     public IBundle create()
@@ -30,12 +39,24 @@ public class BundleFactory
         if (flipCoin())
         {
             var randomizeParams = flipCoin();
-            movementStrat = new SphereTubeStrategy(gameObjectIdProvider, radiusInner, radiusOuter, randomizeParams);
+            movementStrat = new SphereTubeStrategy(
+                gameObjectIdProvider,
+                radiusInner,
+                radiusOuter,
+                randomizeParams,
+                angularVelocityMin,
+                angularVelocityMax);
         }
         else
         {
             var randomizeParams = flipCoin();
-            movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter, randomizeParams);
+            movementStrat = new HamsterWheelStrategy(
+                gameObjectIdProvider,
+                radiusInner, 
+                radiusOuter,
+                randomizeParams,
+                angularVelocityMin,
+                angularVelocityMax);
         }
         var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 

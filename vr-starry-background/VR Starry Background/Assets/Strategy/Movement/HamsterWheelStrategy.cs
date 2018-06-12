@@ -9,6 +9,9 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
     public readonly float radiusOuter;
     public readonly float maxXLength;
     public readonly bool randomizeParams;
+    public readonly float angularVelocityMin;
+    public readonly float angularVelocityMax;
+    public readonly float angularVelocityAverage;
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
@@ -16,12 +19,17 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
         float radiusOuter,
-        bool randomizeParams) : base(gameObjectIdProvider)
+        bool randomizeParams,
+        float angularVelocityMin,
+        float angularVelocityMax) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
         this.maxXLength = radiusOuter;
         this.randomizeParams = randomizeParams;
+        this.angularVelocityMin = angularVelocityMin;
+        this.angularVelocityMax = angularVelocityMax;
+        this.angularVelocityAverage = (angularVelocityMin + angularVelocityMax) / 2;
 
         this.cylinderParamsMap = this.randomizeParams
             ? InitCylinderParamsRandom()
@@ -60,7 +68,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
                     var xLengthUnit = 2 * maxXLength / (numLengthSpacings - 1);
                     var xLength = (k * xLengthUnit) - maxXLength;
 
-                    cylinderParamsList.Add(new CylinderParams(radius, angleZY, xLength, 1.5f));
+                    cylinderParamsList.Add(new CylinderParams(radius, angleZY, xLength, angularVelocityAverage));
                 }
             }
         }
@@ -79,7 +87,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(-maxXLength, maxXLength),
-            Random.Range(1.0f, 2.0f));
+            Random.Range(angularVelocityMin, angularVelocityMax));
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)

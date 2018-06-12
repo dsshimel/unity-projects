@@ -5,8 +5,10 @@ public class GameOrchestrator : MonoBehaviour {
 
     public GameObject spherePrefab;
     public int numSpheres;
-    public int radiusInner;
-    public int radiusOuter;
+    public float radiusInner;
+    public float radiusOuter;
+    public float angularVelocityMin;
+    public float angularVelocityMax;
 
     private ISession session;
 
@@ -20,7 +22,7 @@ public class GameOrchestrator : MonoBehaviour {
         }
 
         var manipulator = new Manipulator(comets);
-        var bundleFactory = new BundleFactory(manipulator, radiusInner, radiusOuter);
+        var bundleFactory = new BundleFactory(manipulator, radiusInner, radiusOuter, angularVelocityMin, angularVelocityMax);
         var playlistFactory = new PlaylistFactory(bundleFactory);
 
         session = new Session(playlistFactory.create(4), /* countdowTime= */ 1.0f);

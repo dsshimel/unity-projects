@@ -8,6 +8,9 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
     // Max distance meteor can be from player.
     public readonly float radiusOuter;
     public readonly bool randomizeParams;
+    public readonly float angularVelocityMin;
+    public readonly float angularVelocityMax;
+    public readonly float angularVelocityAverage;
 
     private IDictionary<int, AngleParams> angleParamsMap;
 
@@ -15,11 +18,16 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
         float radiusOuter,
-        bool randomizeParams) : base(gameObjectIdProvider)
+        bool randomizeParams,
+        float angularVelocityMin,
+        float angularVelocityMax) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
         this.randomizeParams = randomizeParams;
+        this.angularVelocityMin = angularVelocityMin;
+        this.angularVelocityMax = angularVelocityMax;
+        this.angularVelocityAverage = (angularVelocityMin + angularVelocityMax) / 2;
 
         this.angleParamsMap = this.randomizeParams
             ? InitAngleParamsRandom()
@@ -57,7 +65,7 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
                     var azimuthAngleUnit = 2 * Mathf.PI / numAzimuthAngles;
                     var azimuthAnglePhi = k * azimuthAngleUnit + (azimuthAngleUnit / 2);
 
-                    angleParamsList.Add(new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, 1.5f));
+                    angleParamsList.Add(new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, angularVelocityAverage));
                 }
             }
         }
@@ -76,7 +84,7 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(0, 2 * Mathf.PI),
-            Random.Range(1.0f, 2.0f));
+            Random.Range(angularVelocityMin, angularVelocityMax));
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)
