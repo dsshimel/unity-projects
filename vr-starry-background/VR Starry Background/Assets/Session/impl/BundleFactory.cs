@@ -8,10 +8,12 @@ public class BundleFactory
     public int radiusInner = 30;
     public int radiusOuter = 100;
 
-    public BundleFactory(Manipulator manipulator)
+    public BundleFactory(Manipulator manipulator, int radiusInner, int radiusOuter)
     {
         this.manipulator = manipulator;
         this.gameObjectIdProvider = manipulator;
+        this.radiusInner = radiusInner;
+        this.radiusOuter = radiusOuter;
     }
 
     public IBundle create()
@@ -27,8 +29,9 @@ public class BundleFactory
         IStrategy<Vector3> movementStrat;
         if (flipCoin())
         {
-            movementStrat = new SphereTubeStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
-        } else
+            movementStrat = new SphereTubeStrategy(gameObjectIdProvider, radiusInner, radiusOuter, /* randomizeParams= */ flipCoin());
+        }
+        else
         {
             movementStrat = new HamsterWheelStrategy(gameObjectIdProvider, radiusInner, radiusOuter);
         }

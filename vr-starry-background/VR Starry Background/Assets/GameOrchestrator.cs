@@ -20,7 +20,7 @@ public class GameOrchestrator : MonoBehaviour {
         }
 
         var manipulator = new Manipulator(comets);
-        var bundleFactory = new BundleFactory(manipulator);
+        var bundleFactory = new BundleFactory(manipulator, radiusInner, radiusOuter);
         var playlistFactory = new PlaylistFactory(bundleFactory);
 
         session = new Session(playlistFactory.create(4), /* countdowTime= */ 1.0f);

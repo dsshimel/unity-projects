@@ -4,24 +4,62 @@ using UnityEngine;
 public class SphereTubeStrategy : AbstractStrategy<Vector3>
 {
     // Min distance meteor can be from player.
-    public float radiusInner;
+    public readonly float radiusInner;
     // Max distance meteor can be from player.
-    public float radiusOuter;
+    public readonly float radiusOuter;
+    public readonly bool randomizeParams;
 
     private IDictionary<int, AngleParams> angleParamsMap;
 
     public SphereTubeStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
-        float radiusOuter) : base(gameObjectIdProvider)
+        float radiusOuter,
+        bool randomizeParams) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
+        this.randomizeParams = randomizeParams;
 
         angleParamsMap = new Dictionary<int, AngleParams>();
+
+        var gameObjectIdEnumerator = gameObjectIds.GetEnumerator();
+        var angleParamsList = new List<AngleParams>();
+        var numRadii = 2;
+        var numPolarAngles = 14;
+        var numAzimuthAngles = 12;
+        for (var r = 0; r < numRadii; r++)
+        {
+            var radiusUnit = (radiusOuter - radiusInner) / (numRadii - 1);
+            var radius = (r * radiusUnit) + radiusInner;
+            var radiusFraction = r / numRadii;
+            for (var j = 0; j < numPolarAngles; j++)
+            {
+                var polarAngleUnit = Mathf.PI / numPolarAngles;
+                var polarAngleTheta = j * polarAngleUnit + (polarAngleUnit / 2);
+                polarAngleTheta += polarAngleUnit * radiusFraction;
+
+                for (var k = 0; k < numAzimuthAngles; k++)
+                {
+                    var azimuthAngleUnit = 2 * Mathf.PI / numAzimuthAngles;
+                    var azimuthAnglePhi = k * azimuthAngleUnit + (azimuthAngleUnit / 2);
+                    azimuthAnglePhi += azimuthAngleUnit * radiusFraction;
+
+                    angleParamsList.Add(new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, 1.5f));
+                }
+            }
+        }
+
+        var angleParamsIndex = 0;
         foreach (int gameObjectId in gameObjectIds)
         {
-            angleParamsMap.Add(gameObjectId, CreateAngleParams());
+            if (randomizeParams)
+            {
+                angleParamsMap.Add(gameObjectId, CreateAngleParams());
+            } else
+            {
+                angleParamsMap.Add(gameObjectId, angleParamsList[angleParamsIndex++]);
+            }
         }
     }
 
@@ -31,7 +69,7 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(0, 2 * Mathf.PI),
-            Random.Range(1.0f, 2.0f)); ;
+            Random.Range(1.0f, 2.0f));
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)
@@ -56,7 +94,10 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
 
     class AngleParams
     {
-        public AngleParams(float radius, float polarAngleTheta, float azimuthAnglePhi,
+        public AngleParams(
+            float radius,
+            float polarAngleTheta,
+            float azimuthAnglePhi,
             float angularVelocity)
         {
             Radius = radius;
