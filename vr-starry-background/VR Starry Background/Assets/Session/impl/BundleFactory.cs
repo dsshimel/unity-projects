@@ -55,12 +55,13 @@ public class BundleFactory
         {
             movementStrat = new HamsterWheelStrategy(
                 gameObjectIdProvider,
-                radiusInner, 
+                radiusInner,
                 radiusOuter,
                 randomizeMovementStrategyPositionParams,
                 angularVelocityMin,
                 angularVelocityMax,
-                randomizeMovementStrategyVelocities);
+                randomizeMovementStrategyVelocities,
+                alternateMovementStrategyDirections);
         }
         var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 

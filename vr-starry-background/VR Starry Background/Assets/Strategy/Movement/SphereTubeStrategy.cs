@@ -43,9 +43,14 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
     private IDictionary<int, AngleParams> InitAngleParamsRandom()
     {
         var paramsMap = new Dictionary<int, AngleParams>();
+        var direction = 1;
         foreach (var gameObjectId in gameObjectIds)
         {
-            paramsMap.Add(gameObjectId, CreateAngleParams());
+            paramsMap.Add(gameObjectId, CreateAngleParams(direction));
+            if (alternateDirections)
+            {
+                direction *= -1;
+            }
         }
         return paramsMap;
     }
@@ -60,6 +65,7 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         var numPolarAngles = 14;
         var numAzimuthAngles = 8;
         var radiusUnit = (radiusOuter - radiusInner) / (numRadii - 1);
+        var direction = 1;
         for (var r = 0; r < numRadii; r++)
         {
             var radius = (r * radiusUnit) + radiusInner;
@@ -74,8 +80,14 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
                     var azimuthAnglePhi = k * azimuthAngleUnit + (azimuthAngleUnit / 2);
 
                     var angularVelocity = randomizeVelocities ? RandomVelocity() : angularVelocityAverage;
+                    angularVelocity *= direction;
                     var angleParams = new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, angularVelocity);
                     paramsMap.Add(gameObjectEnumerator.Current, angleParams);
+
+                    if (alternateDirections)
+                    {
+                        direction *= -1;
+                    }
                     gameObjectEnumerator.MoveNext();
                 }
             }
@@ -84,13 +96,13 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         return paramsMap;
     }
 
-    private AngleParams CreateAngleParams()
+    private AngleParams CreateAngleParams(int direction)
     {
         return new AngleParams(
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(0, 2 * Mathf.PI),
-            RandomVelocity());
+            direction * RandomVelocity());
     }
 
     private float RandomVelocity()

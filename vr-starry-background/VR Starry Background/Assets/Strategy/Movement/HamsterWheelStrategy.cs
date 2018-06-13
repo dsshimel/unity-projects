@@ -15,6 +15,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
     public readonly float angularVelocityMax;
     public readonly float angularVelocityAverage;
     public readonly bool randomizePositionParams;
+    public readonly bool alternateDirections;
 
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
@@ -26,7 +27,8 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
         bool randomizePositionParams,
         float angularVelocityMin,
         float angularVelocityMax,
-        bool randomizeVelocities) : base(gameObjectIdProvider)
+        bool randomizeVelocities,
+        bool alternateDirections) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
@@ -36,6 +38,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
         this.angularVelocityMax = angularVelocityMax;
         this.angularVelocityAverage = (angularVelocityMin + angularVelocityMax) / 2;
         this.randomizePositionParams = randomizeVelocities;
+        this.alternateDirections = alternateDirections;
 
         this.cylinderParamsMap = this.randomizeParams
             ? InitCylinderParamsRandom()
@@ -45,9 +48,14 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
     private IDictionary<int, CylinderParams> InitCylinderParamsRandom()
     {
         var paramsMap = new Dictionary<int, CylinderParams>();
+        var direction = 1;
         foreach (int gameObjectId in gameObjectIds)
         {
-            paramsMap.Add(gameObjectId, CreateCylinderParams());
+            paramsMap.Add(gameObjectId, CreateCylinderParams(direction));
+            if (alternateDirections)
+            {
+                direction *= -1;
+            }
         }
         return paramsMap;
     }
@@ -55,12 +63,14 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
     private IDictionary<int, CylinderParams> InitCylinderParams()
     {
         var paramsMap = new Dictionary<int, CylinderParams>();
+        var gameObjectEnumerator = gameObjectIds.GetEnumerator();
+        gameObjectEnumerator.MoveNext();
 
-        var cylinderParamsList = new List<CylinderParams>();
         var numRadii = 3;
         var numAngleZYs = 8;
         var numLengthSpacings = 14;
         var radiusUnit = (radiusOuter - radiusInner) / (numRadii - 1);
+        var direction = 1;
         for (var r = 0; r < numRadii; r++)
         {
             var radius = (r * radiusUnit) + radiusInner;
@@ -75,26 +85,29 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
                     var xLength = (k * xLengthUnit) - maxXLength;
 
                     var angularVelocity = randomizePositionParams ? RandomVelocity() : angularVelocityAverage;
-                    cylinderParamsList.Add(new CylinderParams(radius, angleZY, xLength, angularVelocity));
+                    angularVelocity *= direction;
+                    var cylinderParams = new CylinderParams(radius, angleZY, xLength, angularVelocity);
+                    paramsMap.Add(gameObjectEnumerator.Current, cylinderParams);
+
+                    gameObjectEnumerator.MoveNext();
+                    if (alternateDirections)
+                    {
+                        direction *= -1;
+                    }
                 }
             }
         }
 
-        var cylinderParamsIndex = 0;
-        foreach (int gameObjectId in gameObjectIds)
-        {
-            paramsMap.Add(gameObjectId, cylinderParamsList[cylinderParamsIndex++]);
-        }
         return paramsMap;
     }
 
-    private CylinderParams CreateCylinderParams()
+    private CylinderParams CreateCylinderParams(int direction)
     {
         return new CylinderParams(
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(-maxXLength, maxXLength),
-            RandomVelocity());
+            direction * RandomVelocity());
     }
 
     private float RandomVelocity()
