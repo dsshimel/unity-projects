@@ -3,23 +3,10 @@ using UnityEngine;
 
 // TODO: Factor out a CircularMovementStrategy class since a lot of code
 // is shared with SphereTubeStrategy.
-public class HamsterWheelStrategy : AbstractStrategy<Vector3>
+public class HamsterWheelStrategy : CircularMovementStrategy
 {
-    // Min distance meteor can be from player.
-    public readonly float radiusInner;
-    // Max distance meteor can be from player.
-    public readonly float radiusOuter;
-    public readonly float maxXLength;
-    public readonly bool randomizeParams;
-    public readonly float angularVelocityMin;
-    public readonly float angularVelocityMax;
-    public readonly float angularVelocityAverage;
-    public readonly bool randomizePositionParams;
-    public readonly bool alternateDirections;
-
     private IDictionary<int, CylinderParams> cylinderParamsMap;
 
-    // TODO: Add bool for controlling if half the comets go the opposite direction
     public HamsterWheelStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
@@ -28,19 +15,17 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
         float angularVelocityMin,
         float angularVelocityMax,
         bool randomizeVelocities,
-        bool alternateDirections) : base(gameObjectIdProvider)
+        bool alternateDirections) : base(
+            gameObjectIdProvider,
+            radiusInner,
+            radiusOuter,
+            randomizePositionParams,
+            angularVelocityMin,
+            angularVelocityMax,
+            randomizeVelocities,
+            alternateDirections)
     {
-        this.radiusInner = radiusInner;
-        this.radiusOuter = radiusOuter;
-        this.maxXLength = radiusOuter;
-        this.randomizeParams = randomizePositionParams;
-        this.angularVelocityMin = angularVelocityMin;
-        this.angularVelocityMax = angularVelocityMax;
-        this.angularVelocityAverage = (angularVelocityMin + angularVelocityMax) / 2;
-        this.randomizePositionParams = randomizeVelocities;
-        this.alternateDirections = alternateDirections;
-
-        this.cylinderParamsMap = this.randomizeParams
+        cylinderParamsMap = base.randomizePositionParams
             ? InitCylinderParamsRandom()
             : InitCylinderParams();
     }
@@ -84,7 +69,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
                     var xLengthUnit = 2 * maxXLength / (numLengthSpacings - 1);
                     var xLength = (k * xLengthUnit) - maxXLength;
 
-                    var angularVelocity = randomizePositionParams ? RandomVelocity() : angularVelocityAverage;
+                    var angularVelocity = randomizeVelocities ? RandomVelocity() : angularVelocityAverage;
                     angularVelocity *= direction;
                     var cylinderParams = new CylinderParams(radius, angleZY, xLength, angularVelocity);
                     paramsMap.Add(gameObjectEnumerator.Current, cylinderParams);
@@ -108,11 +93,6 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(-maxXLength, maxXLength),
             direction * RandomVelocity());
-    }
-
-    private float RandomVelocity()
-    {
-        return Random.Range(angularVelocityMin, angularVelocityMax);
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)

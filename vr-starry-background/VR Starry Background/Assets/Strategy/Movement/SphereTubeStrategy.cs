@@ -1,19 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SphereTubeStrategy : AbstractStrategy<Vector3>
+public class SphereTubeStrategy : CircularMovementStrategy
 {
-    // Min distance meteor can be from player.
-    public readonly float radiusInner;
-    // Max distance meteor can be from player.
-    public readonly float radiusOuter;
-    public readonly bool randomizePositionParams;
-    public readonly float angularVelocityMin;
-    public readonly float angularVelocityMax;
-    public readonly float angularVelocityAverage;
-    public readonly bool randomizeVelocities;
-    public readonly bool alternateDirections;
-
     private IDictionary<int, AngleParams> angleParamsMap;
 
     public SphereTubeStrategy(
@@ -24,18 +13,17 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         float angularVelocityMin,
         float angularVelocityMax,
         bool randomizeVelocities,
-        bool alternateDirections) : base(gameObjectIdProvider)
+        bool alternateDirections) : base(
+            gameObjectIdProvider,
+            radiusInner,
+            radiusOuter,
+            randomizePositionParams,
+            angularVelocityMin,
+            angularVelocityMax,
+            randomizeVelocities,
+            alternateDirections)
     {
-        this.radiusInner = radiusInner;
-        this.radiusOuter = radiusOuter;
-        this.randomizePositionParams = randomizePositionParams;
-        this.angularVelocityMin = angularVelocityMin;
-        this.angularVelocityMax = angularVelocityMax;
-        this.angularVelocityAverage = (angularVelocityMin + angularVelocityMax) / 2;
-        this.randomizeVelocities = randomizeVelocities;
-        this.alternateDirections = alternateDirections;
-
-        this.angleParamsMap = this.randomizePositionParams
+        angleParamsMap = randomizePositionParams
             ? InitAngleParamsRandom()
             : InitAngleParams();
     }
@@ -103,11 +91,6 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(0, 2 * Mathf.PI),
             direction * RandomVelocity());
-    }
-
-    private float RandomVelocity()
-    {
-        return Random.Range(angularVelocityMin, angularVelocityMax);
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)
