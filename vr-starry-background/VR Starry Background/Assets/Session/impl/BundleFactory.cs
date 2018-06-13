@@ -38,6 +38,7 @@ public class BundleFactory
         IStrategy<Vector3> movementStrat;
         var randomizeMovementStrategyPositionParams = flipCoin();
         var randomizeMovementStrategyVelocities = flipCoin();
+        var alternateMovementStrategyDirections = flipCoin();
         if (flipCoin())
         {
             movementStrat = new SphereTubeStrategy(
@@ -47,7 +48,8 @@ public class BundleFactory
                 randomizeMovementStrategyPositionParams,
                 angularVelocityMin,
                 angularVelocityMax,
-                randomizeMovementStrategyVelocities);
+                randomizeMovementStrategyVelocities,
+                alternateMovementStrategyDirections);
         }
         else
         {

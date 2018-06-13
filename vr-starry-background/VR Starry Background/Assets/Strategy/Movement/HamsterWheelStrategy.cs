@@ -74,7 +74,7 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
                     var xLengthUnit = 2 * maxXLength / (numLengthSpacings - 1);
                     var xLength = (k * xLengthUnit) - maxXLength;
 
-                    var angularVelocity = randomizePositionParams ? randomVelocity() : angularVelocityAverage;
+                    var angularVelocity = randomizePositionParams ? RandomVelocity() : angularVelocityAverage;
                     cylinderParamsList.Add(new CylinderParams(radius, angleZY, xLength, angularVelocity));
                 }
             }
@@ -94,10 +94,10 @@ public class HamsterWheelStrategy : AbstractStrategy<Vector3>
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(-maxXLength, maxXLength),
-            randomVelocity());
+            RandomVelocity());
     }
 
-    private float randomVelocity()
+    private float RandomVelocity()
     {
         return Random.Range(angularVelocityMin, angularVelocityMax);
     }
