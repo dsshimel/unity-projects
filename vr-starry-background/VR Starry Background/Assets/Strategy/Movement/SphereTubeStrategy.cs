@@ -7,10 +7,11 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
     public readonly float radiusInner;
     // Max distance meteor can be from player.
     public readonly float radiusOuter;
-    public readonly bool randomizeParams;
+    public readonly bool randomizePositionParams;
     public readonly float angularVelocityMin;
     public readonly float angularVelocityMax;
     public readonly float angularVelocityAverage;
+    public readonly bool randomizeVelocities;
 
     private IDictionary<int, AngleParams> angleParamsMap;
 
@@ -18,18 +19,20 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
         IProvider<ICollection<int>> gameObjectIdProvider,
         float radiusInner,
         float radiusOuter,
-        bool randomizeParams,
+        bool randomizePositionParams,
         float angularVelocityMin,
-        float angularVelocityMax) : base(gameObjectIdProvider)
+        float angularVelocityMax,
+        bool randomizeVelocities) : base(gameObjectIdProvider)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
-        this.randomizeParams = randomizeParams;
+        this.randomizePositionParams = randomizePositionParams;
         this.angularVelocityMin = angularVelocityMin;
         this.angularVelocityMax = angularVelocityMax;
         this.angularVelocityAverage = (angularVelocityMin + angularVelocityMax) / 2;
+        this.randomizeVelocities = randomizeVelocities;
 
-        this.angleParamsMap = this.randomizeParams
+        this.angleParamsMap = this.randomizePositionParams
             ? InitAngleParamsRandom()
             : InitAngleParams();
     }
@@ -65,7 +68,8 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
                     var azimuthAngleUnit = 2 * Mathf.PI / numAzimuthAngles;
                     var azimuthAnglePhi = k * azimuthAngleUnit + (azimuthAngleUnit / 2);
 
-                    angleParamsList.Add(new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, angularVelocityAverage));
+                    var angularVelocity = randomizeVelocities ? randomVelocity() : angularVelocityAverage;
+                    angleParamsList.Add(new AngleParams(radius, polarAngleTheta, azimuthAnglePhi, angularVelocity));
                 }
             }
         }
@@ -84,7 +88,12 @@ public class SphereTubeStrategy : AbstractStrategy<Vector3>
             Random.Range(radiusInner, radiusOuter),
             Random.Range(0, 2 * Mathf.PI),
             Random.Range(0, 2 * Mathf.PI),
-            Random.Range(angularVelocityMin, angularVelocityMax));
+            randomVelocity());
+    }
+
+    private float randomVelocity()
+    {
+        return Random.Range(angularVelocityMin, angularVelocityMax);
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)

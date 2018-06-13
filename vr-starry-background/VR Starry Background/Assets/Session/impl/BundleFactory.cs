@@ -36,27 +36,29 @@ public class BundleFactory
         // TODO: One idea is to feed one strategy into the next in a chain to create coherency
         // between the patterns
         IStrategy<Vector3> movementStrat;
+        var randomizeMovementStrategyPositionParams = flipCoin();
+        var randomizeMovementStrategyVelocities = flipCoin();
         if (flipCoin())
         {
-            var randomizeParams = flipCoin();
             movementStrat = new SphereTubeStrategy(
                 gameObjectIdProvider,
                 radiusInner,
                 radiusOuter,
-                randomizeParams,
+                randomizeMovementStrategyPositionParams,
                 angularVelocityMin,
-                angularVelocityMax);
+                angularVelocityMax,
+                randomizeMovementStrategyVelocities);
         }
         else
         {
-            var randomizeParams = flipCoin();
             movementStrat = new HamsterWheelStrategy(
                 gameObjectIdProvider,
                 radiusInner, 
                 radiusOuter,
-                randomizeParams,
+                randomizeMovementStrategyPositionParams,
                 angularVelocityMin,
-                angularVelocityMax);
+                angularVelocityMax,
+                randomizeMovementStrategyVelocities);
         }
         var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 

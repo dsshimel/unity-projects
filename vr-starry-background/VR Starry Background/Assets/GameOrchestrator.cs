@@ -5,6 +5,8 @@ public class GameOrchestrator : MonoBehaviour {
 
     public GameObject spherePrefab;
     public int numSpheres;
+    public int numIntervals;
+
     public float radiusInner;
     public float radiusOuter;
     public float angularVelocityMin;
@@ -25,7 +27,7 @@ public class GameOrchestrator : MonoBehaviour {
         var bundleFactory = new BundleFactory(manipulator, radiusInner, radiusOuter, angularVelocityMin, angularVelocityMax);
         var playlistFactory = new PlaylistFactory(bundleFactory);
 
-        session = new Session(playlistFactory.create(4), /* countdowTime= */ 1.0f);
+        session = new Session(playlistFactory.create(numIntervals), /* countdowTime= */ 1.0f);
         session.Start();
     }
 
