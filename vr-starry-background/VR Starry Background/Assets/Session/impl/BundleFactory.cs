@@ -66,7 +66,7 @@ public class BundleFactory
         var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 
         IStrategy<Color> colorStrat;
-        if (falseflipCoin())
+        if (flipCoin())
         {
             colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
         } else
