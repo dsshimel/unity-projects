@@ -33,8 +33,8 @@ public class GameOrchestrator : MonoBehaviour {
             angularVelocityMin,
             angularVelocityMax,
             intensityMax,
-            intensityMax);
-        var playlistFactory = new PlaylistFactory(bundleFactory);
+            intensityMin);
+        var playlistFactory = new PlaylistFactory(bundleFactory, intensityMax, intensityMin);
 
         session = new Session(playlistFactory.create(numIntervals), /* countdowTime= */ 1.0f);
         session.Start();

@@ -3,10 +3,17 @@
 public class PlaylistFactory
 {
     private readonly BundleFactory bundleFactory;
+    public readonly float maxIntensity;
+    public readonly float minIntensity;
 
-    public PlaylistFactory(BundleFactory bundleFactory)
+    public PlaylistFactory(
+        BundleFactory bundleFactory, 
+        float maxIntensity, 
+        float minIntensity)
     {
         this.bundleFactory = bundleFactory;
+        this.maxIntensity = maxIntensity;
+        this.minIntensity = minIntensity;
     }
 
     public IPlaylist create(int length)
@@ -17,7 +24,7 @@ public class PlaylistFactory
         }
 
         var playlist = new Playlist(new List<IBundle>(), new List<Interval>());
-        var interval = new Interval(5.0f, 1.0f, 2.5f, 5.0f);
+        var interval = new Interval(5.0f, 1.0f, 2.5f, 5.0f, maxIntensity, minIntensity);
    
         for (var i = 0; i < length; i++)
         {

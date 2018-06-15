@@ -4,6 +4,8 @@
     public readonly float SlowdownIntervalSeconds;
     public readonly float RestIntervalSeconds;
     public readonly float FadeIntervalSeconds;
+    public readonly float MaxIntensity;
+    public readonly float MinIntensity;
 
     private bool isFinished = false;
 
@@ -11,7 +13,9 @@
         float activeIntervalSeconds,
         float slowdownIntervalSeconds,
         float restIntervalSeconds,
-        float fadeSeconds)
+        float fadeSeconds,
+        float maxIntensity,
+        float minIntensity)
     {
         if (activeIntervalSeconds < 0 || slowdownIntervalSeconds < 0 || restIntervalSeconds < 0 || fadeSeconds < 0)
         {
@@ -21,6 +25,8 @@
         SlowdownIntervalSeconds = slowdownIntervalSeconds;
         RestIntervalSeconds = restIntervalSeconds;
         FadeIntervalSeconds = fadeSeconds;
+        MaxIntensity = maxIntensity;
+        MinIntensity = minIntensity;
     }
 
     public bool IsActive(float time)
@@ -64,16 +70,15 @@
     {
         if (time < SlowingDownStartTime)
         {
-            return 1.0f;
+            return MaxIntensity;
         }
-        if (time >= RestingStartTime)
+        if (RestingStartTime < time)
         {
-            return 0.5f;
+            return MinIntensity;
         }
 
         float timeIntoSlowdown = time - SlowingDownStartTime;
-        return 1.0f - (timeIntoSlowdown / SlowdownIntervalSeconds);
-        
+        return MaxIntensity - (MaxIntensity - MinIntensity) * (timeIntoSlowdown / SlowdownIntervalSeconds);
     }
 
     public float SlowingDownStartTime

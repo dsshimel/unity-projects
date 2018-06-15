@@ -21,7 +21,7 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
     {
         if (intensity < minIntensity|| maxIntensity < intensity)
         {
-            throw new System.ArgumentException("intensity must be between " + minIntensity + " and " + maxIntensity);
+            throw new System.ArgumentException("intensity " + intensity + " must be between " + minIntensity + " and " + maxIntensity);
         }
         this.intensity = intensity;
     }

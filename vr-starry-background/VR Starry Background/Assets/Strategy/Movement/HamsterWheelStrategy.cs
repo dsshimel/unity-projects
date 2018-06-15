@@ -101,6 +101,10 @@ public class HamsterWheelStrategy : CircularMovementStrategy
     {
         var cylinderParams = cylinderParamsMap[gameObjectId];
 
+        if (intensity < 0.5f)
+        {
+            throw new System.ArgumentException(intensity + " is too low");
+        }
         float attenuatedAngularVelocity = cylinderParams.AngularVelocity * intensity;
         cylinderParams.AngleZY -= timeDelta * attenuatedAngularVelocity;
 
