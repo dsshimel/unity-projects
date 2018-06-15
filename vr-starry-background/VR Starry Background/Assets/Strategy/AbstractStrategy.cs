@@ -23,4 +23,9 @@ public abstract class AbstractStrategy<T> : IStrategy<T>
     }
 
     public abstract T ComputeValue(int gameObjectId, float timeNow, float timeDelta);
+
+    public T ComputeInitialValue(int gameObjectId)
+    {
+        return ComputeValue(gameObjectId, /* timeNow= */ 0, /* timeDelta= */ 0);
+    }
 }

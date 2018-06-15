@@ -8,14 +8,14 @@ public class ColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gradient>
 
     public ColorMatchStaticGradientStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
-        IStrategy<Color> colorStrat) : base(gameObjectIdProvider)
+        IStrategy<Color> colorStrategy) : base(gameObjectIdProvider)
     {
-        colorStrategy = colorStrat;
+        this.colorStrategy = colorStrategy;
 
         gradientMap = new Dictionary<int, Gradient>();
         foreach (int gameObjectId in gameObjectIds)
         {
-            Color color = colorStrategy.ComputeValue(gameObjectId, 0, 0);
+            Color color = this.colorStrategy.ComputeValue(gameObjectId, 0, 0);
 
             Gradient grad = new Gradient();
             GradientColorKey[] colorKeys = new GradientColorKey[]

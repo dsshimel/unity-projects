@@ -1,11 +1,26 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class ParticleSizeMatchStaticStrategy : AbstractStaticStrategy<Vector3>
+public class ParticleSizeMatchStaticStrategy : AbstractStaticStrategy<float>
 {
-    [MenuItem("Tools/MyTool/Do It in C#")]
-    static void DoIt()
+    private IStrategy<Vector3> sizeStrategy;
+    private IDictionary<int, float> radiusMap;
+
+    public ParticleSizeMatchStaticStrategy(
+        IProvider<ICollection<int>> gameObjectIdProvider,
+        IStrategy<Vector3> sizeStrategy) : base(gameObjectIdProvider)
     {
-        EditorUtility.DisplayDialog("MyTool", "Do It in C# !", "OK", "");
+        this.sizeStrategy = sizeStrategy;
+
+        radiusMap = new Dictionary<int, float>();
+        foreach (int gameObjectId in gameObjectIds)
+        {
+            radiusMap[gameObjectId] = sizeStrategy.ComputeInitialValue(gameObjectId).magnitude / 2;
+        }
+    }
+
+    public override float ComputeStrategyValue(int gameObjectId)
+    {
+        return radiusMap[gameObjectId];
     }
 }

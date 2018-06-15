@@ -27,4 +27,8 @@ public interface IBundle
     {
         get;
     }
+    IStrategy<float> ParticleSizeStrategy
+    {
+        get;
+    }
 }

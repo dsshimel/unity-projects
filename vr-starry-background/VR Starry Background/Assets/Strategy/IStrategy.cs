@@ -2,4 +2,6 @@
 {
     // Get the value to be applied.
     T ComputeValue(int gameObjectId, float timeNow, float timeDelta);
+
+    T ComputeInitialValue(int gameObjectId);
 }   

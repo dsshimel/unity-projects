@@ -8,24 +8,28 @@ public class Bundle : IBundle
     private IStrategyApplier<Color> colorStrategyApplier;
     private IStrategyApplier<Gradient> trailsStrategyApplier;
     private IStrategyApplier<Vector3> sizeStrategyApplier;
+    private IStrategyApplier<float> particleSizeStrategyApplier;
 
     public Bundle(
-        IStrategyApplier<Vector3> movementStratApplier,
-        IStrategyApplier<Color> colorStratApplier,
-        IStrategyApplier<Gradient> trailsStratApplier,
-        IStrategyApplier<Vector3> sizeStratApplier)
+        IStrategyApplier<Vector3> movementStrategyApplier,
+        IStrategyApplier<Color> colorStrategyApplier,
+        IStrategyApplier<Gradient> trailsStrategyApplier,
+        IStrategyApplier<Vector3> sizeStrategyApplier,
+        IStrategyApplier<float> particleSizeStrategyApplier)
     {
-        movementStrategyApplier = movementStratApplier;
-        colorStrategyApplier = colorStratApplier;
-        trailsStrategyApplier = trailsStratApplier;
-        sizeStrategyApplier = sizeStratApplier;
+        this.movementStrategyApplier = movementStrategyApplier;
+        this.colorStrategyApplier = colorStrategyApplier;
+        this.trailsStrategyApplier = trailsStrategyApplier;
+        this.sizeStrategyApplier = sizeStrategyApplier;
+        this.particleSizeStrategyApplier = particleSizeStrategyApplier;
 
         strategies = new List<IStrategyUntyped>
         {
-            movementStrategyApplier.Strategy,
-            colorStrategyApplier.Strategy,
-            trailsStrategyApplier.Strategy,
-            sizeStrategyApplier.Strategy
+            this.movementStrategyApplier.Strategy,
+            this.colorStrategyApplier.Strategy,
+            this.trailsStrategyApplier.Strategy,
+            this.sizeStrategyApplier.Strategy,
+            this.particleSizeStrategyApplier.Strategy
         };
     }
 
@@ -35,6 +39,7 @@ public class Bundle : IBundle
         colorStrategyApplier.Apply(timeNow, timeDelta);
         trailsStrategyApplier.Apply(timeNow, timeDelta);
         sizeStrategyApplier.Apply(timeNow, timeDelta);
+        particleSizeStrategyApplier.Apply(timeNow, timeDelta);
     }
 
     public void ApplyStrategiesFade(IBundle bundleFadeIn, float fadeOutPercent, float timeNow, float timeDelta)
@@ -43,6 +48,7 @@ public class Bundle : IBundle
         colorStrategyApplier.ApplyFade(bundleFadeIn.ColorStrategy, fadeOutPercent, timeNow, timeDelta);
         trailsStrategyApplier.ApplyFade(bundleFadeIn.TrailsStrategy, fadeOutPercent, timeNow, timeDelta);
         sizeStrategyApplier.ApplyFade(bundleFadeIn.SizeStrategy, fadeOutPercent, timeNow, timeDelta);
+        particleSizeStrategyApplier.ApplyFade(bundleFadeIn.ParticleSizeStrategy, fadeOutPercent, timeNow, timeDelta);
     }
 
     public void SetIntensities(float intensity)
@@ -82,6 +88,14 @@ public class Bundle : IBundle
         get
         {
             return trailsStrategyApplier.Strategy;
+        }
+    }
+
+    public IStrategy<float> ParticleSizeStrategy
+    {
+        get
+        {
+            return particleSizeStrategyApplier.Strategy;
         }
     }
 }

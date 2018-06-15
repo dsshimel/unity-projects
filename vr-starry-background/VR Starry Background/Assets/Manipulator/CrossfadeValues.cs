@@ -53,4 +53,10 @@ public class CrossfadeValues
 
         return result;
     }
+
+    public static float FadeFloat(float valueOut, float valueIn, float percentOut)
+    {
+        var percentIn = PercentIn(percentOut);
+        return valueOut * percentOut + valueIn * percentIn;
+    }
 }

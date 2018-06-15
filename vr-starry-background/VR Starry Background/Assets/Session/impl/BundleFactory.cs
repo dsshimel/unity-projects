@@ -82,11 +82,15 @@ public class BundleFactory
         var trailsStrat = new ColorMatchStaticGradientStrategy(gameObjectIdProvider, colorStrat);
         var trailsStrategyApplier = new TrailsStrategyApplier(manipulator, trailsStrat);
 
+        var particleSizeStrat = new ParticleSizeMatchStaticStrategy(gameObjectIdProvider, sizeStrat);
+        var particleSizeStrategyApplier = new ParticleRadiusStrategyApplier(manipulator, particleSizeStrat);
+
         return new Bundle(
                 movementStrategyApplier,
                 colorStrategyApplier,
                 trailsStrategyApplier,
-                sizeStrategyApplier);
+                sizeStrategyApplier,
+                particleSizeStrategyApplier);
     }
 
     private bool flipCoin()
