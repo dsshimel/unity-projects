@@ -34,7 +34,7 @@ public class RainbowColorWheel : AbstractStrategy<Color>
     public override Color ComputeValue(int gameObjectId, float timeNow, float timeDelta)
     {
         var color = colorMap[gameObjectId];
-        var colorStep = timeDelta / duration;
+        var colorStep = intensity * timeDelta / duration;
         float hue, saturation, value;
         Color.RGBToHSV(color, out hue, out saturation, out value);
         hue += colorStep;
@@ -42,10 +42,8 @@ public class RainbowColorWheel : AbstractStrategy<Color>
         {
             hue -= 1;
         }
-        if (saturation == 1.0)
-        {
-            saturation *= intensity;
-        }
+
+        saturation = intensity;
 
         color = Color.HSVToRGB(hue, saturation, value);
         colorMap[gameObjectId] = color;
