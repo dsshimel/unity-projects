@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: Factor out a CircularMovementStrategy class since a lot of code
-// is shared with SphereTubeStrategy.
 public class HamsterWheelStrategy : CircularMovementStrategy
 {
     private IDictionary<int, CylinderParams> cylinderParamsMap;
@@ -45,6 +43,15 @@ public class HamsterWheelStrategy : CircularMovementStrategy
         return paramsMap;
     }
 
+    private CylinderParams CreateCylinderParams(int direction)
+    {
+        return new CylinderParams(
+            Random.Range(radiusInner, radiusOuter),
+            Random.Range(0, 2 * Mathf.PI),
+            Random.Range(-maxXLength, maxXLength),
+            direction * RandomVelocity());
+    }
+
     private IDictionary<int, CylinderParams> InitCylinderParams()
     {
         var paramsMap = new Dictionary<int, CylinderParams>();
@@ -84,15 +91,6 @@ public class HamsterWheelStrategy : CircularMovementStrategy
         }
 
         return paramsMap;
-    }
-
-    private CylinderParams CreateCylinderParams(int direction)
-    {
-        return new CylinderParams(
-            Random.Range(radiusInner, radiusOuter),
-            Random.Range(0, 2 * Mathf.PI),
-            Random.Range(-maxXLength, maxXLength),
-            direction * RandomVelocity());
     }
 
     public override Vector3 ComputeValue(int gameObjectId, float timeNow, float timeDelta)

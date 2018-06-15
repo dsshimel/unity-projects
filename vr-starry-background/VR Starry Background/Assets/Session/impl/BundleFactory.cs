@@ -65,7 +65,15 @@ public class BundleFactory
         }
         var movementStrategyApplier = new MovementStrategyApplier(manipulator, movementStrat);
 
-        var colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
+        IStrategy<Color> colorStrat;
+        if (falseflipCoin())
+        {
+            colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
+        } else
+        {
+            var duration = 5.0f;
+            colorStrat = new RainbowColorWheel(gameObjectIdProvider, duration);
+        }
         var colorStrategyApplier = new ColorStrategyApplier(manipulator, colorStrat);
 
         var sizeStrat = new RandomStaticSizeStrategy(gameObjectIdProvider);
