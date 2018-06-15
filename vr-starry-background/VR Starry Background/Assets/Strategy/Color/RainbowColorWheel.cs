@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class RainbowColorWheel : AbstractStrategy<Color>
+public class RainbowColorWheelStrategy : AbstractStrategy<Color>
 {
     private readonly IDictionary<int, Color> colorMap;
 
     public readonly float duration;
 
-    public RainbowColorWheel(
+    public RainbowColorWheelStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
-        float duration) : base(gameObjectIdProvider)
+        float duration,
+        float intensityMin,
+        float intensityMax) : base(gameObjectIdProvider, intensityMin, intensityMax)
     {
         this.duration = duration;
 

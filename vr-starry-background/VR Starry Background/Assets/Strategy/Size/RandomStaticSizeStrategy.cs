@@ -5,7 +5,10 @@ public class RandomStaticSizeStrategy : AbstractStaticStrategy<Vector3>
 {
     private IDictionary<int, Vector3> scaleMap;
 
-    public RandomStaticSizeStrategy(IProvider<ICollection<int>> gameObjectIdProvider) : base(gameObjectIdProvider)
+    public RandomStaticSizeStrategy(
+        IProvider<ICollection<int>> gameObjectIdProvider, 
+        float intensityMin, 
+        float intensityMax) : base(gameObjectIdProvider, intensityMin, intensityMax)
     {
         scaleMap = new Dictionary<int, Vector3>();
         foreach (int gameObjectId in gameObjectIds)

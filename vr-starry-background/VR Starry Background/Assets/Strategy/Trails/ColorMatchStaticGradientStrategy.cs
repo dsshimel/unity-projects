@@ -8,7 +8,9 @@ public class ColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gradient>
 
     public ColorMatchStaticGradientStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
-        IStrategy<Color> colorStrategy) : base(gameObjectIdProvider)
+        IStrategy<Color> colorStrategy,
+        float intensityMin,
+        float intensityMax) : base(gameObjectIdProvider, intensityMin, intensityMax)
     {
         this.colorStrategy = colorStrategy;
 

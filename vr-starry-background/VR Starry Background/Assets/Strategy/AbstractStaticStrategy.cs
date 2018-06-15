@@ -2,7 +2,10 @@
 
 public abstract class AbstractStaticStrategy<T> : AbstractStrategy<T>
 {
-    public AbstractStaticStrategy(IProvider<ICollection<int>> gameObjectIdProvider) : base(gameObjectIdProvider)
+    public AbstractStaticStrategy(
+        IProvider<ICollection<int>> gameObjectIdProvider,
+        float maxIntensity, 
+        float minIntensity) : base(gameObjectIdProvider, maxIntensity, minIntensity)
     {
     }
 

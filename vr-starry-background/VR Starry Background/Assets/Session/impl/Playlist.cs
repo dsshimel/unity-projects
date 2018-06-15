@@ -37,7 +37,13 @@ public class Playlist : IPlaylist
                 ApplyStrategies(timeInEntry, delta);
                 break;
             case State.ACTIVE_FINISHED:
-                SetIntensities(0.5f);
+                ApplyStrategies(timeInEntry, delta);
+                break;
+            case State.SLOWING_DOWN:
+                SetIntensities(GetSlowdownIntensity(timeInEntry));
+                ApplyStrategies(timeInEntry, delta);
+                break;
+            case State.SLOWING_DOWN_FINISHED:
                 ApplyStrategies(timeInEntry, delta);
                 break;
             case State.RESTING:
@@ -106,6 +112,11 @@ public class Playlist : IPlaylist
         }
     }
 
+    private float GetSlowdownIntensity(float timeNow)
+    {
+        return CurrentInterval.GetSlowdownIntensity(timeNow);
+    }
+
     private void SetIntensities(float intensity)
     {
         CurrentBundle.SetIntensities(intensity);
@@ -118,13 +129,21 @@ public class Playlist : IPlaylist
         {
             state = State.ACTIVE;
         }
-        else if (IsResting())
+        else if (IsSlowingDown())
         {
             if (currentState == State.ACTIVE)
             {
                 state = State.ACTIVE_FINISHED;
+            } else
+            {
+                state = State.SLOWING_DOWN;
             }
-            else
+        } else if (IsResting())
+        {
+            if (currentState == State.SLOWING_DOWN)
+            {
+                state = State.SLOWING_DOWN_FINISHED;
+            } else
             {
                 state = State.RESTING;
             }
@@ -134,8 +153,7 @@ public class Playlist : IPlaylist
             if (currentState == State.RESTING)
             {
                 state = State.RESTING_FINISHED;
-            }
-            else
+            } else
             {
                 state = State.FADING;
             }
@@ -165,6 +183,11 @@ public class Playlist : IPlaylist
     private bool IsActive()
     {
         return CurrentInterval.IsActive(timeInEntry);
+    }
+
+    private bool IsSlowingDown()
+    {
+        return CurrentInterval.IsSlowingDown(timeInEntry);
     }
 
     private bool IsResting()
@@ -203,6 +226,8 @@ public class Playlist : IPlaylist
         UNRECOGNIZED = 0,
         ACTIVE,
         ACTIVE_FINISHED,
+        SLOWING_DOWN,
+        SLOWING_DOWN_FINISHED,
         RESTING,
         RESTING_FINISHED,
         FADING,

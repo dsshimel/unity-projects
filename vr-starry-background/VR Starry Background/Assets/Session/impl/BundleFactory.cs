@@ -9,13 +9,17 @@ public class BundleFactory
     public readonly float radiusOuter;
     public readonly float angularVelocityMin;
     public readonly float angularVelocityMax;
+    public readonly float intensityMin;
+    public readonly float intensityMax;
 
     public BundleFactory(
         Manipulator manipulator, 
         float radiusInner, 
         float radiusOuter, 
         float angularVelocityMin, 
-        float angularVelocityMax)
+        float angularVelocityMax,
+        float intensityMin,
+        float intensityMax)
     {
         this.manipulator = manipulator;
         this.gameObjectIdProvider = manipulator;
@@ -23,6 +27,8 @@ public class BundleFactory
         this.radiusOuter = radiusOuter;
         this.angularVelocityMin = angularVelocityMin;
         this.angularVelocityMax = angularVelocityMax;
+        this.intensityMin = intensityMin;
+        this.intensityMax = intensityMax;
     }
 
     public IBundle create()
@@ -48,6 +54,8 @@ public class BundleFactory
                 randomizeMovementStrategyPositionParams,
                 angularVelocityMin,
                 angularVelocityMax,
+                intensityMin,
+                intensityMax,
                 randomizeMovementStrategyVelocities,
                 alternateMovementStrategyDirections);
         }
@@ -60,6 +68,8 @@ public class BundleFactory
                 randomizeMovementStrategyPositionParams,
                 angularVelocityMin,
                 angularVelocityMax,
+                intensityMin,
+                intensityMax,
                 randomizeMovementStrategyVelocities,
                 alternateMovementStrategyDirections);
         }
@@ -68,21 +78,41 @@ public class BundleFactory
         IStrategy<Color> colorStrat;
         if (flipCoin())
         {
-            colorStrat = new RandomStaticColorStrategy(gameObjectIdProvider);
+            colorStrat = new RandomStaticColorStrategy(
+                gameObjectIdProvider,
+                intensityMin,
+                intensityMax);
         } else
         {
             var duration = 5.0f;
-            colorStrat = new RainbowColorWheel(gameObjectIdProvider, duration);
+            colorStrat = new RainbowColorWheelStrategy(
+                gameObjectIdProvider, 
+                duration,
+                intensityMin,
+                intensityMax);
         }
-        var colorStrategyApplier = new ColorStrategyApplier(manipulator, colorStrat);
+        var colorStrategyApplier = new ColorStrategyApplier(
+            manipulator,
+            colorStrat);
 
-        var sizeStrat = new RandomStaticSizeStrategy(gameObjectIdProvider);
+        var sizeStrat = new RandomStaticSizeStrategy(
+            gameObjectIdProvider, 
+            intensityMin,
+            intensityMax);
         var sizeStrategyApplier = new SizeStrategyApplier(manipulator, sizeStrat);
 
-        var trailsStrat = new ColorMatchStaticGradientStrategy(gameObjectIdProvider, colorStrat);
+        var trailsStrat = new ColorMatchStaticGradientStrategy(
+            gameObjectIdProvider,
+            colorStrat,
+            intensityMin,
+            intensityMax);
         var trailsStrategyApplier = new TrailsStrategyApplier(manipulator, trailsStrat);
 
-        var particleSizeStrat = new ParticleSizeMatchStaticStrategy(gameObjectIdProvider, sizeStrat);
+        var particleSizeStrat = new ParticleSizeMatchStaticStrategy(
+            gameObjectIdProvider,
+            sizeStrat,
+            intensityMin,
+            intensityMax);
         var particleSizeStrategyApplier = new ParticleRadiusStrategyApplier(manipulator, particleSizeStrat);
 
         return new Bundle(

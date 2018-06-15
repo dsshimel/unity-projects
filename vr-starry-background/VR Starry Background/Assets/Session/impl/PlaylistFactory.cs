@@ -17,7 +17,7 @@ public class PlaylistFactory
         }
 
         var playlist = new Playlist(new List<IBundle>(), new List<Interval>());
-        var interval = new Interval(5, 2.5f, 5.0f);
+        var interval = new Interval(5.0f, 1.0f, 2.5f, 5.0f);
    
         for (var i = 0; i < length; i++)
         {

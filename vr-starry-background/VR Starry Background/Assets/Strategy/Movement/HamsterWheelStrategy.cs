@@ -12,6 +12,8 @@ public class HamsterWheelStrategy : CircularMovementStrategy
         bool randomizePositionParams,
         float angularVelocityMin,
         float angularVelocityMax,
+        float intensityMin,
+        float intensityMax,
         bool randomizeVelocities,
         bool alternateDirections) : base(
             gameObjectIdProvider,
@@ -20,6 +22,8 @@ public class HamsterWheelStrategy : CircularMovementStrategy
             randomizePositionParams,
             angularVelocityMin,
             angularVelocityMax,
+            intensityMin,
+            intensityMax,
             randomizeVelocities,
             alternateDirections)
     {

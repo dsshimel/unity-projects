@@ -8,7 +8,9 @@ public class ParticleSizeMatchStaticStrategy : AbstractStaticStrategy<float>
 
     public ParticleSizeMatchStaticStrategy(
         IProvider<ICollection<int>> gameObjectIdProvider,
-        IStrategy<Vector3> sizeStrategy) : base(gameObjectIdProvider)
+        IStrategy<Vector3> sizeStrategy,
+        float intensityMin, 
+        float intensityMax) : base(gameObjectIdProvider, intensityMin, intensityMax)
     {
         this.sizeStrategy = sizeStrategy;
 

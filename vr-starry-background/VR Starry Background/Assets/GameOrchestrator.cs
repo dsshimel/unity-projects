@@ -11,6 +11,8 @@ public class GameOrchestrator : MonoBehaviour {
     public float radiusOuter;
     public float angularVelocityMin;
     public float angularVelocityMax;
+    public float intensityMin;
+    public float intensityMax;
 
     private ISession session;
 
@@ -24,7 +26,14 @@ public class GameOrchestrator : MonoBehaviour {
         }
 
         var manipulator = new Manipulator(comets);
-        var bundleFactory = new BundleFactory(manipulator, radiusInner, radiusOuter, angularVelocityMin, angularVelocityMax);
+        var bundleFactory = new BundleFactory(
+            manipulator,
+            radiusInner,
+            radiusOuter,
+            angularVelocityMin,
+            angularVelocityMax,
+            intensityMax,
+            intensityMax);
         var playlistFactory = new PlaylistFactory(bundleFactory);
 
         session = new Session(playlistFactory.create(numIntervals), /* countdowTime= */ 1.0f);

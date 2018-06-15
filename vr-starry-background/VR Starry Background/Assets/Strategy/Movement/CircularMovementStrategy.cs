@@ -23,8 +23,10 @@ public abstract class CircularMovementStrategy : AbstractStrategy<Vector3>
         bool randomizePositionParams,
         float angularVelocityMin,
         float angularVelocityMax,
+        float intensityMin, 
+        float intensityMax,
         bool randomizeVelocities,
-        bool alternateDirections) : base(gameObjectIdProvider)
+        bool alternateDirections) : base(gameObjectIdProvider, intensityMin, intensityMax)
     {
         this.radiusInner = radiusInner;
         this.radiusOuter = radiusOuter;
