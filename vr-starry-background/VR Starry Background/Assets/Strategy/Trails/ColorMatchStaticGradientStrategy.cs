@@ -15,7 +15,7 @@ public class ColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gradient>
         gradientMap = new Dictionary<int, Gradient>();
         foreach (int gameObjectId in gameObjectIds)
         {
-            Color color = this.colorStrategy.ComputeValue(gameObjectId, 0, 0);
+            Color color = this.colorStrategy.ComputeInitialValue(gameObjectId);
 
             Gradient grad = new Gradient();
             GradientColorKey[] colorKeys = new GradientColorKey[]
