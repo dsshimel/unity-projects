@@ -101,11 +101,22 @@ public class BundleFactory
             intensityMax);
         var sizeStrategyApplier = new SizeStrategyApplier(manipulator, sizeStrat);
 
-        var trailsStrat = new ColorMatchStaticGradientStrategy(
-            gameObjectIdProvider,
-            colorStrat,
-            intensityMin,
-            intensityMax);
+        IStrategy<Gradient> trailsStrat;
+        if (flipCoin())
+        {
+            trailsStrat = new ColorMatchStaticGradientStrategy(
+                gameObjectIdProvider,
+                colorStrat,
+                intensityMin,
+                intensityMax);
+        } else
+        {
+            trailsStrat = new RainbowColorMatchStaticGradientStrategy(
+                gameObjectIdProvider, 
+                colorStrat, 
+                intensityMin, 
+                intensityMax);
+        }
         var trailsStrategyApplier = new TrailsStrategyApplier(manipulator, trailsStrat);
 
         var particleSizeStrat = new ParticleSizeMatchStaticStrategy(

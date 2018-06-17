@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 public class RainbowColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gradient>
 {
+    private static readonly int numRainbowSegments = 6;
+    private static readonly float rainbowSegmentLength = 1.0f / numRainbowSegments;
     private IStrategy<Color> colorStrategy;
     private IDictionary<int, Gradient> gradientMap;
 
@@ -13,9 +14,6 @@ public class RainbowColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gr
         float intensityMin,
         float intensityMax) : base(gameObjectIdProvider, intensityMin, intensityMax)
     {
-        // TODO: Actually implement this.
-        throw new System.NotImplementedException();
-
         this.colorStrategy = colorStrategy;
 
         gradientMap = new Dictionary<int, Gradient>();
@@ -24,11 +22,12 @@ public class RainbowColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gr
             Color color = this.colorStrategy.ComputeInitialValue(gameObjectId);
 
             Gradient grad = new Gradient();
-            GradientColorKey[] colorKeys = new GradientColorKey[]
+            GradientColorKey[] colorKeys = new GradientColorKey[numRainbowSegments];
+            for (var i = 0; i < numRainbowSegments; i++)
             {
-                new GradientColorKey(color, 0.0f),
-                new GradientColorKey(ColorHelper.InvertColor(color), 0.5f)
-            };
+                float hueOffset = i * rainbowSegmentLength;
+                colorKeys[i] = new GradientColorKey(getRainbowColor(color, hueOffset), hueOffset);
+            }
             GradientAlphaKey[] alphaKeys = new GradientAlphaKey[]
             {
                 new GradientAlphaKey(1.0f, 0.0f),
@@ -39,6 +38,18 @@ public class RainbowColorMatchStaticGradientStrategy : AbstractStaticStrategy<Gr
 
             gradientMap.Add(gameObjectId, grad);
         }
+    }
+
+    private Color getRainbowColor(Color color, float hueOffset)
+    {
+        float h, s, v;
+        Color.RGBToHSV(color, out h, out s, out v);
+        h += hueOffset;
+        if (h > 1.0f)
+        {
+            h -= 1.0f;
+        }
+        return Color.HSVToRGB(h, s, v);
     }
 
     public override Gradient ComputeStrategyValue(int gameObjectId)
