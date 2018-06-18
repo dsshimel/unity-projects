@@ -13,6 +13,8 @@ public class GameOrchestrator : MonoBehaviour {
     public float angularVelocityMax;
     public float intensityMin;
     public float intensityMax;
+    public float scaleMin;
+    public float scaleMax;
 
     private ISession session;
 
@@ -33,7 +35,9 @@ public class GameOrchestrator : MonoBehaviour {
             angularVelocityMin,
             angularVelocityMax,
             intensityMax,
-            intensityMin);
+            intensityMin,
+            scaleMin,
+            scaleMax);
         var playlistFactory = new PlaylistFactory(bundleFactory, intensityMax, intensityMin);
 
         session = new Session(playlistFactory.create(numIntervals), /* countdowTime= */ 1.0f);

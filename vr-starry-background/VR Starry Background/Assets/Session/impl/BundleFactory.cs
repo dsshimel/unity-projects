@@ -11,6 +11,8 @@ public class BundleFactory
     public readonly float angularVelocityMax;
     public readonly float intensityMin;
     public readonly float intensityMax;
+    public readonly float scaleMin;
+    public readonly float scaleMax;
 
     public BundleFactory(
         Manipulator manipulator, 
@@ -19,7 +21,9 @@ public class BundleFactory
         float angularVelocityMin, 
         float angularVelocityMax,
         float intensityMin,
-        float intensityMax)
+        float intensityMax,
+        float scaleMin,
+        float scaleMax)
     {
         this.manipulator = manipulator;
         this.gameObjectIdProvider = manipulator;
@@ -29,6 +33,8 @@ public class BundleFactory
         this.angularVelocityMax = angularVelocityMax;
         this.intensityMin = intensityMin;
         this.intensityMax = intensityMax;
+        this.scaleMin = scaleMin;
+        this.scaleMax = scaleMax;
     }
 
     public IBundle create()
@@ -37,8 +43,6 @@ public class BundleFactory
         // how will I cross fade between two strategies? Could pass in the next
         // strategy as well, though that might couple it too closely to the ordering
         // in the playlist.
-        // TODO: I am passing the manipulator to the strategies because it is the authoritative source
-        // of game object IDs. Maybe extract a ProvideGameObjectIds interface?
         // TODO: One idea is to feed one strategy into the next in a chain to create coherency
         // between the patterns
         IStrategy<Vector3> movementStrat;
@@ -95,10 +99,24 @@ public class BundleFactory
             manipulator,
             colorStrat);
 
-        var sizeStrat = new RandomStaticSizeStrategy(
-            gameObjectIdProvider, 
-            intensityMin,
-            intensityMax);
+        IStrategy<Vector3> sizeStrat;
+        if (flipCoin())
+        {
+            sizeStrat = new RandomStaticSizeStrategy(
+                gameObjectIdProvider,
+                intensityMin,
+                intensityMax,
+                scaleMin,
+                scaleMax);
+        } else
+        {
+            sizeStrat = new AverageStaticSizeStrategy(
+                gameObjectIdProvider,
+                intensityMin,
+                intensityMax,
+                scaleMin,
+                scaleMax);
+        }
         var sizeStrategyApplier = new SizeStrategyApplier(manipulator, sizeStrat);
 
         IStrategy<Gradient> trailsStrat;
