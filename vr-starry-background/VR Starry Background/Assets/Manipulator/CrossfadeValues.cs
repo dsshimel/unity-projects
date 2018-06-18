@@ -37,16 +37,15 @@ public class CrossfadeValues
         var colorKeysIn = valueIn.colorKeys;
 
         Gradient result = new Gradient();
-
-        // Assume there are two color keys
-        var colorOne = FadeColor(colorKeysOut[0].color, colorKeysIn[0].color, percentOut);
-        var colorTwo = FadeColor(colorKeysOut[1].color, colorKeysIn[1].color, percentOut);
-
-        GradientColorKey[] colorKeys = new GradientColorKey[]
+        GradientColorKey[] colorKeys = new GradientColorKey[colorKeysOut.Length];
+        for (int indexOut = 0; indexOut < colorKeysOut.Length; indexOut++)
         {
-                new GradientColorKey(colorOne, 0.0f),
-                new GradientColorKey(colorTwo, 0.5f)
-        };
+            int indexIn = (indexOut * colorKeysIn.Length) / colorKeysOut.Length;
+            var color = FadeColor(colorKeysOut[indexOut].color, colorKeysIn[indexIn].color, percentOut);
+            var time = FadeFloat(colorKeysOut[indexOut].time, colorKeysIn[indexIn].time, percentOut);
+            var colorKey = new GradientColorKey(color, time);
+            colorKeys[indexOut] = colorKey;
+        }
 
         // Assume alpha keys are the same
         result.SetKeys(colorKeys, valueOut.alphaKeys);
